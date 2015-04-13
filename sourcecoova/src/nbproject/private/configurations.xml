@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="avl">
+        <in>avl.c</in>
+        <in>avl.h</in>
+        <in>common_types.h</in>
+        <in>container_of.h</in>
+        <in>list.h</in>
+      </df>
+      <df name="linux">
+        <in>ipt_coova.h</in>
+        <in>libxt_coova.c</in>
+        <in>xt_coova.c</in>
+        <in>xt_coova.h</in>
+      </df>
+      <df name="mssl">
+        <in>httpsClient.c</in>
+        <in>sslSocket.c</in>
+        <in>sslSocket.h</in>
+      </df>
+      <in>chilli.c</in>
+      <in>chilli.h</in>
+      <in>chilli_limits.h</in>
+      <in>chilli_module.c</in>
+      <in>chilli_module.h</in>
+      <in>chksum.c</in>
+      <in>cmdline.c</in>
+      <in>cmdline.h</in>
+      <in>cmdline.mini.c</in>
+      <in>cmdsock.c</in>
+      <in>cmdsock.h</in>
+      <in>conn.c</in>
+      <in>conn.h</in>
+      <in>debug.h</in>
+      <in>dhcp.c</in>
+      <in>dhcp.h</in>
+      <in>dns.c</in>
+      <in>dns.h</in>
+      <in>ewt.c</in>
+      <in>ewt.h</in>
+      <in>garden.c</in>
+      <in>garden.h</in>
+      <in>iphash.c</in>
+      <in>iphash.h</in>
+      <in>ippool.c</in>
+      <in>ippool.h</in>
+      <in>kcoova.c</in>
+      <in>location.c</in>
+      <in>lookup.c</in>
+      <in>lookup.h</in>
+      <in>lookup3.c</in>
+      <in>main-opt.c</in>
+      <in>main-proxy.c</in>
+      <in>main-query.c</in>
+      <in>main-radconfig.c</in>
+      <in>main-radsec.c</in>
+      <in>main-redir.c</in>
+      <in>main-response.c</in>
+      <in>main-rtmon.c</in>
+      <in>main-script.c</in>
+      <in>main.c</in>
+      <in>md5.c</in>
+      <in>md5.h</in>
+      <in>ms_chap.c</in>
+      <in>mssl.c</in>
+      <in>mssl.h</in>
+      <in>nat.c</in>
+      <in>nat.h</in>
+      <in>net.c</in>
+      <in>net.h</in>
+      <in>options.c</in>
+      <in>options.h</in>
+      <in>patricia.c</in>
+      <in>patricia.h</in>
+      <in>pkt.c</in>
+      <in>pkt.h</in>
+      <in>queue.c</in>
+      <in>radius.c</in>
+      <in>radius.h</in>
+      <in>radius_chillispot.h</in>
+      <in>radius_pkt.h</in>
+      <in>radius_wispr.h</in>
+      <in>redir.c</in>
+      <in>redir.h</in>
+      <in>rtmon.c</in>
+      <in>rtmon.h</in>
+      <in>safe.c</in>
+      <in>sample-mod.c</in>
+      <in>session.c</in>
+      <in>session.h</in>
+      <in>sfhash.c</in>
+      <in>sig.c</in>
+      <in>ssl.c</in>
+      <in>ssl.h</in>
+      <in>statusfile.c</in>
+      <in>syserr.c</in>
+      <in>syserr.h</in>
+      <in>system.h</in>
+      <in>tun.c</in>
+      <in>tun.h</in>
+      <in>util.c</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

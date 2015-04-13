@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <in>chilli.c</in>
+      <in>chksum.c</in>
+      <in>cmdline.c</in>
+      <in>cmdsock.c</in>
+      <in>conn.c</in>
+      <in>dhcp.c</in>
+      <in>dns.c</in>
+      <in>garden.c</in>
+      <in>iphash.c</in>
+      <in>ippool.c</in>
+      <in>lookup.c</in>
+      <in>main-opt.c</in>
+      <in>main-query.c</in>
+      <in>main-radconfig.c</in>
+      <in>main-response.c</in>
+      <in>main.c</in>
+      <in>md5.c</in>
+      <in>ms_chap.c</in>
+      <in>net.c</in>
+      <in>options.c</in>
+      <in>pkt.c</in>
+      <in>radius.c</in>
+      <in>redir.c</in>
+      <in>safe.c</in>
+      <in>session.c</in>
+      <in>sfhash.c</in>
+      <in>sig.c</in>
+      <in>ssl.c</in>
+      <in>statusfile.c</in>
+      <in>syserr.c</in>
+      <in>tun.c</in>
+      <in>util.c</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-O2 -g -O2"/>
+        <element flagsID="1" commonFlags="-O2 -g -O2 -fPIC"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <cTool>
+            <incDir>
+              <pElem>.</pElem>
+              <pElem>..</pElem>
+              <pElem>../bstring</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>DEFCHILLICONF="/usr/local/etc/chilli.conf"</Elem>
+              <Elem>DEFPIDFILE="/usr/local/var/run/chilli.pid"</Elem>
+              <Elem>DEFSTATEDIR="/usr/local/var/run"</Elem>
+              <Elem>HAVE_CONFIG_H</Elem>
+              <Elem>SBINDIR="/usr/local/sbin"</Elem>
+              <Elem>_GNU_SOURCE</Elem>
+            </preprocessorList>
+          </cTool>
+        </makeTool>
+      </makefileType>
+      <item path="chilli.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="chksum.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="cmdline.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="cmdsock.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="conn.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="dhcp.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="dns.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="garden.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="iphash.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="ippool.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="lookup.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="main-opt.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="main-query.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="main-radconfig.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="main-response.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="md5.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="ms_chap.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="net.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="options.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="pkt.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="radius.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="redir.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="safe.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="session.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="sfhash.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="sig.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="ssl.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="statusfile.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="syserr.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="tun.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+      <item path="util.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="1">
+          <preprocessorList>
+            <Elem>PIC</Elem>
+          </preprocessorList>
+        </cTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
