@@ -1,0 +1,1 @@
+iptables -I POSTROUTING -t nat -o $HS_WANIF -j MASQUERADE
