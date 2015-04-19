@@ -1,21 +1,4 @@
-# Composer files
-composer.phar
-vendor/
-
-# Local configs
-config/autoload/*.local.php
-
-# Binary gettext files
-*.mo
-
-# Data
-data/logs/
-data/cache/
-data/sessions/
-data/tmp/
-temp/
-
-# Legacy ZF1
-demos/
-extras/documentation
-/nbproject/private/
+/web/nbproject/project.properties
+/web/nbproject/private/private.xml
+/web/nbproject/project.xml
+/web/nbproject/private/private.properties
