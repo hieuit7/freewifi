@@ -51,18 +51,18 @@ class UsersTable {
 
     public function save(Users $users) {
         $data = array(
-            'username' => $users->username,
-            'password' => md5($users->password),
-            'fullname' => $users->fullname,
-            'email' => $users->email,
-            'building' => $users->building,
-            'phone' => $users->phone,
-            'activate' => $users->activate,
-            'room' => $users->room,
-            'created' => $users->created,
-            'created_by' => $users->created_by
+            'username' => $users->getUsername(),
+            'password' => md5($users->getPassword()),
+            'fullname' => $users->getFullname(),
+            'email' => $users->getEmail(),
+            'building' => $users->getBuilding(),
+            'phone' => $users->getPhone(),
+            'activate' => $users->getActivate(),
+            'room' => $users->getRoom(),
+            'created' => $users->getCreated(),
+            'created_by' => $users->getCreatedBy()
         );
-        $id = (int) $users->id;
+        $id = (int) $users->getId();
         if ($id == 0):
             $this->tableGateway->insert($data);
             return $this->tableGateway->getLastInsertValue();

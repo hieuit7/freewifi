@@ -196,5 +196,5 @@ HS_LOC_NAME="My HotSpot"	   # WISPr Location Name and used in portal
 
 # Embedded miniportal
 # HS_REG_MODE="tos" # or self, other
-HS_RAD_PROTO="pap" # or mschapv2, chap
+HS_RAD_PROTO="mschapv2" # or mschapv2, chap
 # HS_USE_MAP=on

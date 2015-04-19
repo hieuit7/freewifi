@@ -40,7 +40,6 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
 
-
         $form = new RegisterForms();
         $form->get('submit')->setValue('Add');
 
@@ -55,13 +54,13 @@ class IndexController extends AbstractActionController {
             if ($form->isValid()):
                 $users->exchangeArray($form->getData());
                 $usersTable = $this->getUsersTable();
-                $users->active = '0';
-                $users->created = date('Y-m-d');
+                $users->setActivate(0);
+                $users->setCreated(date('Y-m-d')) ;
                 $userId = $usersTable->save($users);
                 $codeActive = new \Zend\Captcha\Dumb();
 
                 $data = array(
-                    'username' => $users->username,
+                    'username' => $users->getUsername(),
                     'code' => $codeActive->generate()
                 );
 
@@ -91,12 +90,17 @@ class IndexController extends AbstractActionController {
         $userTable = $this->getUsersTable();
         if ($id):
             $user = $userTable->getUser($id);
+        else:
+            // error message!!!
+            
+            return $this->redirect()->toRoute('register', array('action' => 'index'));
         endif;
         if ($request->isPost()):
             $data = $request->getPost();
             if (isset($data['verify']) && isset($data['username'])):
                 $code = $codeTable->getUsersCodeByName($data['username']);
                 if (!$code):
+                    // error message!!!
                     return $this->redirect()->toRoute('register', array('action' => 'index'));
                 endif;
                 //check code
@@ -126,14 +130,12 @@ class IndexController extends AbstractActionController {
 
             endif;
         else:
-
-
-            $code = $codeTable->getUsersCodeByName($user->username);
+            $code = $codeTable->getUsersCodeByName($user->getUsername());
             if ($code == 'active'):
                 return $this->redirect()->toUrl($this->urlLogin);
             endif;
             $data = array(
-                'username' => $user->username,
+                'username' => $user->getUsername(),
                 'code' => $code->getCode()
             );
             return new ViewModel($data);

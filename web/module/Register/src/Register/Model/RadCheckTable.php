@@ -54,6 +54,7 @@ class RadCheckTable {
     public function save(RadCheck $radcheck) {
         $data = array(
             'username' => $radcheck->getUsername(),
+            'attribute' => $radcheck->getAttribute(),
             'op' => $radcheck->getOp(),
             'value' => $radcheck->getValue()
         );

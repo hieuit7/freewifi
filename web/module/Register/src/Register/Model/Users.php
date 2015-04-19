@@ -106,6 +106,9 @@ class Users implements InputFilterAwareInterface {
     public function getRoom() {
         return $this->room;
     }
+    public function getActivate() {
+        return $this->activate;
+    }
     public function getInputFilter() {
         if (!$this->inputFiler):
             $inputFilter = new InputFilter();
