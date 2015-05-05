@@ -10,6 +10,12 @@ namespace Register;
 
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+//use \Dashboard\Model\Entity\Users;
+//use \Dashboard\Model\Table\UsersTable;
+//use \Dashboard\Model\Entity\UsersCode;
+//use \Dashboard\Model\Table\UsersCodeTable;
+//use \Dashboard\Model\Entity\RadCheck;
+//use \Dashboard\Model\Table\RadCheckTable;
 use Register\Model\Users;
 use Register\Model\UsersTable;
 use Register\Model\UsersCode;
@@ -18,6 +24,8 @@ use Register\Model\RadCheck;
 use Register\Model\RadCheckTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
+
+
 
 class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
 
@@ -28,20 +36,25 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
             ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
+                    'Dashboard' => __DIR__ . '../../Dashboard/src/Dashboard',
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                    
+                    //'Model\Table' => __DIR__ . '../../Dashboard/src/Dashboard',
+                    
                 ),
             ),
         );
     }
 
     public function getConfig() {
+        
         return include __DIR__ . '/config/module.config.php';
     }
 
     public function getServiceConfig() {
         return array(
             'factories' => array(
-                'Register\Model\UsersTable' => function($sm) {
+                'Registry\Model\UsersTable' => function($sm) {
                     $tableGateway = $sm->get('UsersTableGateway');
                     $table = new UsersTable($tableGateway);
                     return $table;
@@ -52,7 +65,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype->setArrayObjectPrototype(new Users());
                     return new TableGateway('app_users', $dbAdapter, null, $resultSetPrototype);
                 },
-                'Register\Model\UsersCodeTable' => function($sm) {
+                'Registry\Model\UsersCodeTable' => function($sm) {
                     $tableGateway = $sm->get('UsersCodeTableGateway');
                     $table = new UsersCodeTable($tableGateway);
                     return $table;
@@ -63,7 +76,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resulSetPrototype->setArrayObjectPrototype(new UsersCode());
                     return new TableGateway('app_active_code', $dbAdapter, null, $resulSetPrototype);
                 },
-                'Register\Model\RadCheckTable' => function($sm) {
+                'Registry\Model\RadCheckTable' => function($sm) {
                     $tableGateway = $sm->get('RadCheckTableGateway');
                     $table = new RadCheckTable($tableGateway);
                     return $table;

@@ -15,11 +15,18 @@ namespace Dashboard\Controller;
  */
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 class IndexController extends AbstractActionController{
     //put your code here
     
     public function indexAction() {
+      
+        
+        
+        $User = new Container('user');
+        $User->name = 'hieu';
+        
         
         return new ViewModel();
     }

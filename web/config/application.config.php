@@ -7,7 +7,8 @@ return array(
         'DoctrineORMModule',
         'Register',
         'CsnUser',
-        'Dashboard'
+        'Dashboard',
+        
         
     ),
 

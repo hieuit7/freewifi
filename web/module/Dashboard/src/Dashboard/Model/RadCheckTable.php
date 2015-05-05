@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Register\Model;
+namespace Dashboard\Model\Table;
 
 /**
  * Description of RadCheckTable
@@ -14,8 +14,8 @@ namespace Register\Model;
  * @author hieu
  */
 use Zend\Db\TableGateway\TableGateway;
-use Register\Model\RadCheck;
-//use Model\Entity\RadCheck;
+use Dashboard\Model\Entity\RadCheck;
+
 class RadCheckTable {
 
     protected $tableGateway;

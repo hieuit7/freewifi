@@ -15,6 +15,12 @@ namespace Register\Controller;
  */
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
+
+//use Dashboard\Model\Entity\Users;
+//use Dashboard\Model\Entity\UsersCode;
+//use Dashboard\Model\Entity\UsersCodeTable;
+use Dashboard\Entity\RadCheck as DRadCheck;
 use Register\Model\Users;
 use Register\Model\UsersCode;
 use Register\Model\UsersCodeTable;
@@ -39,7 +45,7 @@ class IndexController extends AbstractActionController {
     }
 
     public function indexAction() {
-
+        $User = new Container('user');
         $form = new RegisterForms();
         $form->get('submit')->setValue('Add');
 
@@ -82,6 +88,7 @@ class IndexController extends AbstractActionController {
     }
 
     public function verifyAction() {
+        $drad = new DRadCheck();
         $this->setUrlLogin('/');
         $request = $this->getRequest();
         $codeTable = $this->getUsersCodeTable();
@@ -149,7 +156,7 @@ class IndexController extends AbstractActionController {
     public function getUsersTable() {
         if (!$this->usersTable):
             $sm = $this->getServiceLocator();
-            $this->usersTable = $sm->get('Register\Model\UsersTable');
+            $this->usersTable = $sm->get('\Dashboard\Model\Entity\UsersTable');
         endif;
         return $this->usersTable;
     }
@@ -157,7 +164,7 @@ class IndexController extends AbstractActionController {
     public function getRadCheckTable() {
         if (!$this->radCheckTable):
             $sm = $this->getServiceLocator();
-            $this->radCheckTable = $sm->get('Register\Model\RadCheckTable');
+            $this->radCheckTable = $sm->get('\Dashboard\Model\Entity\RadCheckTable');
         endif;
         return $this->radCheckTable;
     }
@@ -165,7 +172,7 @@ class IndexController extends AbstractActionController {
     public function getUsersCodeTable() {
         if (!$this->usersCodeTable):
             $sm = $this->getServiceLocator();
-            $this->usersCodeTable = $sm->get('Register\Model\UsersCodeTable');
+            $this->usersCodeTable = $sm->get('\Dashboard\Model\Entity\UsersCodeTable');
         endif;
         return $this->usersCodeTable;
     }
