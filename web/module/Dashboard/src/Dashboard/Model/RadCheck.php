@@ -21,6 +21,7 @@ class RadCheck {
     protected $value;
     
     public function exchangeArray($data) {
+        
         $this->id = (isset($data['id']))?$data['id']:null;
         $this->username = (isset($data['username']))?$data['username']:null;
         $this->attribute = (isset($data['attribute']))?$data['attribute']:null;

@@ -30,7 +30,9 @@ class IndexController extends AbstractActionController{
         
         return new ViewModel();
     }
-    
+    public function flotAction(){
+        return new ViewModel();
+    }
     public function listAction(){
         return new ViewModel();
     }

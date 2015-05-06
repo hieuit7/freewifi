@@ -10,12 +10,7 @@ namespace Register;
 
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-//use \Dashboard\Model\Entity\Users;
-//use \Dashboard\Model\Table\UsersTable;
-//use \Dashboard\Model\Entity\UsersCode;
-//use \Dashboard\Model\Table\UsersCodeTable;
-//use \Dashboard\Model\Entity\RadCheck;
-//use \Dashboard\Model\Table\RadCheckTable;
+
 use Register\Model\Users;
 use Register\Model\UsersTable;
 use Register\Model\UsersCode;

@@ -1,0 +1,198 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+namespace DashBoard\Model;
+
+/*
+ * 
+ */
+class RadAcct {
+    
+    protected $radacctid;
+    protected $acctsessionid;
+    protected $acctuniqueid;
+    protected $username;
+    protected $groupname;
+    protected $realm;
+    protected $nasipaddress;
+    protected $nasportid;
+    protected $nasporttype;
+    protected $acctstarttime;
+    protected $acctupdatetime;
+    protected $acctstoptime;
+    protected $acctinterval;
+    protected $acctsessiontime;
+    protected $acctauthentic;
+    protected $connectinfo_start;
+    protected $connectinfo_stop;
+    protected $acctinputoctets;
+    protected $acctoutputoctets;
+    protected $calledstationid;
+    protected $callingstationid;
+    protected $acctterminatecause;
+    protected $servicetype;
+    protected $frameprotocol;
+    protected $frameipaddress;
+    
+    public function exchangeArray($data) {
+        $this->ra
+    }
+    
+    public function getradacctionid() {
+        return $this->radacctionid;
+    }
+    public function getacctsessionid() {
+        return $this->acctsessionid;
+    }
+    public function getacctuniqueid() {
+        return $this->acctuniqueid;
+    }
+    public function getusername() {
+        return $this->username;
+    }
+    public function getgroupname() {
+        return $this->groupname;
+    }
+    public function getrealm() {
+        return $this->realm;
+    }
+    public function getnasipaddress() {
+        return $this->nasipaddress;
+    }
+    public function getnasportid() {
+        return $this->nasportid;
+    }
+    public function getnasporttype() {
+        return $this->nasporttype;
+    }
+    public function getacctstarttime() {
+        return $this->acctstarttime;
+    }
+    public function getacctupdatetime() {
+        return $this->acctupdatetime;
+    }
+    public function getacctstoptime() {
+        return $this->acctstoptime;
+    }
+    public function getacctinterval() {
+        return $this->acctinterval;
+    }
+    public function getacctsessiontime() {
+        return $this->acctsessiontime;
+    }
+    public function getacctauthentic() {
+        return $this->acctauthentic;
+    }
+    public function getconnectinfostop() {
+        return $this->connectinfo_stop;
+    }
+    public function getconnectinfostart() {
+        return $this->connectinfo_start;
+    }
+    public function getacctinputoctets() {
+        return $this->acctinputoctets;
+    }
+    public function getacctoutputoctets() {
+        return $this->acctoutputoctets;
+    }
+    public function getcalledstationid() {
+        return $this->calledstationid;
+    }
+    public function getcallingstationid() {
+        return $this->callingstationid;
+    }
+    public function getacctterminatecause() {
+        return $this->acctterminatecause;
+    }
+    
+    public function getServicetype() {
+        return $this->Servicetype;
+    }
+    public function getFrameProtocal() {
+        return $this->frameprotocal;
+    }
+    public function getFrameIpAddress() {
+        return $this->frameipaddress;
+    }
+    
+    public function setRadacctid($Radacctid) {
+        $this->radacctid = $Radacctid;
+    }
+    public function setAcctSessionID($AcctSessionID) {
+        $this->acctsessionid = $AcctSessionID;
+    }
+    public function setAcctUniqueId($AcctUniqueId) {
+        $this->acctuniqueid = $AcctUniqueId;
+    }
+    public function setUserName($UserName) {
+        $this->username = $UserName;
+    }
+    public function setGroupName($GroupName) {
+        $this->groupname = $GroupName;
+    }
+    public function setRealm($Realm) {
+        $this->realm = $Realm;
+    }
+    public function setNasIpAddress($NasIpAddress) {
+        $this->nasipaddress = $NasIpAddress;
+    }
+    public function setNasPortType($NasPortType) {
+        $this->nasporttype = $NasPortType;
+    }
+    public function setAcctStartTime($AcctStartTime) {
+        $this->acctstarttime = $AcctStartTime;
+    }
+    public function setAcctUpdateTime($AcctUpdateTime) {
+        $this->acctupdatetime = $AcctUpdateTime;
+    }
+    public function setAcctStopTime($AcctStopTime) {
+        $this->acctstoptime = $AcctStopTime;
+    }
+    public function setAcctInterval($AcctInterval) {
+        $this->acctinterval = $AcctInterval;
+    }
+    public function setAcctSessionTime($AcctSessionTime) {
+        $this->acctsessiontime = $AcctSessionTime;
+    }
+    public function setAcctAuthentic($AcctAuthentic) {
+        $this->acctauthentic = $AcctAuthentic;
+    }
+    public function setConnectinfoStart($ConnectinfoStart) {
+        $this->connectinfo_start = $ConnectinfoStart;
+    }
+    public function setConnectInforStop($ConnectinforStop) {
+        $this->connectinfor_stop = $ConnectinforStop;
+    }
+    public function setAcctInputOctets($AcctInputOctets) {
+        $this->acctinputoctets = $AcctInputOctets;
+    }
+    public function setAcctOutputOctets($AcctOuputOctets) {
+        $this->acctoutputoctets = $AcctOuputOctets;
+    }
+    public function setCalledStationId($CalledStationId) {
+        $this->calledstationid = $CalledStationId;
+    }
+    public function setCallingStationId($CallingStationId) {
+        $this->callingstationid = $CallingStationId;
+    }
+    public function setAcctterminate($Acctterminate) {
+        $this->acctterminate = $Acctterminate;
+    }
+    public function setServiceType($ServiceType) {
+        $this->servicetype = $ServiceType;
+    }
+    public function setFrameProtocol($FrameProtocol) {
+        $this->frameprotocol = $FrameProtocol;
+    }
+    public function setFrameIpaddress($FrameIpaddress) {
+        $this->frameipaddress = $FrameIpaddress;
+    }
+    
+    
+    
+}
+

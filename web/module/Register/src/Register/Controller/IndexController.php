@@ -92,6 +92,7 @@ class IndexController extends AbstractActionController {
         $this->setUrlLogin('/');
         $request = $this->getRequest();
         $codeTable = $this->getUsersCodeTable();
+        $radCheckTable = $this->getRadCheckTable();
         $id = $this->params('id');
 
         $userTable = $this->getUsersTable();
@@ -176,5 +177,5 @@ class IndexController extends AbstractActionController {
         endif;
         return $this->usersCodeTable;
     }
-
+   
 }
