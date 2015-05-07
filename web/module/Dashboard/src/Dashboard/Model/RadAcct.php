@@ -39,7 +39,32 @@ class RadAcct {
     protected $frameipaddress;
     
     public function exchangeArray($data) {
-        $this->ra
+        $this->radacctid = (isset($data['radacctid']))?$data['radacctid']:'';
+        $this->acctsessionid = (isset($data['acctsessionid']))?$data['acctsessionid']:'';
+        $this->acctuniqueid = (isset($data['acctuniqueid']))?$data['acctuniqueid']:'';
+        $this->username = (isset($data['username']))?$data['username']:'';
+        $this->groupname = (isset($data['groupname']))?$data['groupname']:'';
+        $this->realm = (isset($data['realm']))?$data['realm']:'';
+        $this->nasipaddress = (isset($data['nasipaddress']))?$data['nasipaddress']:'';
+        $this->nasporttype = (isset($data['nasporttype']))?$data['nasporttype']:'';
+        $this->acctstarttime = (isset($data['acctstarttime']))?$data['acctstarttime']:'';
+        $this->acctupdatetime = (isset($data['acctupdatetime']))?$data['acctupdatetime']:'';
+        $this->acctstoptime = (isset($data['acctstoptime']))?$data['acctstoptime']:'';
+        $this->acctinterval = (isset($data['acctinterval']))?$data['acctinterval']:'';
+        $this->acctsessiontime = (isset($data['acctsessiontime']))?$data['acctsessiontime']:'';
+        $this->acctauthentic = (isset($data['acctauthentic']))?$data['acctauthentic']:'';
+        $this->connectinfo_start = (isset($data['connectinfo_start']))?$data['connectinfo_start']:'';
+        $this->connectinfo_stop = (isset($data['connectinfo_stop']))?$data['connectinfo_stop']:'';
+        $this->acctinputoctets = (isset($data['acctinputoctets']))?$data['acctinputoctets']:'';
+        $this->acctoutputoctets = (isset($data['acctoutputoctets']))?$data['acctoutputoctets']:'';
+        $this->calledstationid = (isset($data['calledstationid']))?$data['calledstationid']:'';
+        $this->callingstationid = (isset($data['callingstationid']))?$data['callingstationid']:'';
+        $this->acctterminatecause = (isset($data['acctterminatecause']))?$data['acctterminatecause']:'';
+        $this->servicetype = (isset($data['servicetype']))?$data['servicetype']:'';
+        $this->frameprotocol = (isset($data['frameprotocol']))?$data['frameprotocol']:'';
+        $this->frameipaddress = (isset($data['frameipaddress']))?$data['frameipaddress']:'';
+        $this->nasportid = (isset($data['nasportid']))?$data['nasportid']:'';
+        
     }
     
     public function getradacctionid() {

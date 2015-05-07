@@ -23,7 +23,9 @@ class RadCheckTable {
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
     }
-
+    /*
+     * 
+     */
     public function getChecks($name, $options = array()) {
         $wheres = array();
         $wheres[] = 'username = ' . $name;
@@ -33,7 +35,7 @@ class RadCheckTable {
             endforeach;
         endif;
 
-        $resultSet = $this->tableGateway>select($wheres);
+        $resultSet = $this->tableGateway->select($wheres);
         $results = array();
         while (($row = $resultSet->current()) !== null):
             $results[] = $row;
