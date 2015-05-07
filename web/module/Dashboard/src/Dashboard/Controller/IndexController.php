@@ -27,7 +27,7 @@ class IndexController extends AbstractActionController{
         $User = new Container('user');
         $User->name = 'hieu';
         
-        
+        //var_dump('test');die;
         return new ViewModel();
     }
     public function flotAction(){
