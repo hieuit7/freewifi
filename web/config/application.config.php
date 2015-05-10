@@ -5,6 +5,7 @@ return array(
         'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineORMModule',
+        'Login',
         'Register',
         'CsnUser',
         'Dashboard',

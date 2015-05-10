@@ -17,10 +17,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 
-//use Dashboard\Model\Entity\Users;
-//use Dashboard\Model\Entity\UsersCode;
-//use Dashboard\Model\Entity\UsersCodeTable;
-use Dashboard\Entity\RadCheck as DRadCheck;
 use Register\Model\Users;
 use Register\Model\UsersCode;
 use Register\Model\UsersCodeTable;

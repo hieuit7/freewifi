@@ -58,4 +58,68 @@ class RadCheck {
     public function getValue() {
         return $this->value;
     }
+    public function getInputFilter() {
+        if (!$this->inputFiler):
+            $inputFilter = new InputFilter();
+            //filter for username
+            $inputFilter->add(array(
+                'name' => 'username',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 100,
+                        ),
+                    ),
+                ),
+            ));
+            //password
+            
+            $inputFilter->add(array(
+                 'name'     => 'op',
+                 'required' => true,
+                 'filters'  => array(
+                     array('name' => 'StripTags'),
+                     array('name' => 'StringTrim'),
+                 ),
+                 'validators' => array(
+                     array(
+                         'name'    => 'StringLength',
+                         'options' => array(
+                             'encoding' => 'UTF-8',
+                             'min'      => 1,
+                             'max'      => 100,
+                         ),
+                     ),
+                 ),
+             ));
+            $inputFilter->add(array(
+                 'name'     => 'value',
+                 'required' => true,
+                 'filters'  => array(
+                     array('name' => 'StripTags'),
+                     array('name' => 'StringTrim'),
+                 ),
+                 'validators' => array(
+                     array(
+                         'name'    => 'StringLength',
+                         'options' => array(
+                             'encoding' => 'UTF-8',
+                             'min'      => 1,
+                             'max'      => 100,
+                         ),
+                     ),
+                 ),
+             ));
+            $this->inputFiler = $inputFilter;
+        endif;
+        return $this->inputFiler;
+    }
 }

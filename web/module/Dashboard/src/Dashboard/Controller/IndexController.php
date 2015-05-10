@@ -21,13 +21,11 @@ class IndexController extends AbstractActionController{
     //put your code here
     
     public function indexAction() {
-      
+        $user = new Container('user');
+//        if(isset($user->name) && $user->name == 'guess'):
+//            $this->redirect()->toRoute('login');
+//        endif;
         
-        
-        $User = new Container('user');
-        $User->name = 'hieu';
-        
-        //var_dump('test');die;
         return new ViewModel();
     }
     public function flotAction(){

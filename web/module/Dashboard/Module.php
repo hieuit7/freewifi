@@ -18,10 +18,31 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
 
     public function onBootstrap($e) {
         $eventManager = $e->getApplication()->getEventManager();
-            
+
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $this->bootstrapSession($e);
+        
+    }
+
+    public function bootstrapLogin(\Zend\Mvc\MvcEvent $e) {
+        $user = new Container('user');
+        //$this->bootstrapLogin($e);
+        if (isset($user->name) && $user->name == 'guess'):
+            $url = $e->getRouter()->assemble(array(), array('name' => 'login'));
+            $response = $e->getResponse();
+            $response->getHeaders()->addHeaderLine('Location', $url);
+            $response->setStatusCode(302);
+            $response->sendHeaders();
+            $stopCallBack = function($event) use ($response) {
+                $event->stopPropagation();
+                return $response;
+            };
+            $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_ROUTE, $stopCallBack, -10000);
+            return $response;
+        endif;
+        
+        
     }
 
     public function bootstrapSession($e) {
@@ -83,8 +104,8 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
     public function getConfig() {
         return include __DIR__ . '/config/module.config.php';
     }
-    public function getServiceConfig()
-    {
+
+    public function getServiceConfig() {
         return array(
             'factories' => array(
                 'Zend\Session\SessionManager' => function ($sm) {
@@ -94,7 +115,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
 
                         $sessionConfig = null;
                         if (isset($session['config'])) {
-                            $class = isset($session['config']['class'])  ? $session['config']['class'] : 'Zend\Session\Config\SessionConfig';
+                            $class = isset($session['config']['class']) ? $session['config']['class'] : 'Zend\Session\Config\SessionConfig';
                             $options = isset($session['config']['options']) ? $session['config']['options'] : array();
                             $sessionConfig = new $class();
                             $sessionConfig->setOptions($options);
@@ -119,8 +140,9 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     Container::setDefaultManager($sessionManager);
                     return $sessionManager;
                 },
-            ),
-        );
-    }
+                    ),
+                );
+            }
 
-}
+        }
+        
