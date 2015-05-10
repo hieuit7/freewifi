@@ -17,27 +17,29 @@ namespace Login\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
-use Login\Forms\Form_Login_Form;
+use Login\Forms\LoginForms;
 
 class IndexController extends AbstractActionController {
 
     public function indexAction() {
 
         $user = new Container('user');
-
+        $form = new LoginForms();
+        
         if (isset($user->name) && $user->name != 'guess'):
             $this->redirect()->toRoute('dashboard');
         endif;
         $request = $this->getRequest();
         $radCheck = new \Register\Model\RadCheck();
         if ($request->isPost()):
-            $form = new Form_Login_Form();
             $radCheck = new \Register\Model\RadCheck();
-            
-            
         endif;
         $this->layout('layout/login');
-        return new ViewModel();
+        
+        
+        return new ViewModel(array(
+            'form' => $form
+        ));
     }
 
 }

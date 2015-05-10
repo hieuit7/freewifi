@@ -12,9 +12,9 @@
  * @author hieun_000
  */
 namespace Login\Forms;
- 
 use Zend\Form\Form;
-class Form_Login_Form extends Form{
+
+class LoginForms extends Form{
     //put your code here
     public function __construct($name = null, $options = array()) {
         parent::__construct('loginform', $options);
@@ -24,25 +24,34 @@ class Form_Login_Form extends Form{
             'name' => 'username',
             'type' => 'text',
             'options' => array(
-                'label' => 'USERNAME'
             ),
             'attributes' => array(
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'placeholder' => 'Username'
             )
         ));
+        
         $this->add(array(
             'name' => 'password',
             'type' => 'password',
-            'options' => array(
-                'label' => 'PASSWORD'
-            ),
             'attributes' => array(
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'placeholder' => 'Password'
             )
         ));
+        
         $this->add(array(
             'type' => 'submit',
             'name' => 'submit',
+            'options' => array(
+                
+                'label' => 'Login',  
+            ),
+            
+            'attributes' => array(
+                'value' =>'Login',
+                'class' =>'btn btn-lg btn-success btn-block'
+            )
         ));
         
     }

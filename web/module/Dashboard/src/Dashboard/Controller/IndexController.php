@@ -22,9 +22,9 @@ class IndexController extends AbstractActionController{
     
     public function indexAction() {
         $user = new Container('user');
-//        if(isset($user->name) && $user->name == 'guess'):
-//            $this->redirect()->toRoute('login');
-//        endif;
+        if(isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login');
+        endif;
         
         return new ViewModel();
     }
