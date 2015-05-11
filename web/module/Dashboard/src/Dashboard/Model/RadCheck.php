@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Dashboard\Entity;
+namespace Dashboard\Model;
 
 /**
  * Description of RadCheck

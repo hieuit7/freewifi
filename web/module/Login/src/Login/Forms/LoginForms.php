@@ -20,6 +20,7 @@ class LoginForms extends Form{
         parent::__construct('loginform', $options);
         
         $forms = array();
+        $this->setAttribute('action', '/login');
         $this->add(array(
             'name' => 'username',
             'type' => 'text',

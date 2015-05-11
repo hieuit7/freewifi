@@ -14,7 +14,7 @@ namespace Dashboard\Model\Table;
  * @author hieu
  */
 use Zend\Db\TableGateway\TableGateway;
-use Dashboard\Model\Entity\UsersCode;
+use Dashboard\Model\UsersCode;
 
 class UsersCodeTable {
 

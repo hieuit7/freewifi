@@ -12,7 +12,7 @@
  * @author hieu
  */
 
-namespace Dashboard\Model\Entity;
+namespace Dashboard\Model;
 
 class UsersCode {
 

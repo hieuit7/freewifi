@@ -18,28 +18,64 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 use Login\Forms\LoginForms;
+use Login\Forms\LoginInputFilter;
+use Dashboard\Model\RadCheckTable;
 
 class IndexController extends AbstractActionController {
-
+    protected $radCheckTable;
     public function indexAction() {
-
+        
+        $routedUrl = $this->params('urlLogin');        
         $user = new Container('user');
         $form = new LoginForms();
-        
+
         if (isset($user->name) && $user->name != 'guess'):
-            $this->redirect()->toRoute('dashboard');
+            $this->redirect()->toRoute($routedUrl);
         endif;
+
         $request = $this->getRequest();
-        $radCheck = new \Register\Model\RadCheck();
+
         if ($request->isPost()):
-            $radCheck = new \Register\Model\RadCheck();
+            $loginFilter  = new LoginInputFilter();
+            $form->setInputFilter($loginFilter);
+            $form->setData($request->getPost());
+            
+            if ($form->isValid()):
+                $data = $form->getData();
+                
+                $radCheckTable = $this->getRadCheckTable();
+                
+                $result = $radCheckTable->getChecks($data['username'],array('attribute'=>'Md5-Password','value'=>  md5($data['password'])));                
+                if($result && count($result) > 0):
+                    $radCheck = (isset($result[0])?$result[0]:new \Dashboard\Model\RadCheck());
+                    if( ($radCheck->getUsername() == $data['username'])):
+                        $user->name = $radCheck->getUsername();
+                        $this->redirect()->toRoute($routedUrl);
+                    endif;
+                endif;                
+            endif;
+            //$radCheckTable->getChecks($name, $options);
         endif;
         $this->layout('layout/login');
-        
-        
         return new ViewModel(array(
             'form' => $form
         ));
+    }
+    function logoutAction() {
+        $urlLogin = $this->params('urlLogin');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name != 'guess'):
+            $user->name = 'guess';
+            $this->redirect()->toRoute('login',array('urlLogin'=>$urlLogin));
+        endif;
+        $this->redirect()->toRoute('login',array('action'=>'index','urlLogin'=>'dashboard'));
+    }
+    public function getRadCheckTable() {
+        if (!$this->radCheckTable):
+            $sm = $this->getServiceLocator();
+            $this->radCheckTable = $sm->get('Dashboard\Model\RadCheckTable');
+        endif;
+        return $this->radCheckTable;
     }
 
 }

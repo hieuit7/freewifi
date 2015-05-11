@@ -27,15 +27,17 @@ return array(
             'login' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/login[/:action][/:id]',
+                    'route' => '/login[/:action][/:urlLogin]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Login\Controller',
                         'controller' => 'Login\Controller\Index',
                         'action' => 'index',
+                        'urlLogin' => 'dashboard'
                     ),
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'urlLogin' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                 ),
             ),

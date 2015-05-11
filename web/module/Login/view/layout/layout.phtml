@@ -4,8 +4,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 ' . $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
-
+        <?php echo $this->headTitle($this->translate('Login'))->setSeparator(' - ')->setAutoEscape(false) ?>
         <?php
         echo $this->headMeta()
                 ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -16,13 +15,10 @@
         <?php
         echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                 ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
-                ->prependStylesheet($this->basePath('css/morris.css'))
                 ->prependStylesheet($this->basePath('css/sb-admin-2.css'))
-                ->prependStylesheet($this->basePath('css/timeline.css'))
                 ->prependStylesheet($this->basePath('css/metisMenu.min.css'))
-                ->prependStylesheet($this->basePath('css/style.css'))
-                ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
                 ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                ->prependStylesheet($this->basePath('css/zdt.css'))
         ?>
 
         <!-- Scripts -->
@@ -30,8 +26,6 @@
         echo $this->headScript()
                 ->prependFile($this->basePath('js/metisMenu.min.js'))
                 ->prependFile($this->basePath('js/raphael-min.js'))
-                ->prependFile($this->basePath('js/morris.min.js'))
-                ->prependFile($this->basePath('js/morris-data.js'))
                 ->prependFile($this->basePath('js/sb-admin-2.js'))
                 ->prependFile($this->basePath('js/bootstrap.min.js'))
                 ->prependFile($this->basePath('js/jquery.min.js'))
@@ -41,9 +35,7 @@
         ?>
 
     <body>
-
         <?php echo $this->content; ?>
-
         <?php echo $this->inlineScript() ?>
     </body>
 

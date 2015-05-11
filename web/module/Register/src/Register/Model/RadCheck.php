@@ -13,13 +13,16 @@ namespace Register\Model;
  *
  * @author hieu
  */
+use Zend\InputFilter\InputFilter;
 class RadCheck {
     protected $id;
     protected $username;
     protected $attribute;
     protected $op;
     protected $value;
-    
+    protected $inputFilter;
+
+
     public function exchangeArray($data) {
         $this->id = (isset($data['id']))?$data['id']:null;
         $this->username = (isset($data['username']))?$data['username']:null;
@@ -59,7 +62,7 @@ class RadCheck {
         return $this->value;
     }
     public function getInputFilter() {
-        if (!$this->inputFiler):
+        if (!$this->inputFilter):
             $inputFilter = new InputFilter();
             //filter for username
             $inputFilter->add(array(

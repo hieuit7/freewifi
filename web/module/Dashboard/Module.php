@@ -13,6 +13,12 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Mvc\ModuleRouteListener;
+use Zend\Db\ResultSet\ResultSet;
+use Dashboard\Model\RadCheck;
+use Dashboard\Model\RadCheckTable;
+use Register\Model\Users;
+use Zend\Db\TableGateway\TableGateway;
+
 
 class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
 
@@ -22,7 +28,6 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $this->bootstrapSession($e);
-        
     }
 
     public function bootstrapLogin(\Zend\Mvc\MvcEvent $e) {
@@ -41,8 +46,6 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
             $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_ROUTE, $stopCallBack, -10000);
             return $response;
         endif;
-        
-        
     }
 
     public function bootstrapSession($e) {
@@ -140,6 +143,39 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     Container::setDefaultManager($sessionManager);
                     return $sessionManager;
                 },
+                        '\Dashboard\Model\UsersTable' => function($sm) {
+                    $tableGateway = $sm->get('UsersTableGateway');
+                    $table = new UsersTable($tableGateway);
+                    return $table;
+                },
+                        'UsersTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Users());
+                    return new TableGateway('app_users', $dbAdapter, null, $resultSetPrototype);
+                },
+                        'Registry\Model\UsersCodeTable' => function($sm) {
+                    $tableGateway = $sm->get('UsersCodeTableGateway');
+                    $table = new UsersCodeTable($tableGateway);
+                    return $table;
+                },
+                        'UsersCodeTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resulSetPrototype = new ResultSet();
+                    $resulSetPrototype->setArrayObjectPrototype(new UsersCode());
+                    return new TableGateway('app_active_code', $dbAdapter, null, $resulSetPrototype);
+                },
+                        'Dashboard\Model\RadCheckTable' => function($sm) {
+                    $tableGateway = $sm->get('RadCheckTableGateway');
+                    $table = new RadCheckTable($tableGateway);
+                    return $table;
+                },
+                        'RadCheckTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new \Dashboard\Model\RadCheck());
+                    return new TableGateway('radcheck', $dbAdapter, null, $resultSetPrototype);
+                }
                     ),
                 );
             }

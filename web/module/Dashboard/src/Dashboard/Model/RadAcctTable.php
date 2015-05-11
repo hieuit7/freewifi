@@ -12,8 +12,10 @@
  * @author hieun_000
  */
 namespace Dashboard\Model;
+
 use Zend\Db\TableGateway\TableGateway;
 use DashBoard\Model\RadAcct;
+
 class RadAcctTable {
     protected $tableGateway;
     public function __construct(TableGateway $tableGateway) {
@@ -28,6 +30,22 @@ class RadAcctTable {
             throw new Exception('Can\'t find id '.$id);
         endif;
         return $row;        
+    }
+    public function getAccts($username,$options = array()) {
+        $wheres = array();
+        if(isset($username)):
+            $wheres[] = 'username = \''.$username.'\'';
+        endif;
+        foreach ($options as $key => $value) {
+            $wheres[] = $key .' = \''.$value.'\'';
+        };
+        $resultSet = $this->tableGateway->select($wheres);
+        $result = array();
+        while ($row = $resultSet->current()):
+            $result[] = $row;
+            $resultSet->next();
+        endwhile;
+        return $result;
     }
     public function fetchAll() {
         $resultSet = $this->tableGateway->select();

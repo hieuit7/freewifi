@@ -12,7 +12,7 @@
  * @author hieu
  */
 
-namespace Dashboard\Model\Entity;
+namespace Dashboard\Model;
 
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;

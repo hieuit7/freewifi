@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Dashboard\Model\Table;
+namespace Dashboard\Model;
 
 /**
  * Description of RadCheckTable
@@ -14,7 +14,7 @@ namespace Dashboard\Model\Table;
  * @author hieu
  */
 use Zend\Db\TableGateway\TableGateway;
-use Dashboard\Model\Entity\RadCheck;
+use Dashboard\Model\RadCheck;
 
 class RadCheckTable {
 
@@ -28,16 +28,15 @@ class RadCheckTable {
      */
     public function getChecks($name, $options = array()) {
         $wheres = array();
-        $wheres[] = 'username = ' . $name;
+        $wheres[] = 'username = \'' . $name.'\'';
         if (count($options) > 0):
             foreach ($options as $key => $value):
-                $wheres[] = $key . ' = ' . $value;
+                $wheres[] = $key . ' = \'' . $value.'\'';
             endforeach;
         endif;
-
         $resultSet = $this->tableGateway->select($wheres);
         $results = array();
-        while (($row = $resultSet->current()) !== null):
+        while (($row = $resultSet->current()) != null):
             $results[] = $row;
             $resultSet->next();
         endwhile;

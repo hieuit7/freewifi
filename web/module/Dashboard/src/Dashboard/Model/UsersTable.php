@@ -12,8 +12,9 @@
  * @author hieu
  */
 
-namespace Dashboard\Model\Table;
-use Dashboard\Model\Entity\Users;
+namespace Dashboard\Model;
+
+use Dashboard\Model\Users;
 use Zend\Db\TableGateway\TableGateway;
 
 class UsersTable {
