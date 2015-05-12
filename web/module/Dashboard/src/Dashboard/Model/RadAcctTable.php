@@ -11,33 +11,37 @@
  *
  * @author hieun_000
  */
+
 namespace Dashboard\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use DashBoard\Model\RadAcct;
 
 class RadAcctTable {
+
     protected $tableGateway;
+
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
     }
-    
+
     public function getAcct($id) {
-        $id = (string)$id;
+        $id = (string) $id;
         $resultSet = $this->tableGateway->select(array('radacctid' => $id));
         $row = $resultSet->current();
-        if(!$row):
-            throw new Exception('Can\'t find id '.$id);
+        if (!$row):
+            throw new Exception('Can\'t find id ' . $id);
         endif;
-        return $row;        
+        return $row;
     }
-    public function getAccts($username,$options = array()) {
+
+    public function getAccts($username, $options = array()) {
         $wheres = array();
-        if(isset($username)):
-            $wheres[] = 'username = \''.$username.'\'';
+        if (isset($username)):
+            $wheres[] = 'username = \'' . $username . '\'';
         endif;
         foreach ($options as $key => $value) {
-            $wheres[] = $key .' = \''.$value.'\'';
+            $wheres[] = $key . ' = \'' . $value . '\'';
         };
         $resultSet = $this->tableGateway->select($wheres);
         $result = array();
@@ -47,11 +51,17 @@ class RadAcctTable {
         endwhile;
         return $result;
     }
+
     public function fetchAll() {
         $resultSet = $this->tableGateway->select();
-        
-        
+        $result = array();
+        while ($row = $resultSet->current()):
+            $result[] = $row;
+            $resultSet->next();
+        endwhile;
+        return $result;
     }
+
     public function save(RadAcct $radacct) {
         $data = array(
             'acctsessionid' => $radacct->getradacctionid(),
@@ -79,12 +89,13 @@ class RadAcctTable {
             'frameipaddress' => $radacct->getradacctionid(),
             'nasportid' => $radacct->getradacctionid(),
         );
-        $id = (string)$radacct->getradacctionid();
-        if($id != ''):
+        $id = (string) $radacct->getradacctionid();
+        if ($id != ''):
             $this->tableGateway->update($data);
         else:
             $id = $this->tableGateway->insert($data);
         endif;
         return $id;
     }
+
 }

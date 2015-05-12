@@ -16,9 +16,10 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Db\ResultSet\ResultSet;
 use Dashboard\Model\RadCheck;
 use Dashboard\Model\RadCheckTable;
+use Dashboard\Model\RadAcct;
+use Dashboard\Model\RadAcctTable;
 use Register\Model\Users;
 use Zend\Db\TableGateway\TableGateway;
-
 
 class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
 
@@ -143,7 +144,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     Container::setDefaultManager($sessionManager);
                     return $sessionManager;
                 },
-                        '\Dashboard\Model\UsersTable' => function($sm) {
+                        'Dashboard\Model\UsersTable' => function($sm) {
                     $tableGateway = $sm->get('UsersTableGateway');
                     $table = new UsersTable($tableGateway);
                     return $table;
@@ -175,7 +176,18 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new \Dashboard\Model\RadCheck());
                     return new TableGateway('radcheck', $dbAdapter, null, $resultSetPrototype);
-                }
+                },
+                        'Dashboard\Model\RadAcctTable' => function($sm) {
+                    $tableGateway = $sm->get('RadAcctTableGateway');
+                    $table = new RadAcctTable($tableGateway);
+                    return $table;
+                },
+                        'RadAcctTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new RadAcct());
+                    return new TableGateway('radacct', $dbAdapter, null, $resultSetPrototype);
+                },
                     ),
                 );
             }
