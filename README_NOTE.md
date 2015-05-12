@@ -51,6 +51,37 @@ Phân tích hệ thống:
         - Phân quyền quản trị hệ thống dựa trên các module.
         
 ===========
+*Model process (Mô tả hoạt động)
+
+1. Quản trị hệ thống:
+Tất cả các tiến trình đều phải đăng nhập để vào quản trị.
+1.1: Quản trị thông tin dữ liệu: 
+	1.1.1: Thống kê thông tin lưu lượng sử dụng theo từng ngày,tháng.(Chỉ xem) 
+	1.1.2: Thống kê số lượng người truy cập theo ngày, theo tháng.(Chỉ xem)
+1.2: Quản trị thông tin người dùng:
+	1.2.1: Quản lý người dùng: Thêm, lưu, xóa, sửa thông tin người dùng(Có thể chỉnh sửa các module radius dang áp dụng cho người dùng)
+	1.2.2: Quản lý nhóm người dùng. Thêm, lưu, xóa, sửa thông tin nhóm người dùng(Có thể chỉnh sửa các module radius dang áp dụng cho người dùng).
+	1.2.3: Quản lý phân quyền nhóm người dùng. Thêm quyền, xóa quyền sửa quyền cho người dùng hoặc nhóm người dùng.
+1.3 Quản lý module radius: Thêm,xóa, sửa module radius (thêm đang xem xét làm như thế nào!!)
+1.4 Quản lý thanh toán:
+	1.4.1. Userpage:
+		1.4.1.1: Thanh toán: Xem trước hóa đơn, thanh toán hóa đơn.
+	1.4.2. Addminpage: 
+		1.4.2.1: Sinh hóa đơn: Tự động, bằng tay. (Thêm, sửa)
+		1.4.2.1: Thống kê hóa đơn (Xem)
+1.5 Quản lý quảng cáo: 
+	1.5.1: Quản lý:Thêm, xóa, sửa.
+	1.5.2: Thống kê.(Lượt xem,người dùng nào xem,...)
+	1.5.3: Thanh toán (trả tiền quảng cáo)
+1.6 Access
+	1.6.1: Login hệ thống:
+		1.6.1.1: Network hotspot: Đăng nhập để sử dụng internet(Xem quảng cáo để dùng free, thành viên đăng nhập để sử dụng)
+		1.6.1.2: Network Profile(Trang userpage): Đăng nhập quản trị tài khoản người dùng.
+	1.6.2: Đăng ký thành viên hệ thống.
+		1.6.2.1: Autoregister: Xem quảng cáo sẽ tự động đăng nhập.
+		1.6.2.1: Đăng ký bằng form. Nhập thống tin. Active (mail hoặc code trực tiếp thông qua hệ thống)để có thể đăng nhập vào hệ thống.
+	
+===========
 *Database system:
 
 1. Quản trị người dùng:
