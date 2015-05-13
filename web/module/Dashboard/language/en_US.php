@@ -7,5 +7,7 @@
  */
 
 return array(
-  'DASHBOARD_TITLE' => 'Dashboard',  
+  'DASHBOARD_TITLE' => 'Dashboard',
+   'USER_LOGINED' => 'User logined',
+    'BANDWIDTH_TRAFIC' => 'Bandwidth'
 );

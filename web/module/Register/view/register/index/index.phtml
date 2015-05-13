@@ -1,8 +1,13 @@
+<?php if(isset($message)):?>
+<div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+    <?php echo (isset($message))?$message:"";?>
+</div>
+<?php endif;?>
+<div class="col-md-12 col-xs-12 col-sm-12">
 <?php
 
 $form->setAttribute('action', $this->url('register', array('action' => 'index')));
 $form->prepare();
-
 echo $this->form()->openTag($form);
 ?>
 <?php foreach ($form as $key => $value): ?>
@@ -15,3 +20,4 @@ echo $this->form()->openTag($form);
     </div>
 <?php endforeach; ?>
 <?php echo $this->form()->closeTag(); ?>
+</div>

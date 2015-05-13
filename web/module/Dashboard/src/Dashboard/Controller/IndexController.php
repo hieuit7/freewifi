@@ -17,8 +17,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 
-use Dashboard\Model\RadAcctTable;
-use Dashboard\Model\Users;
+//use Dashboard\Model\RadAcctTable;
+//use Dashboard\Model\Users;
+
 
 
 class IndexController extends AbstractActionController{
@@ -33,26 +34,29 @@ class IndexController extends AbstractActionController{
         endif;
         $acct = $this->getRadAcctTable();
         
-        echo "<pre>";
-        print_r($acct->getAccts('hieu',array('acctinputoctets'=>'433166')));
-        echo "</pre>";
-        exit;
+        
         
         return new ViewModel(array(
-            'username' => $user->name,
+            
         ));
     }
-    public function flotAction(){
+    public function bandwidthstatisticAction(){
         return new ViewModel();
     }
-    public function listAction(){
+    public function userstatisticAction(){
         return new ViewModel();
     }
+    public function paymentstatisticAction(){
+        return new ViewModel();
+    }
+    
     public function getRadAcctTable() {
         if (!$this->radAcctTable):
             $sm = $this->getServiceLocator();
             $this->radAcctTable = $sm->get('Dashboard\Model\RadAcctTable');
         endif;
+        
         return $this->radAcctTable;
     }
+    
 }

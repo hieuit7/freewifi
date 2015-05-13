@@ -62,12 +62,13 @@ class RadCheckTable {
         );
         $id = (string) $radcheck->getId();
         if ($id == ''):
-            $this->tableGateway->insert($data);
+            $id = $this->tableGateway->insert($data);
         else:
             if($this->getCheck($id)):
                 $this->tableGateway->update($data, array('id' => $id));
             endif;
         endif;
+        return $id;
     }
 
 }

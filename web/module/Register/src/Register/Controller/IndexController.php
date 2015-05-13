@@ -16,11 +16,10 @@ namespace Register\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
-
-use Register\Model\Users;
-use Register\Model\UsersCode;
-use Register\Model\UsersCodeTable;
-use Register\Model\RadCheck;
+use Dashboard\Model\Users;
+use Dashboard\Model\UsersCode;
+use Dashboard\Model\UsersCodeTable;
+use Dashboard\Model\RadCheck;
 use Register\Forms\RegisterForms;
 use Zend\Session\SessionManager;
 
@@ -31,6 +30,7 @@ class IndexController extends AbstractActionController {
     protected $radCheckTable;
     protected $code;
     protected $urlLogin;
+    protected $message;
 
     public function __construct() {
         
@@ -55,27 +55,33 @@ class IndexController extends AbstractActionController {
             $form->setData($request->getPost());
             if ($form->isValid()):
                 $users->exchangeArray($form->getData());
+
                 $usersTable = $this->getUsersTable();
-                $users->setActivate(0);
-                $users->setCreated(date('Y-m-d')) ;
-                $userId = $usersTable->save($users);
-                $codeActive = new \Zend\Captcha\Dumb();
+                if (!$usersTable->find($users->getUsername())):
+                    $users->setActivate(0);
+                    $users->setCreated(date('Y-m-d'));
+                    $userId = $usersTable->save($users);
+                    $codeActive = new \Zend\Captcha\Dumb();
 
-                $data = array(
-                    'username' => $users->getUsername(),
-                    'code' => $codeActive->generate()
-                );
+                    $data = array(
+                        'username' => $users->getUsername(),
+                        'code' => $codeActive->generate()
+                    );
 
-                $codeTable = $this->getUsersCodeTable();
-                $code = new UsersCode();
-                $code->exchangeArray($data);
-                $codeTable->save($code);
-
-                return $this->redirect()->toRoute('register', array('action' => 'verify', 'id' => $userId));
+                    $codeTable = $this->getUsersCodeTable();
+                    $code = new UsersCode();
+                    $code->exchangeArray($data);
+                    $codeTable->save($code);
+                    return $this->redirect()->toRoute('register', array('action' => 'verify', 'id' => $userId));
+                else:
+                    $this->message = "User exist";
+                endif;
             endif;
         }
+        $this->layout('layout/register');
         return new ViewModel(array(
-            'form' => $form
+            'form' => $form,
+            'message' => $this->message
         ));
     }
 
@@ -84,25 +90,26 @@ class IndexController extends AbstractActionController {
     }
 
     public function verifyAction() {
-        $drad = new DRadCheck();
+        $drad = new RadCheck();
         $this->setUrlLogin('/');
         $request = $this->getRequest();
         $codeTable = $this->getUsersCodeTable();
         $radCheckTable = $this->getRadCheckTable();
-        $id = $this->params('id');
-
         $userTable = $this->getUsersTable();
+        $id = $this->params('id', 0);
         if ($id):
             $user = $userTable->getUser($id);
-        else:
-            // error message!!!
-            
-            return $this->redirect()->toRoute('register', array('action' => 'index'));
+            $code = $codeTable->getUsersCodeByName($user->getUsername());
+            if ($code->getCode() == 'active'):
+                return $this->redirect()->toUrl($this->urlLogin);
+            endif;
         endif;
         if ($request->isPost()):
             $data = $request->getPost();
+
             if (isset($data['verify']) && isset($data['username'])):
                 $code = $codeTable->getUsersCodeByName($data['username']);
+
                 if (!$code):
                     // error message!!!
                     return $this->redirect()->toRoute('register', array('action' => 'index'));
@@ -111,7 +118,10 @@ class IndexController extends AbstractActionController {
 
                 if ($code->getCode() == $data['verify']):
                     $userInsert = $userTable->find($data['username']);
-                    if ($userInsert):
+                    $radCheckTable = $this->getRadCheckTable();
+                    $userCheck = $radCheckTable->getChecks($userInsert->getUsername(), array('attribute' => 'Md5-Password'));
+                    if ($userInsert && count($userCheck) > 0):
+
                         $data = array(
                             'username' => $userInsert->getUsername(),
                             'attribute' => 'Md5-Password',
@@ -123,13 +133,17 @@ class IndexController extends AbstractActionController {
 
                         $radCheckTable = $this->getRadCheckTable();
                         $radSave = $radCheckTable->save($radData);
+
                         if ($radSave):
                             $code->setCode('active');
                             $codeTable->save($code);
                             return $this->redirect()->toUrl($this->urlLogin);
                         endif;
+                    else:
+                        $this->message = 'User exist!!';
+                        return $this->redirect()->toUrl($this->urlLogin);
                     endif;
-                    return $this->redirect()->toUrl($this->urlLogin);
+                    
                 endif;
 
             endif;
@@ -140,8 +154,11 @@ class IndexController extends AbstractActionController {
             endif;
             $data = array(
                 'username' => $user->getUsername(),
-                'code' => $code->getCode()
+                'code' => $code->getCode(),
+                'id' => $id,
+                'message' => $this->message
             );
+            $this->layout('layout/register');
             return new ViewModel($data);
         endif;
     }
@@ -153,7 +170,7 @@ class IndexController extends AbstractActionController {
     public function getUsersTable() {
         if (!$this->usersTable):
             $sm = $this->getServiceLocator();
-            $this->usersTable = $sm->get('\Dashboard\Model\Entity\UsersTable');
+            $this->usersTable = $sm->get('Dashboard\Model\UsersTable');
         endif;
         return $this->usersTable;
     }
@@ -161,7 +178,7 @@ class IndexController extends AbstractActionController {
     public function getRadCheckTable() {
         if (!$this->radCheckTable):
             $sm = $this->getServiceLocator();
-            $this->radCheckTable = $sm->get('\Dashboard\Model\Entity\RadCheckTable');
+            $this->radCheckTable = $sm->get('Dashboard\Model\RadCheckTable');
         endif;
         return $this->radCheckTable;
     }
@@ -169,9 +186,9 @@ class IndexController extends AbstractActionController {
     public function getUsersCodeTable() {
         if (!$this->usersCodeTable):
             $sm = $this->getServiceLocator();
-            $this->usersCodeTable = $sm->get('\Dashboard\Model\Entity\UsersCodeTable');
+            $this->usersCodeTable = $sm->get('Dashboard\Model\UsersCodeTable');
         endif;
         return $this->usersCodeTable;
     }
-   
+
 }

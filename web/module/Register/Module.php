@@ -31,7 +31,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
             ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    'Dashboard' => __DIR__ . '../../Dashboard/src/Dashboard',
+                    //'Dashboard' => __DIR__ . '../../Dashboard/src/Dashboard',
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                     
                     //'Model\Table' => __DIR__ . '../../Dashboard/src/Dashboard',

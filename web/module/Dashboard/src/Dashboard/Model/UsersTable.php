@@ -31,7 +31,7 @@ class UsersTable {
         $row = $rowset->current();
 
         if (!$row):
-            throw new \Exception('Can\'t find user with ' . $id);
+            return false;
         endif;
         return $row;
     }
@@ -40,7 +40,7 @@ class UsersTable {
         $rowSet = $this->tableGateway->select(array('username'=> $username));
         $row = $rowSet->current();
         if(!$row):
-            throw new Exception('Can\'t find '.$username.'!!!!');
+            return false;
         endif;
         return $row;
     }

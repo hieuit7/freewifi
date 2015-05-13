@@ -18,7 +18,10 @@ use Dashboard\Model\RadCheck;
 use Dashboard\Model\RadCheckTable;
 use Dashboard\Model\RadAcct;
 use Dashboard\Model\RadAcctTable;
-use Register\Model\Users;
+use Dashboard\Model\Users;
+use Dashboard\Model\UsersTable;
+use Dashboard\Model\UsersCode;
+use Dashboard\Model\UsersCodeTable;
 use Zend\Db\TableGateway\TableGateway;
 
 class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
@@ -31,9 +34,9 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
         $this->bootstrapSession($e);
     }
 
-    public function bootstrapLogin(\Zend\Mvc\MvcEvent $e) {
+    public function bootstrapLogin() {
+        
         $user = new Container('user');
-        //$this->bootstrapLogin($e);
         if (isset($user->name) && $user->name == 'guess'):
             $url = $e->getRouter()->assemble(array(), array('name' => 'login'));
             $response = $e->getResponse();
@@ -155,7 +158,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype->setArrayObjectPrototype(new Users());
                     return new TableGateway('app_users', $dbAdapter, null, $resultSetPrototype);
                 },
-                        'Registry\Model\UsersCodeTable' => function($sm) {
+                        'Dashboard\Model\UsersCodeTable' => function($sm) {
                     $tableGateway = $sm->get('UsersCodeTableGateway');
                     $table = new UsersCodeTable($tableGateway);
                     return $table;
@@ -174,7 +177,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                         'RadCheckTableGateway' => function($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new \Dashboard\Model\RadCheck());
+                    $resultSetPrototype->setArrayObjectPrototype(new RadCheck());
                     return new TableGateway('radcheck', $dbAdapter, null, $resultSetPrototype);
                 },
                         'Dashboard\Model\RadAcctTable' => function($sm) {

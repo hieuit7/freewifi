@@ -9,6 +9,9 @@ return array(
         'Register',
         'CsnUser',
         'Dashboard',
+        'Payment',
+        'Users',
+        'Modules'
         
         
         

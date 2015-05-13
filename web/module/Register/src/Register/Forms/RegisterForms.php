@@ -29,7 +29,7 @@ class RegisterForms extends Form {
             'name' => 'username',
             'type' => 'text',
             'options' => array(
-                'label' => 'USERNAME'
+                'label' => 'USERNAME',
             ),
             'attributes' => array(
                 'class' => 'form-control'

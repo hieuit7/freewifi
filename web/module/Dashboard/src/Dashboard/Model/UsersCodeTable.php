@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Dashboard\Model\Table;
+namespace Dashboard\Model;
 
 /**
  * Description of UsersCodeTable
@@ -28,8 +28,8 @@ class UsersCodeTable {
         $id = (string) $id;
         $rowset = $this->tableGateway->select(array('id' => $id));
         $row = $rowset->current();
-        if ($row):
-            throw new \Exception('Can\'t find ' . $id . ' in code table!!!');
+        if (!$row):
+            return false;
         endif;
         return $row;
     }
