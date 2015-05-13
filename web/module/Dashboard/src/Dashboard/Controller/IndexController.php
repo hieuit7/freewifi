@@ -33,8 +33,11 @@ class IndexController extends AbstractActionController{
             $this->redirect()->toRoute('login', array('action'=>'index','urlLogin'=>'dashboard'));
         endif;
         $acct = $this->getRadAcctTable();
-        
-        
+        $all = $acct->fetchAll();
+        $sums = array();
+        foreach ($all as $value):
+            
+        endforeach;
         
         return new ViewModel(array(
             
