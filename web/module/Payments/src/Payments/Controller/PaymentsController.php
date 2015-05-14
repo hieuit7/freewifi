@@ -11,6 +11,7 @@ namespace Payments\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 class PaymentsController extends AbstractActionController
 {
@@ -22,6 +23,12 @@ class PaymentsController extends AbstractActionController
      */
     public function indexAction()
     {
+        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->headTitle('Payments');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'payments'));
+        endif;
         // TransactionSearch
         $transactionSearch  =   new \SpeckPaypal\Request\TransactionSearch();
         $transactionSearch->setStartDate('2014-12-28T00:00:00Z');
@@ -58,9 +65,10 @@ class PaymentsController extends AbstractActionController
 
         // Set the items
         $paymentDetails->setItems([ $item ]);
-
+        
         // Create a new ExpressCheckOut
         $express = new \SpeckPaypal\Request\SetExpressCheckout(['paymentDetails' => $paymentDetails]);
+        
         $express->setReturnUrl($this->url()->fromRoute('payments-finish', [], ['force_canonical' => true]));
         $express->setCancelUrl($this->url()->fromRoute('payments-failure', [], ['force_canonical' => true]));
         
@@ -69,11 +77,14 @@ class PaymentsController extends AbstractActionController
         // Do a request
         $response = $paypalRequest->send($express);
         
-        // Check if we are using a sandbox
+        if($response->isSuccess()):
+            // Check if we are using a sandbox
         $host = ( strpos($paypalRequest->getConfig()->getEndPoint(), 'sandbox') !== false ) ? 'sandbox.paypal' : 'paypal';
 
         // Redirect to Paypal!
         return $this->redirect()->toUrl(sprintf('https://www.%s.com/cgi-bin/webscr?cmd=_express-checkout&token=%s', $host, $response->getToken()));
+        endif;
+        return new ViewModel();
     }
 
     /**

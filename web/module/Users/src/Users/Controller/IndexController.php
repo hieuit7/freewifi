@@ -35,13 +35,13 @@ class IndexController extends AbstractActionController {
     public function __construct() {
         
     }
-
+    
     public function indexAction() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('Payment');
         $user = new Container('user');
         if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
-            $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'dashboard'));
+            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'users'));
         endif;
         //do with payment
         return new ViewModel(array(

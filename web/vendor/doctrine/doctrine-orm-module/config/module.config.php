@@ -33,12 +33,11 @@ return array(
                 // connection parameters, see
                 // http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
                 'params' => array(
-                    'host'     => '127.0.0.1',
+                    'host'     => 'localhost',
                     'port'     => '3306',
-                    'user'     => 'root',
-                    'password' => '1234',
-                    'dbname'   => 'radius',
-                    'driver'      => 'pdo_sqlite',
+                    'user'     => 'username',
+                    'password' => 'password',
+                    'dbname'   => 'database',
                 )
             ),
         ),

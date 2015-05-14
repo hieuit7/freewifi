@@ -36,7 +36,6 @@ class Driver extends AbstractMySQLDriver
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-        
         try {
             $conn = new PDOConnection(
                 $this->constructPdoDsn($params),

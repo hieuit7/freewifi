@@ -1,6 +1,6 @@
 ![Logo](https://raw.githubusercontent.com/zendframework/zf2/234b554f2ca202095aea32e4fa557553f8849664/resources/ZendFramework-logo.png)
 
-# Welcome to the *Zend Framework 2.3* Release!
+# Welcome to the *Zend Framework 2.4* Release!
 
 Master:
 [![Build Status](https://secure.travis-ci.org/zendframework/zf2.svg?branch=master)](http://travis-ci.org/zendframework/zf2)
@@ -11,16 +11,20 @@ Develop:
 
 ## RELEASE INFORMATION
 
-*Zend Framework 2.3.7*
+*Zend Framework 2.4.2*
 
-This is the seventh maintenance release for the version 2.3 series.
+This is the second maintenance release in the version 2.4 series.
 
-12 Mar 2015
+11 May 2015
 
-### UPDATES IN 2.3.7
+### UPDATES IN 2.4.2
 
-- This release reverts [#7255](https://github.com/zendframework/zf2/pull/7255),
-  as it introduced a BC break against `Zend\Mvc\Controller\AbstractRestfulController`.
+This release fixes issues introduced when correcting
+[ZF2015-04](http://framework.zend.com/security/advisory/ZF2015-04), including:
+
+- [#7506](https://github.com/zendframework/zf2/pull/7506) resolves issues when UTF-8 values are used in Mail headers, particularly addresses.
+- [#7507](https://github.com/zendframework/zf2/pull/7507) ensures that array values can be used with cookies.
+- [#7514](https://github.com/zendframework/zf2/pull/7514) ensures that multipart MIME messages can be added to `Zend\Mail\Message` instances in such a way that they do not conflict with ZF2015-04.
 
 Please see [CHANGELOG.md](CHANGELOG.md).
 

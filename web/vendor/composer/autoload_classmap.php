@@ -60,5 +60,4 @@ return array(
     'SpeckPaypal\\Response\\TransactionSearchResponse' => $vendorDir . '/speckcommerce/speck-paypal/src/SpeckPaypal/Response/TransactionSearchResponse.php',
     'SpeckPaypal\\Service\\Request' => $vendorDir . '/speckcommerce/speck-paypal/src/SpeckPaypal/Service/Request.php',
     'SpeckPaypal\\ValueObject\\CountryCodes' => $vendorDir . '/speckcommerce/speck-paypal/src/SpeckPaypal/ValueObject/CountryCodes.php',
-    'ZendDeveloperTools\\Module' => $vendorDir . '/zendframework/zend-developer-tools/Module.php',
 );
