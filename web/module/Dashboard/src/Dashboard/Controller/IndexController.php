@@ -22,44 +22,63 @@ use Zend\Session\Container;
 
 
 
-class IndexController extends AbstractActionController{
+class IndexController extends AbstractActionController {
+
     //put your code here
     protected $radAcctTable;
+    protected $radPostAuthTable;
+
     public function indexAction() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('Dashboard');
         $user = new Container('user');
-        if(isset($user->name) && $user->name == 'guess' || !isset($user->name)):
-            $this->redirect()->toRoute('login', array('action'=>'index','urlLogin'=>'dashboard'));
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'dashboard'));
         endif;
         $acct = $this->getRadAcctTable();
-        $all = $acct->fetchAll();
-        $sums = array();
-        foreach ($all as $value):
-            
-        endforeach;
+        $authens = $this->getRadPostAuthTable();
+        $usersAuthen = $authens->getPostAuths('');
+        $all = $acct->getAccts('',array(),0);
+        $inputs = 0;
+        foreach ($all as $key => $value) {
+            $inputs +=$value->getacctinputoctets();
+        }
+        $sums = array('userlogged'=>$authens->count());
+        $sums['bandwidthtrafic'] = $inputs;
+        
         
         return new ViewModel(array(
-            
+            'sums' => $sums
         ));
     }
-    public function bandwidthstatisticAction(){
+
+    public function bandwidthstatisticAction() {
         return new ViewModel();
     }
-    public function userstatisticAction(){
+
+    public function userstatisticAction() {
         return new ViewModel();
     }
-    public function paymentstatisticAction(){
+
+    public function paymentstatisticAction() {
         return new ViewModel();
     }
-    
+
     public function getRadAcctTable() {
         if (!$this->radAcctTable):
             $sm = $this->getServiceLocator();
             $this->radAcctTable = $sm->get('Dashboard\Model\RadAcctTable');
         endif;
-        
+
         return $this->radAcctTable;
     }
-    
+    public function getRadPostAuthTable() {
+        if (!$this->radPostAuthTable):
+            $sm = $this->getServiceLocator();
+            $this->radPostAuthTable = $sm->get('Dashboard\Model\RadPostAuthTable');
+        endif;
+
+        return $this->radPostAuthTable;
+    }
+
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -20,22 +19,9 @@
 
 return array(
     'doctrine' => array(
-        'connection' => array(
-            // default connection name
-            'orm_default' => array(
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
-                    'host' => 'localhost',
-                    'port' => '3306',
-                    'user' => 'root',
-                    'password' => '1234',
-                    'dbname' => 'radius',
-                ),
-            ),
-        ),
         'cache' => array(
             'apc' => array(
-                'class' => 'Doctrine\Common\Cache\ApcCache',
+                'class'     => 'Doctrine\Common\Cache\ApcCache',
                 'namespace' => 'DoctrineModule',
             ),
             'array' => array(
@@ -43,38 +29,39 @@ return array(
                 'namespace' => 'DoctrineModule',
             ),
             'filesystem' => array(
-                'class' => 'Doctrine\Common\Cache\FilesystemCache',
+                'class'     => 'Doctrine\Common\Cache\FilesystemCache',
                 'directory' => 'data/DoctrineModule/cache',
                 'namespace' => 'DoctrineModule',
             ),
             'memcache' => array(
-                'class' => 'Doctrine\Common\Cache\MemcacheCache',
-                'instance' => 'my_memcache_alias',
+                'class'     => 'Doctrine\Common\Cache\MemcacheCache',
+                'instance'  => 'my_memcache_alias',
                 'namespace' => 'DoctrineModule',
             ),
             'memcached' => array(
-                'class' => 'Doctrine\Common\Cache\MemcachedCache',
-                'instance' => 'my_memcached_alias',
+                'class'     => 'Doctrine\Common\Cache\MemcachedCache',
+                'instance'  => 'my_memcached_alias',
                 'namespace' => 'DoctrineModule',
             ),
             'redis' => array(
-                'class' => 'Doctrine\Common\Cache\RedisCache',
-                'instance' => 'my_redis_alias',
+                'class'     => 'Doctrine\Common\Cache\RedisCache',
+                'instance'  => 'my_redis_alias',
                 'namespace' => 'DoctrineModule',
             ),
             'wincache' => array(
-                'class' => 'Doctrine\Common\Cache\WinCacheCache',
+                'class'     => 'Doctrine\Common\Cache\WinCacheCache',
                 'namespace' => 'DoctrineModule',
             ),
             'xcache' => array(
-                'class' => 'Doctrine\Common\Cache\XcacheCache',
+                'class'     => 'Doctrine\Common\Cache\XcacheCache',
                 'namespace' => 'DoctrineModule',
             ),
             'zenddata' => array(
-                'class' => 'Doctrine\Common\Cache\ZendDataCache',
+                'class'     => 'Doctrine\Common\Cache\ZendDataCache',
                 'namespace' => 'DoctrineModule',
             ),
         ),
+
         //These authentication settings are a hack to tide things over until version 1.0
         //Normall doctrineModule should have no mention of odm or orm
         'authentication' => array(
@@ -95,16 +82,18 @@ return array(
             'orm_default' => true,
         )
     ),
+
     // Factory mappings - used to define which factory to use to instantiate a particular doctrine
     // service type
     'doctrine_factories' => array(
-        'cache' => 'DoctrineModule\Service\CacheFactory',
-        'eventmanager' => 'DoctrineModule\Service\EventManagerFactory',
-        'driver' => 'DoctrineModule\Service\DriverFactory',
+        'cache'                 => 'DoctrineModule\Service\CacheFactory',
+        'eventmanager'          => 'DoctrineModule\Service\EventManagerFactory',
+        'driver'                => 'DoctrineModule\Service\DriverFactory',
         'authenticationadapter' => 'DoctrineModule\Service\Authentication\AdapterFactory',
         'authenticationstorage' => 'DoctrineModule\Service\Authentication\StorageFactory',
         'authenticationservice' => 'DoctrineModule\Service\Authentication\AuthenticationServiceFactory',
     ),
+
     'service_manager' => array(
         'invokables' => array(
             'DoctrineModule\Authentication\Storage\Session' => 'Zend\Authentication\Storage\Session'
@@ -116,16 +105,19 @@ return array(
             'DoctrineModule' => 'DoctrineModule\ServiceFactory\AbstractDoctrineServiceFactory',
         ),
     ),
+
     'controllers' => array(
         'factories' => array(
             'DoctrineModule\Controller\Cli' => 'DoctrineModule\Service\CliControllerFactory'
         )
     ),
+
     'route_manager' => array(
         'factories' => array(
             'symfony_cli' => 'DoctrineModule\Service\SymfonyCliRouteFactory',
         ),
     ),
+
     'console' => array(
         'router' => array(
             'routes' => array(

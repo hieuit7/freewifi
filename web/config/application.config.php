@@ -9,9 +9,11 @@ return array(
         'Register',
         //'CsnUser',
         'Dashboard',
-        'Payment',
+        'Payments',
         'Users',
-        'Modules'
+        'Modules',
+        'SpeckPaypal'
+        
         
         
         

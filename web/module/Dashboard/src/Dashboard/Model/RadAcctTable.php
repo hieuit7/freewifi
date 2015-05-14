@@ -15,6 +15,7 @@
 namespace Dashboard\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Select;
 use DashBoard\Model\RadAcct;
 
 class RadAcctTable {
@@ -35,16 +36,20 @@ class RadAcctTable {
         return $row;
     }
 
-    public function getAccts($username, $options = array()) {
-        $wheres = array();
-        if (isset($username)):
-            $wheres[] = 'username = \'' . $username . '\'';
+    public function getAccts($username, $wheres = array(),$limit = null) {
+        $select  = new Select('radacct');
+        if (isset($username) && $username !== ''):
+            $select->where(array('username' =>  $username));
         endif;
-        foreach ($options as $key => $value) {
-            $wheres[] = $key . ' = \'' . $value . '\'';
-        };
-        $resultSet = $this->tableGateway->select($wheres);
+        if($wheres):
+            $select->where($wheres);
+        endif;
+        if($limit):
+            $select->limit($limit);
+        endif;
+        $resultSet = $this->tableGateway->selectWith($select);
         $result = array();
+        
         while ($row = $resultSet->current()):
             $result[] = $row;
             $resultSet->next();

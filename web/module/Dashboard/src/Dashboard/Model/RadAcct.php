@@ -67,8 +67,8 @@ class RadAcct {
         
     }
     
-    public function getradacctionid() {
-        return $this->radacctionid;
+    public function getradacctid() {
+        return $this->radacctid;
     }
     public function getacctsessionid() {
         return $this->acctsessionid;

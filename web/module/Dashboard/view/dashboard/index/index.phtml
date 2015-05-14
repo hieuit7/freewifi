@@ -14,14 +14,14 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo (isset($sums['userlogged']))?$sums['userlogged']:'0';?></div>
-                        <div><?php echo $this->translate('USER_LOGINED');?></div>
+                        <div class="huge"><?php echo (isset($sums['userlogged'])) ? $sums['userlogged'] : '0'; ?></div>
+                        <div><?php echo $this->translate('USER_LOGINED'); ?></div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo $this->url('dashboard',array('action'=>'userstatistic'));?>">
+            <a href="<?php echo $this->url('dashboard', array('action' => 'userstatistic')); ?>">
                 <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW');?></span>
+                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -36,14 +36,23 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo (isset($sums['bandwidthtrafic']))?$sums['bandwidthtrafic']:'0';?></div>
-                        <div><?php echo $this->translate('BANDWIDTH_TRAFIC');?></div>
+                        <div class="huge"><?php
+                            $unit = array('B','Kb','Mb','Gb','Tb');
+                            $i = 0;
+                            $bw = (isset($sums['bandwidthtrafic'])) ? $sums['bandwidthtrafic'] : '0';
+                            while($bw - 100 >= 0):
+                                $i++;
+                                $bw /= 1024;
+                            endwhile;
+                            echo round($bw,2).' '.$unit[$i];
+                            ?></div>
+                        <div><?php echo $this->translate('BANDWIDTH_TRAFIC'); ?></div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo $this->url('dashboard',array('action'=>'bandwidthstatistic'));?>">
+            <a href="<?php echo $this->url('dashboard', array('action' => 'bandwidthstatistic')); ?>">
                 <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW');?></span>
+                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -58,14 +67,14 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo (isset($sums['payment']))?$sums['payment']:'0';?></div>
-                        <div><?php echo $this->translate('PAYMENT');?></div>
+                        <div class="huge"><?php echo (isset($sums['payment'])) ? $sums['payment'] : '0'; ?></div>
+                        <div><?php echo $this->translate('PAYMENT'); ?></div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo $this->url('dashboard',array('action'=>'paymentstatistic'));?>">
+            <a href="<?php echo $this->url('dashboard', array('action' => 'paymentstatistic')); ?>">
                 <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW');?></span>
+                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -80,14 +89,14 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo (isset($sums['freeuserlogged']))?$sums['freeuserlogged']:'0';?></div>
-                        <div><?php echo $this->translate('FREE_USER_LOGINED');?></div>
+                        <div class="huge"><?php echo (isset($sums['freeuserlogged'])) ? $sums['freeuserlogged'] : '0'; ?></div>
+                        <div><?php echo $this->translate('FREE_USER_LOGINED'); ?></div>
                     </div>
                 </div>
             </div>
-            <a href="<?php echo $this->url('dashboard',array('action'=>'userstatistic'));?>">
+            <a href="<?php echo $this->url('dashboard', array('action' => 'userstatistic')); ?>">
                 <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW');?></span>
+                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
                 </div>
@@ -230,14 +239,14 @@
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->
-       
+
         <!-- /.panel -->
     </div>
     <!-- /.col-lg-8 -->
     <div class="col-lg-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-bell fa-fw"></i> <?php echo $this->translate('EVENT_SYSTEM');?>
+                <i class="fa fa-bell fa-fw"></i> <?php echo $this->translate('EVENT_SYSTEM'); ?>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -305,7 +314,7 @@
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->
-       
+
         <!-- /.panel .chat-panel -->
     </div>
     <!-- /.col-lg-4 -->

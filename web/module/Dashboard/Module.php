@@ -18,6 +18,8 @@ use Dashboard\Model\RadCheck;
 use Dashboard\Model\RadCheckTable;
 use Dashboard\Model\RadAcct;
 use Dashboard\Model\RadAcctTable;
+use Dashboard\Model\RadPostAuth;
+use Dashboard\Model\RadPostAuthTable;
 use Dashboard\Model\Users;
 use Dashboard\Model\UsersTable;
 use Dashboard\Model\UsersCode;
@@ -190,6 +192,18 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new RadAcct());
                     return new TableGateway('radacct', $dbAdapter, null, $resultSetPrototype);
+                },
+                        
+                        'Dashboard\Model\RadPostAuthTable' => function($sm) {
+                    $tableGateway = $sm->get('RadPostAuthTableGateway');
+                    $table = new RadPostAuthTable($tableGateway);
+                    return $table;
+                },
+                        'RadPostAuthTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new RadPostAuth());
+                    return new TableGateway('radpostauth', $dbAdapter, null, $resultSetPrototype);
                 },
                     ),
                 );
