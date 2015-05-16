@@ -34,7 +34,6 @@ class IndexController extends AbstractActionController {
         
         
         if (isset($user->name) && $user->name != 'guess'):
-
             $this->redirect()->toRoute($routedUrl);
         endif;
 

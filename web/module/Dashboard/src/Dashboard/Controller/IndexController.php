@@ -38,15 +38,15 @@ class IndexController extends AbstractActionController {
         $acct = $this->getRadAcctTable();
         $authens = $this->getRadPostAuthTable();
         $usersAuthen = $authens->getPostAuths('');
-        $all = $acct->getAccts('',array(),0);
+        $all = $acct->getAccts('', array(), 0);
         $inputs = 0;
         foreach ($all as $key => $value) {
             $inputs +=$value->getacctinputoctets();
         }
-        $sums = array('userlogged'=>$authens->count());
+        $sums = array('userlogged' => $authens->count());
         $sums['bandwidthtrafic'] = $inputs;
-        
-        
+
+
         return new ViewModel(array(
             'sums' => $sums
         ));
@@ -61,7 +61,21 @@ class IndexController extends AbstractActionController {
     }
 
     public function paymentstatisticAction() {
-        return new ViewModel();
+        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->headTitle('Payments');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'payments'));
+        endif;
+        $transactionSearch = new \SpeckPaypal\Request\TransactionSearch();
+        $transactionSearch->setStartDate('2014-12-28T00:00:00Z');
+
+
+        $paypalRequest = $this->getServiceLocator()->get('SpeckPaypal\Service\Request');
+        $response = $paypalRequest->send($transactionSearch);
+        return new ViewModel(array(
+            'transactions' => $response->getResults()
+        ));
     }
 
     public function getRadAcctTable() {
@@ -72,6 +86,7 @@ class IndexController extends AbstractActionController {
 
         return $this->radAcctTable;
     }
+
     public function getRadPostAuthTable() {
         if (!$this->radPostAuthTable):
             $sm = $this->getServiceLocator();

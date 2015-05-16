@@ -39,6 +39,21 @@ return array(
                     ),
                 ),
             ),
+            'user-action' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/users[/:action]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Users\Controller',
+                        'controller' => 'Users\Controller\Index',
+                        'action' => 'index',
+                    ),
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(

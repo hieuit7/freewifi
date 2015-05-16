@@ -38,7 +38,7 @@ class PaymentsModel
 
         $payment = $this->payment[$id];
 
-        $item = new \SpeckPaypal\Element\PaymentItem;
+        $item = new \SpeckPaypal\Element\PaymentItem();
         $item->setName($payment['name']);
         $item->setDesc($payment['desc']);
         $item->setAmt($payment['amt']);

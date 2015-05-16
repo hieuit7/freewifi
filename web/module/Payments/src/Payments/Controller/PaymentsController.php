@@ -36,10 +36,9 @@ class PaymentsController extends AbstractActionController
 
         $paypalRequest      =   $this->getServiceLocator()->get('SpeckPaypal\Service\Request');
         $response           =   $paypalRequest->send($transactionSearch);
-
-        return new ViewModel([
+        return new ViewModel(array(
             'transactions'  =>  $response->getResults()
-        ]);
+        ));
     }
 
     /**

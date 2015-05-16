@@ -47,7 +47,12 @@ class UsersTable {
 
     public function fetchAll() {
         $resultSet = $this->tableGateway->select();
-        return $resultSet;
+        $result = array();
+        while ($row = $resultSet->current()):
+            $result[] = $row;
+            $resultSet->next();
+        endwhile;
+        return $result;
     }
 
     public function save(Users $users) {

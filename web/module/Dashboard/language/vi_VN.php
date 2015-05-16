@@ -13,5 +13,13 @@ return array(
     'DETAIL_VIEW' => 'Xem chi tiết',
     'FREE_USER_LOGINED' => 'Người dùng vãng lai',
     'PAYMENT' => 'Thanh toán',
-    'EVENT_SYSTEM' => 'Thông tin hệ thống'
+    'EVENT_SYSTEM' => 'Thông tin hệ thống',
+    'MENU_ADD_TITLE' => "Thêm",
+    'MENU_EDIT_TITLE' => 'Sửa',
+    'MENU_DELETE_TITLE' => 'Xóa',
+    'TABLE_HEAD_ID' => 'Mã người dùng',
+    'TABLE_HEAD_USERNAME' => 'Tên người dùng',
+    'TABLE_HEAD_EMAIL' => 'Email người dùng',
+    'TABLE_HEAD_STATUS' => 'Trạng thái',
+    'TABLE_HEAD_CREATED' => 'Ngày tạo',
 );

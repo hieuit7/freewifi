@@ -1,0 +1,23 @@
+<?php if(isset($message)):?>
+<div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+    <?php echo (isset($message))?$message:"";?>
+</div>
+<?php endif;?>
+<div class="col-md-12 col-xs-12 col-sm-12">
+<?php
+
+$form->setAttribute('action', $this->url('user-action', array('action' => 'add')));
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<?php foreach ($form as $key => $value): ?>
+    <div class="row">
+<!--        <div class="col-sm-2 col-md-3 col-xs-1"></div>
+        <div class="col-sm-8 col-md-6 col-xs-10">-->
+            <?php echo $this->formRow($value); ?>
+<!--        </div>
+        <div class="col-sm-2 col-md-3 col-xs-1"></div>-->
+    </div>
+<?php endforeach; ?>
+<?php echo $this->form()->closeTag(); ?>
+</div>
