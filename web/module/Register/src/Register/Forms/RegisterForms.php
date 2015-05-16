@@ -32,9 +32,12 @@ class RegisterForms extends Form {
                 'label' => 'USERNAME',
             ),
             'attributes' => array(
-                'class' => 'form-control'
-            )
+                'class' => 'form-control',
+                'label' => 'USERNAME',
+            ),
+            'label' => 'USERNAME',
         ));
+        
         //fullname 
         $this->add(array(
             'name' => 'fullname',
@@ -44,7 +47,8 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control'
-            )
+            ),
+            'label' => 'USERNAME',
         ));
         //password
         $this->add(array(
@@ -55,7 +59,8 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control'
-            )
+            ),
+            'label' => 'USERNAME'
         ));
         //retype
         $this->add(array(
@@ -66,7 +71,8 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control'
-            )
+            ),
+            'label' => 'USERNAME',
         ));
         //email
         $this->add(array(
@@ -77,7 +83,8 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control'
-            )
+            ),
+            'label' => 'USERNAME',
         ));
         //building
         $this->add(array(
@@ -92,7 +99,7 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control',
-            )
+            ),'label' => 'USERNAME',
         ));
         //room
         $this->add(array(
@@ -103,7 +110,7 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control'
-            )
+            ),'label' => 'USERNAME',
         ));
         //fone
         $this->add(array(
@@ -114,17 +121,19 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control'
-            )
+            ),
+            'label' => 'USERNAME',
         ));
         //capcha
-//        $this->add(array(
-//            'type' => 'Zend\Form\Element\Captcha',
-//            'name' => 'captcha',
-//            'options' => array(
-//                'label' => 'Please verify you are human',
-//                'captcha' => new \Zend\Captcha\Dumb()
-//            )
-//        ));
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Captcha',
+            'name' => 'captcha',
+            'options' => array(
+                'label' => 'Please verify you are human',
+                'captcha' => new \Zend\Captcha\Dumb()
+            ),
+            'label' => 'USERNAME',
+        ));
         //submit
         $this->add(array(
             'type' => 'submit',
