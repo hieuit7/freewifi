@@ -31,3 +31,13 @@ CREATE TABLE `app_product_categories`(
     `created` datetime,
     `created_by` int
 );
+CREATE TABLE `app_modules`(
+	`Id` int not null auto_increment primary key,
+    `name` varchar(100),
+    `descrition` text,
+    `attribute` varchar(255),
+    `status` tinyint,
+    `created` datetime,
+    `created_by` int
+);
+

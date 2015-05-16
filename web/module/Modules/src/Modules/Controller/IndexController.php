@@ -20,14 +20,16 @@ use Dashboard\Model\Users;
 use Dashboard\Model\UsersCode;
 use Dashboard\Model\UsersCodeTable;
 use Dashboard\Model\RadCheck;
-use Register\Forms\RegisterForms;
+use Modules\Forms\ModulesForms;
 use Zend\Session\SessionManager;
+
 
 class IndexController extends AbstractActionController {
 
     protected $usersTable;
     protected $usersCodeTable;
     protected $radCheckTable;
+    protected $appModuleTable;
     protected $code;
     protected $urlLogin;
     protected $message;
@@ -38,19 +40,57 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->headTitle('Payment');
+        $renderer->headTitle('MODULE_TITLE');
         $user = new Container('user');
         if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
             $this->redirect()->toRoute('login', array('action' => 'login','urlLogin' => 'modules'));
         endif;
-        //do with payment
+        $modules = $this->getAppModuleTable();
+        $items = $modules->fetchAll();
+        
+        
+        $route = 'modules';
         return new ViewModel(array(
-            'message' => $this->message
+            'message' => $this->message,
+            'buttons' => array(
+                'add' => array(
+                    'route' => $route,
+                    'action' => 'add'
+                ),
+                'edit' => array(
+                    'route' => $route,
+                    'action' => 'edit'
+                ),
+                'delete' => array(
+                    'route' => $route,
+                    'action' => 'delete'
+                )
+            ),
+            'items' => $items
         ));
     }
 
     public function addAction() {
-        return new ViewModel();
+        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->headTitle('MODULE_ADD_TITLE');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'login','urlLogin' => 'modules'));
+        endif;
+        $form = new ModulesForms();
+        
+        
+        $request = $this->getRequest();
+        
+        if($request->isPost()):
+            $data = $request->getPost();
+            
+        endif;
+        
+        
+        return new ViewModel(array(
+            'form' => $form
+        ));
     }
 
     public function getUsersTable() {
@@ -75,6 +115,14 @@ class IndexController extends AbstractActionController {
             $this->usersCodeTable = $sm->get('Dashboard\Model\UsersCodeTable');
         endif;
         return $this->usersCodeTable;
+    }
+    
+    public function getAppModuleTable() {
+        if (!$this->appModuleTable):
+            $sm = $this->getServiceLocator();
+            $this->appModuleTable = $sm->get('Dashboard\Model\AppModuleTable');
+        endif;
+        return $this->appModuleTable;
     }
 
 }

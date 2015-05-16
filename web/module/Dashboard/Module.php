@@ -24,7 +24,10 @@ use Dashboard\Model\Users;
 use Dashboard\Model\UsersTable;
 use Dashboard\Model\UsersCode;
 use Dashboard\Model\UsersCodeTable;
+use Dashboard\Model\AppModule;
+use Dashboard\Model\AppModuleTable;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Validator\AbstractValidator;
 
 class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
 
@@ -34,10 +37,23 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $this->bootstrapSession($e);
+        $this->onBootstrapTranslateForm($e);
+    }
+
+    public function onBootstrapTranslateForm($event) {
+        $application = $event->getApplication();
+        $serviceManager = $application->getServiceManager();
+        $translator = $serviceManager->get('translator');
+        // for validation
+        AbstractValidator::setDefaultTranslator($translator, 'formvalidation');
+        // for form element label and value
+        $serviceManager->get('ViewHelperManager')
+                ->get('formrow')
+                ->setTranslatorTextDomain('formtranslate');
     }
 
     public function bootstrapLogin() {
-        
+
         $user = new Container('user');
         if (isset($user->name) && $user->name == 'guess'):
             $url = $e->getRouter()->assemble(array(), array('name' => 'login'));
@@ -193,7 +209,6 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype->setArrayObjectPrototype(new RadAcct());
                     return new TableGateway('radacct', $dbAdapter, null, $resultSetPrototype);
                 },
-                        
                         'Dashboard\Model\RadPostAuthTable' => function($sm) {
                     $tableGateway = $sm->get('RadPostAuthTableGateway');
                     $table = new RadPostAuthTable($tableGateway);
@@ -204,6 +219,17 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new RadPostAuth());
                     return new TableGateway('radpostauth', $dbAdapter, null, $resultSetPrototype);
+                },
+                        'Dashboard\Model\AppModuleTable' => function($sm) {
+                    $tableGateway = $sm->get('AppModuleTableGateway');
+                    $table = new AppModuleTable($tableGateway);
+                    return $table;
+                },
+                        'AppModuleTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new AppModule());
+                    return new TableGateway('app_modules', $dbAdapter, null, $resultSetPrototype);
                 },
                     ),
                 );

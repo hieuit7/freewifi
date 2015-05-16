@@ -58,6 +58,12 @@ return array(
                 'base_dir' => __DIR__ . '/../language',
                 'pattern' => '%s.php',
             ),
+            array(
+                'type' => 'phpArray',
+                'base_dir' => __DIR__ . '/../language',
+                'pattern' => '%s.php',
+                'textdomain' =>'formtranslate'
+            ),
         ),
     ),
     'controllers' => array(

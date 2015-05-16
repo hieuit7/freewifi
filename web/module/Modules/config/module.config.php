@@ -51,7 +51,7 @@ return array(
         ),
     ),
     'translator' => array(
-        'locale' => 'en_US',
+        'locale' => 'vi_VN',
         'translation_file_patterns' => array(
             array(
                 'type' => 'phpArray',

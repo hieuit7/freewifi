@@ -1,48 +1,78 @@
-<div class="clearfix" style="height:30px"></div>
-<button type="button" class="btn btn-warning">Quản lý theo thời gian sử dụng</button>
-<div class="clearfix" style="height:30px"></div>
-<div class="container-fluid text-center">
-    <div class="row" style="background:rgba(102,153,51,1); color:#eee;">
-      <div class="col-md-1 table-bordered" style="padding:10px 0">STT</div>
-      <div class="col-md-6 table-bordered" style="padding:10px 0">Tên Module</div>
-      <div class="col-md-5 table-bordered" style="padding:10px 0">Hành động</div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 table-bordered" style="height:30px; line-height:30px">1</div>
-      <div class="col-md-6 table-bordered" style="height:30px; line-height:30px">Quản lý theo thời gian sử dụng</div>
-      <div class="col-md-5 table-bordered" style="height:30px">
-      	<a href="listnguoidung.html"><button type="button" class="btn btn-info btn-xs ">List Người Dùng</button></a>
-        <button type="button" id="add" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Thêm User</button>
-        <div class="clearfix"></div>
-      </div>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="pull-right">
+            <?php echo $this->partial('partials/shared/menuaction.phtml', array('buttons' => $buttons)); ?>
+        </div>
     </div>
 </div>
+<div class="container-fluid text-center">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td class="col-md-1 col-xs-12">
+                    <?php echo $this->translate('ID'); ?>
+                </td>
+                <td class="col-md-6 col-xs-12">
+                    <?php echo $this->translate('MUDOLE_NAME_TITLE'); ?>
+                </td>
+                <td class="col-md-5 col-xs-12">
+                    <?php echo $this->translate('MODULE_ACTION_TITLE'); ?>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($items): ?>
+                <?php foreach ($items as $item): ?>
+                <td class="col-md-1 col-xs-12">
+                    <?php echo $item['id']; ?>
+                </td>
+                <td class="col-md-6 col-xs-12">
+                    <?php echo $item['name'] ?>
+                </td>
+                <td class="col-md-5 col-xs-12">
+                    <a href="listnguoidung.html"><button type="button" class="btn btn-info btn-xs ">List Người Dùng</button></a>
+                    <button type="button" id="add" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Thêm User</button>
+                    <div class="clearfix"></div>
+                </td>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="3" class="alert alert-danger">
+                    <?php echo $this->translate("NO_RESULT"); ?>
+                </td>
+
+            </tr>
+
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Thêm Người Dùng</h4>
-      </div>
-      <div class="modal-body">
-		<form class="form-horizontal">
-        	<div class="form-group">
-                <label for="username" class="col-md-2 control-label">Username</label>
-                <div class="col-md-8">
-                    <input type="text" id='username' name='username' placeholder="Username ..." class='form-control'>
-                </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Thêm Người Dùng</h4>
             </div>
-            <div class="form-group">
-                <label for="email" class="col-md-2 control-label">Email</label>
-                <div class="col-md-8">
-                    <input type="email" id='email' name='email' placeholder="Email ..." class='form-control'>
-                </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="username" class="col-md-2 control-label">Username</label>
+                        <div class="col-md-8">
+                            <input type="text" id='username' name='username' placeholder="Username ..." class='form-control'>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-md-2 control-label">Email</label>
+                        <div class="col-md-8">
+                            <input type="email" id='email' name='email' placeholder="Email ..." class='form-control'>
+                        </div>
+                    </div>
+                </form>
             </div>
-         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary">Thêm</button>
-      </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary">Thêm</button>
+            </div>
+        </div>
     </div>
-  </div>
