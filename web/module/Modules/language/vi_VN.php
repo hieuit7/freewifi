@@ -23,5 +23,7 @@ return array(
     'MODULE_STATUS_OFF' => 'Tắt',
     'MODULE_STATUS' => 'Trạng thái',
     'MODULE_DESCRIPTION_TITLE' => 'Mo ta',
-    'MODULE_ADD_TITLE' => 'Them module'
+    'MODULE_ADD_TITLE' => 'Them module',
+    'MODULE_ADD_BUTTON_TITLE' => 'Thêm',
+    'MODULE_CANCLE_BUTTON_TITLE' => 'Hủy'
 );

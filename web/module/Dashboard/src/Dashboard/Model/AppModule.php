@@ -68,7 +68,7 @@ class AppModule implements InputFilterAwareInterface {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->name = (isset($data['name'])) ? $data['name'] : null;
         $this->attribute = (isset($data['attribute'])) ? $data['attribute'] : null;
-        $this->description = (isset($data['password'])) ? $data['password'] : null;
+        $this->description = (isset($data['description'])) ? $data['description'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
         $this->created = (isset($data['created'])) ? $data['created'] : null;
         $this->created_by = (isset($data['created_by'])) ? $data['created_by'] : null;

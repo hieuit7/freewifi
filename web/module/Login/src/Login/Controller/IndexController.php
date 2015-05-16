@@ -24,15 +24,14 @@ use Dashboard\Model\RadCheckTable;
 class IndexController extends AbstractActionController {
 
     protected $radCheckTable;
-    
-    
+
     public function indexAction() {
 
         $routedUrl = $this->params('urlLogin');
         $user = new Container('user');
         $form = new LoginForms();
-        
-        
+
+
         if (isset($user->name) && $user->name != 'guess'):
             $this->redirect()->toRoute($routedUrl);
         endif;
@@ -46,15 +45,19 @@ class IndexController extends AbstractActionController {
 
             if ($form->isValid()):
                 $data = $form->getData();
-                
+
                 $radCheckTable = $this->getRadCheckTable();
 
                 $result = $radCheckTable->getChecks($data['username'], array('attribute' => 'Md5-Password', 'value' => md5($data['password'])));
                 if ($result && count($result) > 0):
                     $radCheck = (isset($result[0]) ? $result[0] : new \Dashboard\Model\RadCheck());
                     if (($radCheck->getUsername() == $data['username'])):
+                        $appUserTable = $this->getAppUsers();
                         $user->name = $radCheck->getUsername();
-
+                        $appUser = $appUserTable->find($user->name);
+                        if($appUser):
+                            $user->id = $appUser->getId();
+                        endif;
                         $this->redirect()->toRoute($routedUrl);
                     endif;
                 endif;
@@ -84,6 +87,12 @@ class IndexController extends AbstractActionController {
             $this->radCheckTable = $sm->get('Dashboard\Model\RadCheckTable');
         endif;
         return $this->radCheckTable;
+    }
+
+    public function getAppUsers() {
+        $sm = $this->getServiceLocator();
+        $appUsersTable = $sm->get('Dashboard\Model\UsersTable');
+        return $appUsersTable;
     }
 
 }

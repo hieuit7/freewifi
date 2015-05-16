@@ -42,17 +42,16 @@ class ModulesForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Username'
+                'placeholder' => 'MODULE_ATRRIBUTE'
             )
         ));
         $this->add(array(
             'type' => 'Zend\Form\Element\Radio',
-            'name' => 'gender',
+            'name' => 'status',
             'options' => array(
-                'label' => 'What is your gender ?',
                 'value_options' => array(
-                    '0' => 'Female',
-                    '1' => 'Male',
+                    '0' => 'MODULE_STATUS_ON',
+                    '1' => 'MODULE_STATUS_OFF',
                 ),
             ),
         ));
@@ -63,7 +62,7 @@ class ModulesForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Username'
+                'placeholder' => 'MODULE_DESCRIPTION_TITLE'
             )
         ));
     }

@@ -23,27 +23,29 @@
         <tbody>
             <?php if ($items): ?>
                 <?php foreach ($items as $item): ?>
-                <td class="col-md-1 col-xs-12">
-                    <?php echo $item['id']; ?>
-                </td>
-                <td class="col-md-6 col-xs-12">
-                    <?php echo $item['name'] ?>
-                </td>
-                <td class="col-md-5 col-xs-12">
-                    <a href="listnguoidung.html"><button type="button" class="btn btn-info btn-xs ">List Người Dùng</button></a>
-                    <button type="button" id="add" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Thêm User</button>
-                    <div class="clearfix"></div>
-                </td>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="3" class="alert alert-danger">
-                    <?php echo $this->translate("NO_RESULT"); ?>
-                </td>
+                    <tr>
+                        <td class="col-md-1 col-xs-12">
+                            <?php echo $item->getId(); ?>
+                        </td>
+                        <td class="col-md-6 col-xs-12">
+                            <?php echo $item->getName(); ?>
+                        </td>
+                        <td class="col-md-5 col-xs-12">
+                            <a href="listnguoidung.html"><button type="button" class="btn btn-info btn-xs ">List Người Dùng</button></a>
+                            <button type="button" id="add" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Thêm User</button>
+                            <div class="clearfix"></div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="3" class="alert alert-danger">
+                        <?php echo $this->translate("NO_RESULT"); ?>
+                    </td>
 
-            </tr>
+                </tr>
 
-        <?php endif; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

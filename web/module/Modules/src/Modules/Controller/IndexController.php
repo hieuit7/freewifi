@@ -20,6 +20,8 @@ use Dashboard\Model\Users;
 use Dashboard\Model\UsersCode;
 use Dashboard\Model\UsersCodeTable;
 use Dashboard\Model\RadCheck;
+use Dashboard\Model\AppModule;
+use Dashboard\Model\AppModuleTable;
 use Modules\Forms\ModulesForms;
 use Zend\Session\SessionManager;
 
@@ -33,6 +35,7 @@ class IndexController extends AbstractActionController {
     protected $code;
     protected $urlLogin;
     protected $message;
+    protected $user;
 
     public function __construct() {
         
@@ -45,9 +48,13 @@ class IndexController extends AbstractActionController {
         if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
             $this->redirect()->toRoute('login', array('action' => 'login','urlLogin' => 'modules'));
         endif;
+        
         $modules = $this->getAppModuleTable();
         $items = $modules->fetchAll();
-        
+//        echo "<pre>";
+//        print_r($items);
+//        echo "</pre>";
+//        exit();
         
         $route = 'modules';
         return new ViewModel(array(
@@ -77,13 +84,26 @@ class IndexController extends AbstractActionController {
         if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
             $this->redirect()->toRoute('login', array('action' => 'login','urlLogin' => 'modules'));
         endif;
+        $this->user = $user;
         $form = new ModulesForms();
         
         
         $request = $this->getRequest();
         
         if($request->isPost()):
-            $data = $request->getPost();
+            
+            $form->setData($request->getPost());
+            if($form->isValid()):
+                $module = new AppModule();
+                $module->exchangeArray($form->getData());
+                $module->setCreated(date('Y-m-d H:m:s'));
+                $module->setCreatedBy($this->user->id);
+                $moduleTable = $this->getAppModuleTable();
+                $id = $moduleTable->save($module);               
+                if($id):
+                    $this->redirect()->toRoute('modules');
+                endif;
+            endif;
             
         endif;
         
