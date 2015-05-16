@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quản Lý Module</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="clearfix" style="height:30px"></div>
+<button type="button" class="btn btn-warning">Quản lý theo thời gian sử dụng</button>
+<div class="clearfix" style="height:30px"></div>
+<div class="container-fluid text-center">
+    <div class="row" style="background:rgba(102,153,51,1); color:#eee;">
+      <div class="col-md-1 table-bordered" style="padding:10px 0">STT</div>
+      <div class="col-md-6 table-bordered" style="padding:10px 0">Tên Module</div>
+      <div class="col-md-5 table-bordered" style="padding:10px 0">Hành động</div>
+    </div>
+    <div class="row">
+      <div class="col-md-1 table-bordered" style="height:30px; line-height:30px">1</div>
+      <div class="col-md-6 table-bordered" style="height:30px; line-height:30px">Quản lý theo thời gian sử dụng</div>
+      <div class="col-md-5 table-bordered" style="height:30px">
+      	<a href="listnguoidung.html"><button type="button" class="btn btn-info btn-xs ">List Người Dùng</button></a>
+        <button type="button" id="add" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Thêm User</button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Thêm Người Dùng</h4>
+      </div>
+      <div class="modal-body">
+		<form class="form-horizontal">
+        	<div class="form-group">
+                <label for="username" class="col-md-2 control-label">Username</label>
+                <div class="col-md-8">
+                    <input type="text" id='username' name='username' placeholder="Username ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">Email</label>
+                <div class="col-md-8">
+                    <input type="email" id='email' name='email' placeholder="Email ..." class='form-control'>
+                </div>
+            </div>
+         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary">Thêm</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
