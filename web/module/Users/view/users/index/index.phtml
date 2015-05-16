@@ -45,8 +45,14 @@
                         <td>
                             <?php echo $value->getEmail(); ?>
                         </td> 
-                        <td>
-                            <?php echo $value->getActivate(); ?>
+                        <td class="link">
+                            
+                            <?php if($value->getActivate()): ?>
+                            <a class="link linkActive" data-id="<?php echo $value->getId();?>"><span class="fa fa-anchor "></span></a>
+                            <?php else:?>
+                                <a class="linkDeactive" data-id="<?php echo $value->getId();?>"><span class="fa fa-download "></span></a>
+                            <?php endif;?>
+                            
                         </td> 
                         <td>
                             <?php echo date($value->getCreated()); ?>

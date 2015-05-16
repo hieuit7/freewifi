@@ -44,7 +44,6 @@ class IndexController extends AbstractActionController {
         $User = new Container('user');
         $form = new RegisterForms();
         $form->get('submit')->setValue('Add');
-
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -67,7 +66,6 @@ class IndexController extends AbstractActionController {
                         'username' => $users->getUsername(),
                         'code' => $codeActive->generate()
                     );
-
                     $codeTable = $this->getUsersCodeTable();
                     $code = new UsersCode();
                     $code->exchangeArray($data);

@@ -98,7 +98,7 @@ class IndexController extends AbstractActionController {
                     $code = new UsersCode();
                     $code->exchangeArray($data);
                     $codeTable->save($code);
-                    return $this->redirect()->toRoute('register', array('action' => 'verify', 'id' => $userId));
+                    return $this->redirect()->toRoute('users');
                 else:
                     $this->message = "User exist";
                 endif;

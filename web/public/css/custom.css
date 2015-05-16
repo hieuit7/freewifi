@@ -613,3 +613,15 @@ table.dataTable thead .sorting:after {
 .bg-red{
     background: red
 }
+fa.fa-active{
+    background: url(../img/icon-active.png);
+}
+fa.fa-deactive{
+    background: url(../img/icon-deactive.png);
+}
+td.link:hover{
+    cursor: pointer;
+}
+.linkActive{
+    
+}
