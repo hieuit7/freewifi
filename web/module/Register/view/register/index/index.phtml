@@ -6,19 +6,66 @@
 <div class="col-md-12 col-xs-12 col-sm-12">
     <?php
     $form->setAttribute('action', $this->url('register', array('action' => 'index')));
+    $form->setAttribute('class', 'form-horizontal');
     $form->prepare();
-    echo $this->form()->openTag($form);
     ?>
-    <?php foreach ($form as $key => $value): 
-      ?>
-        <div class="form-group">
-<!--            <label for="attribute" class="col-sm-2 control-label"><?php //echo $this->translate($this->formLabel($value)); ?></label>-->
-            <div class="col-sm-10">
-                <?php echo $this->formRow($value); ?>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <?php echo $this->form()->openTag($form); ?>
+            <div class="form-group">
+                <label for="username" class="col-md-2 control-label"><?php echo $this->translate('USERNAME_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('username')); ?>
+                </div>
             </div>
-            
+            <div class="form-group">
+                <label for="fullname" class="col-md-2 control-label"><?php echo $this->translate('FULLNAME_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('fullname')); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-md-2 control-label"><?php echo $this->translate('PASSWORD_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('password')); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="re-password" class="col-md-2 control-label"><?php echo $this->translate('RETYPEPASSWORD_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('retype')); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label"><?php echo $this->translate('EMAIL_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('email')); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phonenumber" class="col-md-2 control-label"><?php echo $this->translate('PHONE_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('phone')); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="building" class="col-md-2 control-label"><?php echo $this->translate('BUILDING_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('building')); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="room" class="col-md-2 control-label"><?php echo $this->translate('ROOM_TITLE'); ?></label>
+                <div class="col-md-10">
+                    <?php echo $this->formRow($form->get('room')); ?>
+                </div>
+            </div>
+            <div class="form-actions nobg fluid">
+                <div class="col-md-offset-2">
+                    <button class="btn" id='btn-ok' name='ok' type='submit'><?php echo $this->translate('SUBMIT_TITLE'); ?></button>
+                </div>
+            </div
+            </form>
         </div>
-    
-    <?php endforeach;?>
-    <?php echo $this->form()->closeTag(); ?>
+    </div>
 </div>
