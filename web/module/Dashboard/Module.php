@@ -26,6 +26,8 @@ use Dashboard\Model\UsersCode;
 use Dashboard\Model\UsersCodeTable;
 use Dashboard\Model\AppModule;
 use Dashboard\Model\AppModuleTable;
+use Dashboard\Model\AppOrders;
+use Dashboard\Model\AppOrdersTable;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Validator\AbstractValidator;
 
@@ -230,6 +232,17 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new AppModule());
                     return new TableGateway('app_modules', $dbAdapter, null, $resultSetPrototype);
+                },
+                        'Dashboard\Model\AppOrdersTable' => function($sm) {
+                    $tableGateway = $sm->get('AppModuleTableGateway');
+                    $table = new AppOrdersTable($tableGateway);
+                    return $table;
+                },
+                        'AppOdersTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new AppModule());
+                    return new TableGateway('app_orders', $dbAdapter, null, $resultSetPrototype);
                 },
                     ),
                 );

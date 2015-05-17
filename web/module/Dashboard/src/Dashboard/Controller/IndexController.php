@@ -45,8 +45,8 @@ class IndexController extends AbstractActionController {
         }
         $sums = array('userlogged' => $authens->count());
         $sums['bandwidthtrafic'] = $inputs;
-
-
+        
+        
         return new ViewModel(array(
             'sums' => $sums
         ));
