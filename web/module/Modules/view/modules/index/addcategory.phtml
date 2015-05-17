@@ -1,0 +1,28 @@
+<?php
+$form = $this->form;
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-sm-12 col-xs-12 col-md-12">
+        <form class="form-horizontal" action="addct" method="post">
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Category Name</label>
+                <div class="col-sm-5">
+                    <input type="text" id='name' name='name' placeholder="Category name ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-5">
+                        <input type="text" id='description' name='description' placeholder="Description ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default"><?php echo $this->translate('MODULE_ADD_BUTTON_TITLE'); ?></button>
+                    <button type="reset" class="btn btn-default linkCancle"><?php echo $this->translate('MODULE_CANCLE_BUTTON_TITLE'); ?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

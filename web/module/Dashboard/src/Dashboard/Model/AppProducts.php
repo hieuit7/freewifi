@@ -27,6 +27,9 @@ class AppProducts implements InputFilterAwareInterface {
     public function setName($Name) {
         $this->name = $Name;
     }
+    public function setPrice($Price) {
+        $this->price = $Price;
+    }
     public function setCategory($Category) {
         $this->category = $Category;
     }

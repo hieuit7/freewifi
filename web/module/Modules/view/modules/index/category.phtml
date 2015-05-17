@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="pull-right">
+            <?php echo $this->partial('partials/shared/menuaction.phtml', array('buttons' => $buttons)); ?>
+        </div>
+    </div>
+</div>
+<div class="clearfix" style="height: 20px"></div>
+<div class="container-fluid text-center">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td class="col-md-1 col-xs-12">
+                    ID
+                </td>
+                <td class="col-md-6 col-xs-12">
+                    Packet Name
+                </td>
+                <td class="col-md-5 col-xs-12">
+                    Description
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($items): ?>
+                <?php foreach ($items as $item): ?>
+                    <tr>
+                        <td class="col-md-1 col-xs-12">
+                            <?php echo $item->getId(); ?>
+                        </td>
+                        <td class="col-md-6 col-xs-12">
+                            <?php echo $item->getName(); ?>
+                        </td>
+                        <td class="col-md-5 col-xs-12">
+                            <?php echo $item->getDescription(); ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="3" class="alert alert-danger">
+                        <?php echo $this->translate("NO_RESULT"); ?>
+                    </td>
+
+                </tr>
+
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>

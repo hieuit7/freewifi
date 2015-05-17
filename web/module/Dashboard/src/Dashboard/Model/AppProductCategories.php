@@ -48,7 +48,7 @@ class AppProductCategories implements InputFilterAwareInterface {
         return $this->created;
     }
     public function getCreatedBy() {
-        return $this->createdBy;
+        return $this->created_by;
     }
     
     

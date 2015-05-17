@@ -22,6 +22,10 @@ use Dashboard\Model\UsersCodeTable;
 use Dashboard\Model\RadCheck;
 use Register\Forms\RegisterForms;
 use Zend\Session\SessionManager;
+use Dashboard\Model\AppProductCategories;
+use Dashboard\Model\AppProductCategoriesTable;
+use Dashboard\Model\AppProducts;
+use Dashboard\Model\AppProductsTable;
 
 class IndexController extends AbstractActionController {
 
@@ -31,11 +35,19 @@ class IndexController extends AbstractActionController {
     protected $code;
     protected $urlLogin;
     protected $message;
+    protected $appCategoryTable;
 
     public function __construct() {
         
     }
     
+    public function getAppProductsTable() {
+        if (!$this->appCategoryTable):
+            $sm = $this->getServiceLocator();
+            $this->appCategoryTable = $sm->get('Dashboard\Model\AppProductsTable');
+        endif;
+        return $this->appCategoryTable;
+    }
     public function indexAction() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('Users');
@@ -104,8 +116,11 @@ class IndexController extends AbstractActionController {
                 endif;
             endif;
         }
+        $category = $this->getAppProductsTable();
+        $category = $category->fetchAll();
         return new ViewModel(array(
-            'form' => $form
+            'form' => $form,
+            'packet'=>$category
         ));
     }
 

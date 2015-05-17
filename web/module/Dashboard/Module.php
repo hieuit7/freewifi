@@ -30,6 +30,10 @@ use Dashboard\Model\AppOrders;
 use Dashboard\Model\AppOrdersTable;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Validator\AbstractValidator;
+use Dashboard\Model\AppProductCategories;
+use Dashboard\Model\AppProductCategoriesTable;
+use Dashboard\Model\AppProducts;
+use Dashboard\Model\AppProductsTable;
 
 class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
 
@@ -246,7 +250,7 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                 },
                         'Dashboard\Model\AppProductsTable' => function($sm) {
                     $tableGateway = $sm->get('AppProductsTableGateway');
-                    $table = new AppOrdersTable($tableGateway);
+                    $table = new AppProductsTable($tableGateway);
                     return $table;
                 },
                         'AppProductsTableGateway' => function($sm) {
@@ -258,13 +262,13 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                         
                         'Dashboard\Model\AppProductCategoriesTable' => function($sm) {
                     $tableGateway = $sm->get('AppProductCategoriesTableGateway');
-                    $table = new AppOrdersTable($tableGateway);
+                    $table = new AppProductCategoriesTable($tableGateway);
                     return $table;
                 },
                         'AppProductCategoriesTableGateway' => function($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new ProductCategories());
+                    $resultSetPrototype->setArrayObjectPrototype(new AppProductCategories());
                     return new TableGateway('app_product_categories', $dbAdapter, null, $resultSetPrototype);
                 },
                     ),

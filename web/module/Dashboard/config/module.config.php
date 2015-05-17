@@ -17,7 +17,7 @@ return array(
                     'defaults' => array(
                         'controller' => 'Dashboard\Controller\Index',
                         'action' => 'index',
-                    ),
+                    )
                 ),
             ),
             // The following is a route to simplify getting started creating
