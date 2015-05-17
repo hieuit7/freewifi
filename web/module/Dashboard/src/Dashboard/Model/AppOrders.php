@@ -39,7 +39,21 @@ class AppOrders implements InputFilterAwareInterface {
         return $this->created_by;
     }
     
-    
+    public function setOrdersid($Ordersid) {
+        $this->ordersid = $Ordersid;
+    }
+    public function setCustomerid($Customerid) {
+        $this->customerid = $Customerid;
+    }
+    public function setOrderdate($Orderdate) {
+        $this->orderdate = $Orderdate;
+    }
+    public function setStatus($Status) {
+        $this->status = $Status;
+    }
+    public function setCreatedBy($CreatedBy) {
+        $this->created_by = $CreatedBy;
+    }
     public function exchangeArray($data) {
         $this->orderid = (isset($data['orderid'])) ? $data['orderid'] : null;
         $this->customerid = (isset($data['customerid'])) ? $data['customerid'] : null;
