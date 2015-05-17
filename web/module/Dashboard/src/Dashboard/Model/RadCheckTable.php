@@ -50,7 +50,16 @@ class RadCheckTable {
         if(!$row):
             throw new Exception('Can\'t find check with id = '.$id);
         endif;
-        return $id;        
+        return $resultSet;        
+    }
+    public function getCheckAttr($attr) {
+        $rowset = $this->tableGateway->select(array('attribute' => $attr));
+        $result = array();
+        while ($row = $rowset->current()):
+            $result[] = $row;
+            $rowset->next();
+        endwhile;
+        return $result;      
     }
     public function save(RadCheck $radcheck) {
         
@@ -69,6 +78,10 @@ class RadCheckTable {
             endif;
         endif;
         return $id;
+    }
+    
+    public function removeCheck($id){
+        $this->tableGateway->delete(array('id'=>(int)$id));
     }
 
 }

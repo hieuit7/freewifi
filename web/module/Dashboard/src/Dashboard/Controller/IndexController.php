@@ -27,6 +27,8 @@ class IndexController extends AbstractActionController {
     //put your code here
     protected $radAcctTable;
     protected $radPostAuthTable;
+    protected $appOrdersTable;
+    protected $user;
 
     public function indexAction() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
@@ -53,28 +55,32 @@ class IndexController extends AbstractActionController {
     }
 
     public function bandwidthstatisticAction() {
-        return new ViewModel();
+        $k = $this->getRadAcctTable();
+        $k = $k->fetchAll();
+        return new ViewModel(
+                array(
+                'allUser'=>$k
+            )
+        );
     }
 
     public function userstatisticAction() {
-        return new ViewModel();
+        $k = $this->getRadAcctTable();
+        $k = $k->fetchAll();
+        return new ViewModel(
+            array(
+                'allUser'=>$k
+            )
+        );
     }
 
     public function paymentstatisticAction() {
-        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->headTitle('Payments');
-        $user = new Container('user');
-        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
-            $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'payments'));
-        endif;
-        $transactionSearch = new \SpeckPaypal\Request\TransactionSearch();
-        $transactionSearch->setStartDate('2014-12-28T00:00:00Z');
-
-
-        $paypalRequest = $this->getServiceLocator()->get('SpeckPaypal\Service\Request');
-        $response = $paypalRequest->send($transactionSearch);
+        $k =$this->getAppOrdersTable();
+        $k = $k->fetchAll();
+        $user = $this->getUser();
         return new ViewModel(array(
-            'transactions' => $response->getResults()
+            'transactions' => $k,
+            'user'=>$user
         ));
     }
 
@@ -94,6 +100,21 @@ class IndexController extends AbstractActionController {
         endif;
 
         return $this->radPostAuthTable;
+    }
+    
+    public function getAppOrdersTable() {
+        if (!$this->appOrdersTable):
+            $sm = $this->getServiceLocator();
+            $this->appOrdersTable = $sm->get('Dashboard\Model\AppOrdersTable');
+        endif;
+        return $this->appOrdersTable;
+    }
+    public function getUser() {
+        if (!$this->user):
+            $sm = $this->getServiceLocator();
+            $this->user = $sm->get('Dashboard\Model\UsersTable');
+        endif;
+        return $this->user;
     }
 
 }

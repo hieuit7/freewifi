@@ -20,8 +20,8 @@ class AppOrders implements InputFilterAwareInterface {
     protected $sumtotal;
     protected $created_by;
     
-    public function getOderid() {
-        return $this->oderid;
+    public function getOrderid() {
+        return $this->orderid;
     }
     public function getCustomerid() {
         return $this->customerid;

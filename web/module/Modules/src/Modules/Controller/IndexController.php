@@ -48,7 +48,6 @@ class IndexController extends AbstractActionController {
         if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
             $this->redirect()->toRoute('login', array('action' => 'login','urlLogin' => 'modules'));
         endif;
-        
         $modules = $this->getAppModuleTable();
         $items = $modules->fetchAll();
 //        echo "<pre>";
@@ -112,6 +111,38 @@ class IndexController extends AbstractActionController {
             'form' => $form
         ));
     }
+    
+    public function addUserAction(){
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $module_attr = $_POST['module_attribute'];
+        $check = $this->getRadCheckTable();
+        $u = new RadCheck();
+        $u->setUsername($username);
+        $u->setAttribute($module_attr);
+        $u->setValue($email);
+        $u->setOp(':=');
+        $check->save($u);
+        $this->redirect()->toRoute('modules');
+    }
+    public function removeUserAction(){
+        $radcheck_id = $_POST['radcheck_id'];
+        $check = $this->getRadCheckTable();
+        $check->removeCheck($radcheck_id);
+        $this->redirect()->toRoute('modules');
+    }
+    
+    public function listnguoidungAction(){
+        $module_attr = $_POST['module_attribute'];
+        $check = $this->getRadCheckTable();
+        $check = $check->getCheckAttr($module_attr);
+        $user = $this->getUser();
+        return new ViewModel(array(
+            'items' => $check,
+            'user'=>$user
+        ));
+    }
+    
 
     public function getUsersTable() {
         if (!$this->usersTable):
@@ -125,6 +156,13 @@ class IndexController extends AbstractActionController {
         if (!$this->radCheckTable):
             $sm = $this->getServiceLocator();
             $this->radCheckTable = $sm->get('Dashboard\Model\RadCheckTable');
+        endif;
+        return $this->radCheckTable;
+    }
+    public function getRadAcctTable() {
+        if (!$this->radCheckTable):
+            $sm = $this->getServiceLocator();
+            $this->radCheckTable = $sm->get('Dashboard\Model\RadAcctTable');
         endif;
         return $this->radCheckTable;
     }
@@ -143,6 +181,13 @@ class IndexController extends AbstractActionController {
             $this->appModuleTable = $sm->get('Dashboard\Model\AppModuleTable');
         endif;
         return $this->appModuleTable;
+    }
+    public function getUser() {
+        if (!$this->user):
+            $sm = $this->getServiceLocator();
+            $this->user = $sm->get('Dashboard\Model\UsersTable');
+        endif;
+        return $this->user;
     }
 
 }

@@ -6,11 +6,24 @@
       <div class="col-md-3 table-bordered" style="padding:10px 0">Băng Thông</div>
       
     </div>
+    <?php foreach ($allUser as $user) : ?>
     <div class="row">
-      <div class="col-md-1 table-bordered">1</div>
-      <div class="col-md-3 table-bordered">Hoang</div>
-      <div class="col-md-3 table-bordered">18:35pm 15/5/2015</div>
-      <div class="col-md-3 table-bordered">100MB</div>
+      <div class="col-md-1 table-bordered"><?php echo $this->escapeHtml($user->getRadacctid());?></div>
+      <div class="col-md-3 table-bordered"><?php echo $this->escapeHtml($user->getUsername());?></div>
+      <div class="col-md-3 table-bordered"><?php echo $this->escapeHtml($user->getAcctstarttime());?></div>
+      <div class="col-md-3 table-bordered">
+          <?php
+            $unit = array('B','Kb','Mb','Gb','Tb');
+            $i = 0;
+            $bw = $user->getAcctinputoctets();
+            while($bw - 100 >= 0):
+                $i++;
+                $bw /= 1024;
+            endwhile;
+            echo round($bw,2).' '.$unit[$i];
+          ?>
       </div>
+    </div>
+    <?php endforeach; ?>
     </div>
 </div>

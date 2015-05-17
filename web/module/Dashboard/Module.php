@@ -234,14 +234,14 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     return new TableGateway('app_modules', $dbAdapter, null, $resultSetPrototype);
                 },
                         'Dashboard\Model\AppOrdersTable' => function($sm) {
-                    $tableGateway = $sm->get('AppModuleTableGateway');
+                    $tableGateway = $sm->get('AppOrdersTableGateway');
                     $table = new AppOrdersTable($tableGateway);
                     return $table;
                 },
-                        'AppOdersTableGateway' => function($sm) {
+                        'AppOrdersTableGateway' => function($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new AppModule());
+                    $resultSetPrototype->setArrayObjectPrototype(new AppOrders());
                     return new TableGateway('app_orders', $dbAdapter, null, $resultSetPrototype);
                 },
                     ),

@@ -4,26 +4,22 @@
     <table class='table table-hover'>
         <thead>
             <tr>
-                <th><?php echo $this->escapeHtml('Transaction'); ?></th>
-                <th><?php echo $this->escapeHtml('Name'); ?></th>
-                <th><?php echo $this->escapeHtml('Email'); ?></th>
-                <th><?php echo $this->escapeHtml('Type'); ?></th>
-                <th><?php echo $this->escapeHtml('Status'); ?></th>
-                <th><?php echo $this->escapeHtml('AMT'); ?></th>
-                <th><?php echo $this->escapeHtml('Currency'); ?></th>
+                <th>STT</th>
+                <th>Username</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Total</th>
             </tr>
         </thead>
 
         <tbody>
             <?php foreach($transactions as $transaction) { ?>
                 <tr>
-                    <td><a href='<?php echo $this->url('payments-read', array('id' => $transaction['TRANSACTIONID'])); ?>'><?php echo $this->escapehtml($transaction['TRANSACTIONID']); ?></a></td>
-                    <td><?php echo $this->escapehtml($transaction['NAME']); ?></td>
-                    <td><?php echo isset($transaction['EMAIL']) ? $this->escapehtml($transaction['EMAIL']) : 'n/a'; ?></td>
-                    <td><?php echo $this->escapehtml($transaction['TYPE']); ?></td>
-                    <td><?php echo $this->escapehtml($transaction['STATUS']); ?></td>
-                    <td><?php echo $this->escapehtml($transaction['AMT']); ?></td>
-                    <td><?php echo $this->escapehtml($transaction['CURRENCYCODE']); ?></td>
+                    <td><?php echo $this->escapehtml($transaction->getOrderid()); ?></td>
+                    <td><?php $u = $user->getUser($transaction->getOrderid()); echo $this->escapehtml($u->getUsername()); ?></td>
+                    <td><?php echo $this->escapehtml($transaction->getOrderdate()); ?></td>
+                    <td><?php echo $this->escapehtml($transaction->getStatus()); ?></td>
+                    <td><?php echo $this->escapehtml(number_format($transaction->getSumtotal())).' VND'; ?></td>
                 </tr>
             <?php } ?>
         </tbody>

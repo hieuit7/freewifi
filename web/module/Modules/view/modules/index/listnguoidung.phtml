@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12">
+                <div class="pull-left">
+                    <div class="input-group custom-search-form">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix" style="height: 20px"></div>
+<div class="row">
+    <div class="container-fluid">
+        <?php if ($items): ?>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>
+                            ID
+                        </td> 
+                        <td>
+                            Username
+                        </td> 
+                        <td>
+                            Email
+                        </td> 
+                        <td>
+                            Building
+                        </td>
+                        <td>
+                            Room
+                        </td>
+                        <td>
+                            Action
+                        </td> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($items as $value): ?>
+                        <tr>
+                            <td>
+                                <?php echo $value->getId(); ?>
+                            </td> 
+                            <td>
+                                <?php echo $value->getUsername(); ?>
+                            </td> 
+                            <td>
+                                <?php echo $value->getValue() ?>
+                            </td> 
+                            <td>
+                                 <?php $u = $user->find($value->getUsername());echo $this->escapehtml($u->getBuilding()); ?>   
+                            </td> 
+                            <td>
+                                 <?php $u = $user->find($value->getUsername());echo $this->escapehtml($u->getRoom()); ?>   
+                            </td> 
+                            <td>
+                                <form method="post" style="display: inline" action="removeuser"><button style="border-radius: 0px; border:none; padding:5px" value="<?php echo $value->getId(); ?>" name="radcheck_id" type="submit" id="add" class="add btn btn-danger btn-xs">Remove</button></form>
+                            </td> 
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+            </table>
+        <?php endif;
+        ?>
+    </div>
+</div>

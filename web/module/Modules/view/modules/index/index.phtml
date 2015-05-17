@@ -5,6 +5,7 @@
         </div>
     </div>
 </div>
+<div class="clearfix" style="height: 20px"></div>
 <div class="container-fluid text-center">
     <table class="table table-bordered table-hover">
         <thead>
@@ -31,8 +32,8 @@
                             <?php echo $item->getName(); ?>
                         </td>
                         <td class="col-md-5 col-xs-12">
-                            <a href="listnguoidung.html"><button type="button" class="btn btn-info btn-xs ">List Người Dùng</button></a>
-                            <button type="button" id="add" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Thêm User</button>
+                            <form method="post" style="display: inline" action="modules/listnguoidung"><button type="submit" name="module_attribute" value="<?php echo $item->getAttribute(); ?>" class="btn btn-info btn-xs " style="border-radius: 0px; border:none; padding: 5px">List Người Dùng</button></a></form>
+                            <button style="border-radius: 0px; border:none; padding:5px" type="button" id="add" class="add btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal<?php echo $item->getId(); ?>">Thêm User</button>
                             <div class="clearfix"></div>
                         </td>
                     </tr>
@@ -49,15 +50,16 @@
         </tbody>
     </table>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<?php foreach ($items as $item): ?>
+<div class="modal fade" id="myModal<?php echo $item->getId(); ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Thêm Người Dùng</h4>
             </div>
+            <form class="form-horizontal" action="modules/adduser" method="post">
             <div class="modal-body">
-                <form class="form-horizontal">
                     <div class="form-group">
                         <label for="username" class="col-md-2 control-label">Username</label>
                         <div class="col-md-8">
@@ -68,13 +70,16 @@
                         <label for="email" class="col-md-2 control-label">Email</label>
                         <div class="col-md-8">
                             <input type="email" id='email' name='email' placeholder="Email ..." class='form-control'>
+                            <input type="hidden" id='module_attribute' name='module_attribute' value="<?php echo $item->getAttribute(); ?>" placeholder="Email ..." class='form-control'>
                         </div>
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary">Thêm</button>
+                <button type="submit" class="btn btn-primary">Thêm</button>
             </div>
+            </form>
         </div>
     </div>
+</div>
+<?php endforeach; ?>

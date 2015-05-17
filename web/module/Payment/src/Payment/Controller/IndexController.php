@@ -36,20 +36,7 @@ class IndexController extends AbstractActionController {
         
     }
 
-    public function indexAction() {
-        
-        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->headTitle('Payment');
-        $user = new Container('user');
-        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
-        endif;
-        //do with payment
-        return new ViewModel(array(
-            'message' => $this->message
-        ));
-    }
-
-    public function addAction() {
+    public function indexAction() {        
         return new ViewModel();
     }
 
