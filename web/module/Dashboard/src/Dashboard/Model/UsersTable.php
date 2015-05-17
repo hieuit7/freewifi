@@ -36,8 +36,19 @@ class UsersTable {
         return $row;
     }
     
-    public function find($username) {
-        $rowSet = $this->tableGateway->select(array('username'=> $username));
+    public function find($username,$options = array()) {
+        $wheres = array();
+        if(isset($username)):
+            $wheres['username'] = $username;
+        else:
+            throw new Exception('Username is not empty!!');
+        endif;
+        if($options):
+            foreach ($options as $key => $value) {
+                $wheres[$key] = $value;
+            }
+        endif;
+        $rowSet = $this->tableGateway->select($wheres);
         $row = $rowSet->current();
         if(!$row):
             return false;

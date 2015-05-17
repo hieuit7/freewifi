@@ -141,7 +141,7 @@ class IndexController extends AbstractActionController {
                         $this->message = 'User exist!!';
                         return $this->redirect()->toUrl($this->urlLogin);
                     endif;
-                    
+
                 endif;
 
             endif;
@@ -160,11 +160,24 @@ class IndexController extends AbstractActionController {
             return new ViewModel($data);
         endif;
     }
+
     public function autoAction() {
+        $url = $this->getRequest();
+        $request = new \Zend\Http\Request();
+        $request->setUri($url->getServer()->get('HTTP_REFERER'));
+
+        $client = new \Zend\Http\Client();
+        $client->setMethod(\Zend\Http\Request::METHOD_POST);
+        $client->setParameterPost(array(
+            'username' => 'hieu',
+            'password' => 'hieu1234',
+        ));
         
+        
+        $this->redirect()->toUrl($url->getServer()->get('HTTP_REFERER'));
         return new ViewModel();
     }
-    
+
     public function listAction() {
         return new ViewModel();
     }
