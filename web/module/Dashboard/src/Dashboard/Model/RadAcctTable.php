@@ -35,6 +35,14 @@ class RadAcctTable {
         endif;
         return $row;
     }
+    public function findByUsername($id) {
+        $rowSet = $this->tableGateway->select(array('username' => $id));
+        $row = $rowSet->current();
+        if (!$row):
+            return null;
+        endif;
+        return $row;
+    }
 
     public function getAccts($username, $wheres = array(),$limit = null) {
         $select  = new Select('radacct');

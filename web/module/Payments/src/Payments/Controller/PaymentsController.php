@@ -12,6 +12,11 @@ namespace Payments\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
+use Dashboard\Model\AppProductCategories;
+use Dashboard\Model\AppProductCategoriesTable;
+use Dashboard\Model\AppProducts;
+use Dashboard\Model\AppProductsTable;
+use Dashboard\Model\RadAcctTable;
 
 class PaymentsController extends AbstractActionController
 {
@@ -23,13 +28,18 @@ class PaymentsController extends AbstractActionController
      */
     protected $user;
     protected $module;
+    protected $appProductTable;
+    protected $radAcctTable;
     public function indexAction()
     {
         $user = $this->getUser();
-        $module = $this->getModule();
+        $user = $user->fetchAll();
+        $packet = $this->getAppProductsTable();
+        $radact = $this->getRadAcctTable();
         return new ViewModel(array(
             'user'=>$user,
-            'module'=>$module
+            'packet'=>$packet,
+            'radact'=>$radact
         ));
     }
     public function getUser() {
@@ -45,6 +55,21 @@ class PaymentsController extends AbstractActionController
             $this->module = $sm->get('Dashboard\Model\AppModuleTable');
         endif;
         return $this->module;
+    }
+    public function getAppProductsTable() {
+        if (!$this->appProductTable):
+            $sm = $this->getServiceLocator();
+            $this->appProductTable = $sm->get('Dashboard\Model\AppProductsTable');
+        endif;
+        return $this->appProductTable;
+    }
+    public function getRadAcctTable() {
+        if (!$this->radAcctTable):
+            $sm = $this->getServiceLocator();
+            $this->radAcctTable = $sm->get('Dashboard\Model\RadAcctTable');
+        endif;
+
+        return $this->radAcctTable;
     }
             
 }

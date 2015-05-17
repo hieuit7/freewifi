@@ -31,6 +31,7 @@ class Users implements InputFilterAwareInterface {
     protected $building;
     protected $room;
     protected $activate;
+    protected $packet;
     protected $inputFiler;
 
     public function exchangeArray($data) {
@@ -45,9 +46,13 @@ class Users implements InputFilterAwareInterface {
         $this->building = (isset($data['building'])) ? $data['building'] : null;
         $this->room = (isset($data['room'])) ? $data['room'] : null;
         $this->active = (isset($data['active'])) ? $data['active'] : null;
+        $this->packet = (isset($data['packet'])) ? $data['packet'] : null;
     }
     public function setId($id) {
         $this->id = id;
+    }
+    public function setPacket($packet) {
+        $this->packet = packet;
     }
     public function setUsername($username) {
         $this->username = $username;
@@ -87,6 +92,9 @@ class Users implements InputFilterAwareInterface {
     }
     public function getPassword() {
         return $this->password;
+    }
+    public function getPacket() {
+        return $this->packet;
     }
     public function getEmail() {
         return $this->email;
