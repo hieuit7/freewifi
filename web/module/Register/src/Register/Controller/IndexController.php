@@ -160,7 +160,11 @@ class IndexController extends AbstractActionController {
             return new ViewModel($data);
         endif;
     }
-
+    public function autoAction() {
+        
+        return new ViewModel();
+    }
+    
     public function listAction() {
         return new ViewModel();
     }
