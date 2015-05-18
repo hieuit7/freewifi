@@ -1,0 +1,14 @@
+<?php if (isset($message)): ?>
+    <div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+        <?php echo (isset($message)) ? $message : ""; ?>
+    </div>
+<?php endif; ?>
+<div class="col-md-12 col-xs-12 col-sm-12">
+    <?php if($code): ?>
+    <div class="col-sm-12">
+        <label class="label">Your Username: <?php $username;?></label>
+        <label class="label">Your Username: <?php $password;?></label>
+    </div>
+    <?php endif;
+?>
+</div>

@@ -31,6 +31,7 @@ class IndexController extends AbstractActionController {
     protected $code;
     protected $urlLogin;
     protected $message;
+    protected $responseCode;
 
     public function __construct() {
         
@@ -187,12 +188,19 @@ class IndexController extends AbstractActionController {
             $radCheck->setValue(md5($users->getPassword()));
             $radCheckTable = $this->getRadCheckTable();
             if($radCheckTable->save($radCheck)):
-                $this->redirect()->toUrl($url->getServer()->get('HTTP_REFERER'));
+                $this->message = $url->getServer()->get('HTTP_REFERER');
+                $this->responseCode = 1;
+                //$this->redirect()->toUrl($url->getServer()->get('HTTP_REFERER'));
             endif;
         else:
             
         endif;
-        return new ViewModel();
+        return new ViewModel(array(
+            'message' => $this->message,
+            'code' => $this->responseCode,
+            'username'=> $username,
+            'password' => $password
+        ));
     }
 
     public function listAction() {
