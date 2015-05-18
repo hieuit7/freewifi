@@ -42,6 +42,15 @@ class PaymentsController extends AbstractActionController
             'radact'=>$radact
         ));
     }
+    public function createpaymentAction() {
+        
+        $order = $this->getRequest()->getContent();
+        echo "<pre>";
+        print_r($order);
+        echo "</pre>";
+        exit();
+        return new ViewModel();
+    }
     public function getUser() {
         if (!$this->user):
             $sm = $this->getServiceLocator();

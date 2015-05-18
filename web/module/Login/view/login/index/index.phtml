@@ -1,4 +1,7 @@
 <?php
+if(isset($message)):
+    echo $message;
+endif;
 $form->setAttribute('action', $this->url('login', array('action' => 'index','urlLogin' => $urlLogin)));
 $form->prepare();
 ?>

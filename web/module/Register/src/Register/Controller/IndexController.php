@@ -118,7 +118,8 @@ class IndexController extends AbstractActionController {
                     $userInsert = $userTable->find($data['username']);
                     $radCheckTable = $this->getRadCheckTable();
                     $userCheck = $radCheckTable->getChecks($userInsert->getUsername(), array('attribute' => 'Md5-Password'));
-                    if ($userInsert && count($userCheck) > 0):
+                    
+                    if ($userInsert && !$userCheck):
 
                         $data = array(
                             'username' => $userInsert->getUsername(),
@@ -131,10 +132,12 @@ class IndexController extends AbstractActionController {
 
                         $radCheckTable = $this->getRadCheckTable();
                         $radSave = $radCheckTable->save($radData);
-
+                        
                         if ($radSave):
                             $code->setCode('active');
                             $codeTable->save($code);
+                            $this->message = 'Veryfy ok!!!';
+                            
                             return $this->redirect()->toUrl($this->urlLogin);
                         endif;
                     else:
@@ -165,16 +168,30 @@ class IndexController extends AbstractActionController {
         $url = $this->getRequest();
         $request = new \Zend\Http\Request();
         $request->setUri($url->getServer()->get('HTTP_REFERER'));
-
-        $client = new \Zend\Http\Client();
-        $client->setMethod(\Zend\Http\Request::METHOD_POST);
-        $client->setParameterPost(array(
-            'username' => 'hieu',
-            'password' => 'hieu1234',
-        ));
-        
-        
-        $this->redirect()->toUrl($url->getServer()->get('HTTP_REFERER'));
+        $users = new Users();
+        $userTable = $this->getUsersTable();
+        $users->setUsername($username = $this->rand());
+        $password = $this->rand(6);
+        $users->setPassword($password);
+        $users->setActivate(1);
+        $users->setFullname("Auto Register");
+        $users->setPacket(1);
+        $users->setCreated(date('Y-m-d'));
+        $users->setCreatedBy(0);
+        $users->setEmail('contact@freewifi.vn');
+        if($userTable->save($users)):
+            $radCheck = new RadCheck();
+            $radCheck->setUsername($users->getUsername());
+            $radCheck->setOp(':=');
+            $radCheck->setAttribute('Md5-Password');
+            $radCheck->setValue(md5($users->getPassword()));
+            $radCheckTable = $this->getRadCheckTable();
+            if($radCheckTable->save($radCheck)):
+                $this->redirect()->toUrl($url->getServer()->get('HTTP_REFERER'));
+            endif;
+        else:
+            
+        endif;
         return new ViewModel();
     }
 
@@ -204,6 +221,17 @@ class IndexController extends AbstractActionController {
             $this->usersCodeTable = $sm->get('Dashboard\Model\UsersCodeTable');
         endif;
         return $this->usersCodeTable;
+    }
+
+    private function rand($length = 5) {
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = 'free_';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 }

@@ -38,7 +38,8 @@ class UsersCodeTable {
         $rowset = $this->tableGateway->select(array('username' => $name));
         $row = $rowset->current();
         if (!$row):
-            throw new \Exception('Can\'t find ' . $name . ' in code table!!!');
+            return false;
+            
         endif;
         return $row;
     }
