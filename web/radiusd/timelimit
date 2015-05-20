@@ -1,0 +1,2 @@
+query = "\
+	SELECT SUM(AcctSessionTime) FROM radacct where UserName=’%{%k}’;"

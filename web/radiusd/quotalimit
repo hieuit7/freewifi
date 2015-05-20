@@ -1,0 +1,2 @@
+query = "\
+	SELECT IFNULL(SUM(acctinputoctets+acctoutputoctets),0) from radacct WHERE UserName='%{%k}';"
