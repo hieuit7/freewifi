@@ -26,12 +26,12 @@ class Users implements InputFilterAwareInterface {
     protected $password;
     protected $email;
     protected $phone;
+    protected $packet;
     protected $created;
     protected $created_by;
     protected $building;
     protected $room;
     protected $activate;
-    protected $packet;
     protected $inputFiler;
 
     public function exchangeArray($data) {
@@ -52,7 +52,7 @@ class Users implements InputFilterAwareInterface {
         $this->id = id;
     }
     public function setPacket($packet) {
-        $this->packet = packet;
+        $this->packet = $packet;
     }
     public function setUsername($username) {
         $this->username = $username;
@@ -72,7 +72,7 @@ class Users implements InputFilterAwareInterface {
     public function setCreated($created) {
         $this->created = $created;
     }
-    public function setCreatedBy($reatedBy) {
+    public function setCreatedBy($createdBy) {
         $this->created_by = $createdBy;
     }
     public function setBuilding($building) {
