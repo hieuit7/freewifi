@@ -49,6 +49,7 @@ class AppProductCategoriesTable {
         $data = array(
             'name' => $module->getName(),
             'description' => $module->getDescription(),
+            'value' => $module->getValue(),
             'created' => $module->getCreated(),
             'created_by' => $module->getCreatedBy()
         );
