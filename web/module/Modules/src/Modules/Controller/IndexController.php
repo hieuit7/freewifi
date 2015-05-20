@@ -56,6 +56,8 @@ class IndexController extends AbstractActionController {
         endif;
         $modules = $this->getAppModuleTable();
         $items = $modules->fetchAll();
+        $user = $this->getUsersTable();
+        $user = $user->fetchAll();
 //        echo "<pre>";
 //        print_r($items);
 //        echo "</pre>";
@@ -78,7 +80,8 @@ class IndexController extends AbstractActionController {
                     'action' => 'delete'
                 )
             ),
-            'items' => $items
+            'items' => $items,
+            'user'=>$user
         ));
     }
 
@@ -119,9 +122,12 @@ class IndexController extends AbstractActionController {
     }
     
     public function addUserAction(){
-        $username = $_POST['username'];
-        $email = $_POST['email'];
+        $id = $_POST['user_id'];        
         $module_attr = $_POST['module_attribute'];
+        $user = $this->getUsersTable();
+        $u = $user->getUser($id);
+        $email = $u->getEmail();
+        $username = $u->getUsername();
         $check = $this->getRadCheckTable();
         $u = new RadCheck();
         $u->setUsername($username);
@@ -226,6 +232,82 @@ class IndexController extends AbstractActionController {
         ));
     }
     
+    public function deletepacketAction(){
+        $id = $_GET['id'];
+        $user = $this->getAppProductsTable();
+        $user->deleteUser($id);
+        return $this->redirect()->toRoute('modules',array('action'=>'packet'));
+    }
+
+    public function deleteAllpacketAction(){
+        $user = $this->getAppProductsTable();
+        $user->deleteAllUser();
+        return $this->redirect()->toRoute('modules',array('action'=>'packet'));
+
+    }
+    public function deletecategoryAction(){
+        $id = $_GET['id'];
+        $user = $this->getAppProductCategoriesTable();
+        $user->deleteUser($id);
+        return $this->redirect()->toRoute('modules',array('action'=>'category'));
+    }
+
+    public function deleteAllcategoryAction(){
+        $user = $this->getAppProductCategoriesTable();
+        $user->deleteAllUser();
+        return $this->redirect()->toRoute('modules',array('action'=>'category'));
+
+    }
+    public function editcategoryAction(){
+        $id = $_GET['id'];
+        $user = $this->getAppProductCategoriesTable();
+        $user = $user->findById($id);
+        return new ViewModel(array(
+            'category'=>$user
+        ));
+    }
+    public function editpacketAction(){
+        $id = $_GET['id'];
+        $user = $this->getAppProductsTable();
+        $user = $user->findById($id);
+        $category = $this->getAppProductCategoriesTable();
+        $category = $category->fetchAll();
+        return new ViewModel(array(
+            'category'=>$user,
+            'category2'=>$category
+        ));
+    }
+    
+    public function editpkAction(){
+        $id = $_POST['id'];
+        $category2 = $this->getAppProductsTable();
+        $category2->deleteUser($id);
+        $c = $this->getAppProductsTable();
+        $name = $_POST['name'];
+        $category = $_POST['category'];
+        $price = $_POST['price'];
+        $unit = $_POST['unit'];
+        $p = new AppProducts();
+        $p->setName($name);
+        $p->setCategory($category);
+        $p->setPrice($price);
+        $p->setUnit($unit);
+        $c->save($p);
+        return $this->redirect()->toRoute('modules',array('action'=>'packet'));
+    }
+    
+    public function editctAction(){
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $id = $_POST['id'];
+        $category = $this->getAppProductCategoriesTable();
+        $category->deleteUser($id);
+        $c = new AppProductCategories();
+        $c->setName($name);
+        $c->setDescription($description);
+        $category->save($c);
+        return $this->redirect()->toRoute('modules',array('action'=>'category'));
+    }
     public function addcategoryAction(){
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('MODULE_ADD_TITLE');

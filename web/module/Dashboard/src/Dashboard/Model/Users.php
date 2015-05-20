@@ -45,7 +45,7 @@ class Users implements InputFilterAwareInterface {
         $this->created_by = (isset($data['created_by'])) ? $data['created_by'] : null;
         $this->building = (isset($data['building'])) ? $data['building'] : null;
         $this->room = (isset($data['room'])) ? $data['room'] : null;
-        $this->active = (isset($data['active'])) ? $data['active'] : null;
+        $this->active = (isset($data['active'])) ? $data['active'] : 0;
         $this->packet = (isset($data['packet'])) ? $data['packet'] : null;
     }
     public function setId($id) {
@@ -71,6 +71,9 @@ class Users implements InputFilterAwareInterface {
     }
     public function setCreated($created) {
         $this->created = $created;
+    }
+    public function setRoom($room) {
+        $this->room = $room;
     }
     public function setCreatedBy($reatedBy) {
         $this->created_by = $createdBy;
