@@ -44,11 +44,18 @@ class PaymentsController extends AbstractActionController
     }
     public function createpaymentAction() {
         
-        $order = $this->getRequest()->getContent();
-        echo "<pre>";
-        print_r($order);
-        echo "</pre>";
-        exit();
+        $order = $this->getRequest()->getPost();
+        $user = $this->getUser()->getUser($order->get('id_user'));
+        $radAcct = $this->getRadAcctTable();
+        $username = $radAcct->findByUsername($order->get('radcheck_id'));
+        $packet = $this->getAppProductCategoriesTable();
+        $packetvalue = $packet->findById($user->getPacket());
+        $time = 0;
+        $bw = 0;
+        foreach ($username as $key => $value) {
+            
+        }
+        
         return new ViewModel();
     }
     public function getUser() {
@@ -80,5 +87,12 @@ class PaymentsController extends AbstractActionController
 
         return $this->radAcctTable;
     }
-            
+    public function getAppProductCategoriesTable() {
+        if (!$this->appProductTable):
+            $sm = $this->getServiceLocator();
+            $this->appProductTable = $sm->get('Dashboard\Model\AppProductCategoriesTable');
+        endif;
+        return $this->appProductTable;
+    }
+           
 }

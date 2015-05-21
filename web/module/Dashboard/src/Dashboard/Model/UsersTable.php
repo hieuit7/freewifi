@@ -95,5 +95,8 @@ class UsersTable {
     public function deleteUser($id) {
         $this->tableGateway->delete(array('id'=>(int)$id));
     }
+    public function deleteAllUser() {
+        $this->tableGateway->delete();
+    }
 
 }

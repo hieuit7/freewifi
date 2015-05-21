@@ -47,8 +47,8 @@ class IndexController extends AbstractActionController {
         }
         $sums = array('userlogged' => $authens->count());
         $sums['bandwidthtrafic'] = $inputs;
-        
-        
+        $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
         return new ViewModel(array(
             'sums' => $sums
         ));
@@ -59,28 +59,49 @@ class IndexController extends AbstractActionController {
         $k = $k->fetchAll();
         return new ViewModel(
                 array(
-                'allUser'=>$k
-            )
+            'allUser' => $k
+                )
         );
     }
 
     public function userstatisticAction() {
         $k = $this->getRadAcctTable();
         $k = $k->fetchAll();
-        return new ViewModel(
-            array(
-                'allUser'=>$k
-            )
-        );
+
+        $users = array();
+        foreach ($k as $value):
+            if (in_array($value->getUsername(), $users)):
+                $users[$value->getUsername()]['user'] = $value;
+                $users[$value->getUsername()]['status'] = (!$value->getAcctstoptime()) ? 1 : ($users[$value->getUsername()]['status']) ? 1 : 1;
+            else:
+                $users[$value->getUsername()] = array();
+                $users[$value->getUsername()]['user'] = $value;
+                $users[$value->getUsername()]['status'] = (!$value->getAcctstoptime()) ? 1 : 0;
+            endif;
+        endforeach;
+
+        return new ViewModel(array(
+            'allUser' => $k,
+            'users' => $users
+        ));
+    }
+
+    public function deconnectAction() {
+        $request = $this->getRequest();
+        $para = $request->getPost();
+        $mac = $para->get('id');
+        $re = exec('chilli_query logout ' + $mac);
+        echo $re;
+        exit();
     }
 
     public function paymentstatisticAction() {
-        $k =$this->getAppOrdersTable();
+        $k = $this->getAppOrdersTable();
         $k = $k->fetchAll();
         $user = $this->getUser();
         return new ViewModel(array(
             'transactions' => $k,
-            'user'=>$user
+            'user' => $user
         ));
     }
 
@@ -101,7 +122,7 @@ class IndexController extends AbstractActionController {
 
         return $this->radPostAuthTable;
     }
-    
+
     public function getAppOrdersTable() {
         if (!$this->appOrdersTable):
             $sm = $this->getServiceLocator();
@@ -109,6 +130,7 @@ class IndexController extends AbstractActionController {
         endif;
         return $this->appOrdersTable;
     }
+
     public function getUser() {
         if (!$this->user):
             $sm = $this->getServiceLocator();

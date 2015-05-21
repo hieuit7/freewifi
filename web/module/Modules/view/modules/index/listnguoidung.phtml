@@ -56,10 +56,10 @@
                                 <?php echo $value->getValue() ?>
                             </td> 
                             <td>
-                                 <?php $u = $user->find($value->getUsername());echo $this->escapehtml($u->getBuilding()); ?>   
+                                 <?php $u = $user->find($value->getUsername()); echo $this->escapehtml($u->getBuilding()); ?>   
                             </td> 
                             <td>
-                                 <?php $u = $user->find($value->getUsername());echo $this->escapehtml($u->getRoom()); ?>   
+                                 <?php $u = $user->find($value->getUsername()); echo $this->escapehtml($u->getRoom()); ?>   
                             </td> 
                             <td>
                                 <form method="post" style="display: inline" action="removeuser"><button style="border-radius: 0px; border:none; padding:5px" value="<?php echo $value->getId(); ?>" name="radcheck_id" type="submit" id="add" class="add btn btn-danger btn-xs">Remove</button></form>

@@ -115,14 +115,14 @@
                   <div class="col-md-3 table-bordered" style="padding:10px 0">Tình Trạng</div>
                   <div class="col-md-2 table-bordered" style="padding:10px 0">Hành Động</div>
                 </div>
-                <?php foreach ($allUser as $huy) : ?>
-                <div class="row" data-toggle="modal" data-target="#myModal<?php echo $this->escapeHtml($huy->getRadacctid());?>">
-                    <div class="col-md-1 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($huy->getRadacctid());?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($huy->getUsername());?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($huy->getAcctstarttime());?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php if(strtotime($huy->getAcctstoptime())<0) echo 'Online'; else echo 'Offline'; ?></div>
+                <?php foreach ($users as $user) : ?>
+                <div class="row" data-toggle="modal" data-target="#myModal<?php echo $this->escapeHtml($user['user']->getRadacctid());?>">
+                    <div class="col-md-1 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']->getRadacctid());?></div>
+                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']->getUsername());?></div>
+                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']->getAcctstarttime());?></div>
+                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo ($user['status'])?'Online':'Offline'?></div>
                     <div class="col-md-2 table-bordered" style="padding:5px 0">
-                        <button type="button" class="btn btn-primary btn-xs" style="border-radius: 0px; border:none; padding: 0px 5px" value="<?php echo $this->escapeHtml($huy->getRadacctid());?>">Ngắt kết nối</button>
+                        <button type="button" class="btn btn-primary btn-xs deconnect <?php echo ($user['status'])?'':'disabled';?>" style="border-radius: 0px; border:none; padding: 0px 5px" value="<?php echo $this->escapeHtml($user['user']->getRadacctid());?>" data-mac="<?php echo $user['user']->getCallingstationid();?>">Ngắt kết nối</button>
                     </div>
                 </div>
                 <?php endforeach; ?>

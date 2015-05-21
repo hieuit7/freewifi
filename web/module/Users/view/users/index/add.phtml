@@ -1,36 +1,49 @@
-<?php if (isset($message)): ?>
-    <div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
-        <?php echo (isset($message)) ? $message : ""; ?>
-    </div>
-<?php endif; ?>
-<?php
-$form->setAttribute('action', $this->url('user-action', array('action' => 'add')));
-$form->setAttribute('class', 'form-horizontal');
-$form->prepare();
-?>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <?php echo $this->form()->openTag($form); ?>
-        <div class="form-group">
-            <label for="username" class="col-md-2 control-label"><?php echo $this->translate('USERNAME_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('username')); ?>
+
+<form class="form-horizontal" action="addUser" method="post" id="form-add">
+        	<div class="form-group">
+                <label for="username" class="col-md-2 control-label">Username</label>
+                <div class="col-md-4">
+                    <input type="text" required="required" id='username' name='username' placeholder="Username ..." class='form-control'>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="fullname" class="col-md-2 control-label"><?php echo $this->translate('FULLNAME_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('fullname')); ?>
+            <div class="form-group">
+                <label for="fullname" class="col-md-2 control-label">Fullname</label>
+                <div class="col-md-4">
+                    <input type="text"  required="required" id='fullname' name='fullname' placeholder="Fullname ..." class='form-control'>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-md-2 control-label"><?php echo $this->translate('PASSWORD_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('password')); ?>
+            <div class="form-group">
+                <label for="password" class="col-md-2 control-label">Password</label>
+                <div class="col-md-4">
+                    <input type="password" id="password1" required="required" id='password' name='password' placeholder="Password ..." class='form-control'>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-                <label for="packet" class="col-sm-2 control-label">PACKET</label>
+            <div class="form-group">
+                <label for="re-password" class="col-md-2 control-label">Re-Password</label>
+                <div class="col-md-4">
+                    <input type="password" id="password2" required="required" id='re-password' name='re-password' placeholder="Re-Password ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">Email</label>
+                <div class="col-md-4">
+                    <input type="email" required="required" id='email' name='email' placeholder="Email ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phonenumber" class="col-md-2 control-label">Phone Number</label>
+                <div class="col-md-4">
+                    <input type="text" required="required" id='phonenumber' name='phone' placeholder="Phone Number ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="room" class="col-md-2 control-label">Room</label>
+                <div class="col-md-4">
+                    <input type="text" required="required" id='room' name='room' placeholder="Room ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="packet" class="col-sm-2 control-label">Packet</label>
                 <div class="col-sm-4">
                     <select class="form-control" name="packet">
                        <?php foreach ($packet as $item): ?>
@@ -39,41 +52,24 @@ $form->prepare();
                     </select>
                 </div>
             </div>
-        <div class="form-group">
-            <label for="re-password" class="col-md-2 control-label"><?php echo $this->translate('RETYPEPASSWORD_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('retype')); ?>
+            <div class="form-group">
+                <label for="room" class="col-md-2 control-label">Building</label>
+                <div class="col-md-4">
+                    <input type="text"  required="required"id='room' name='building' placeholder=" ..." class='form-control'>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-md-2 control-label"><?php echo $this->translate('EMAIL_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('email')); ?>
+            <div class="form-actions nobg fluid">
+                <div class="col-md-offset-2">
+                    <button class="btn" id='btn-ok' name='ok' type='submit'>Tạo</button>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="phonenumber" class="col-md-2 control-label"><?php echo $this->translate('PHONE_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('phone')); ?>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="building" class="col-md-2 control-label"><?php echo $this->translate('BUILDING_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('building')); ?>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="room" class="col-md-2 control-label"><?php echo $this->translate('ROOM_TITLE'); ?></label>
-            <div class="col-md-10">
-                <?php echo $this->formRow($form->get('room')); ?>
-            </div>
-        </div>
-        <div class="form-actions nobg fluid">
-            <div class="col-md-offset-2">
-                <button class="btn" id='btn-ok' name='ok' type='submit'><?php echo $this->translate('SUBMIT_TITLE'); ?></button>
-            </div>
-        </div
         </form>
-    </div>
-</div>
+<script>
+    $('#form-add').submit(function(){
+        if($('#password1').val()!=$('#password2').val())
+        {
+            alert('Password is not same');
+            return false;
+        }
+    })
+</script>

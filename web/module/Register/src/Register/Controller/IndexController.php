@@ -167,12 +167,11 @@ class IndexController extends AbstractActionController {
 
     public function autoAction() {
         $url = $this->getRequest();
-        $request = new \Zend\Http\Request();
-        $request->setUri($url->getServer()->get('HTTP_REFERER'));
+        
         $users = new Users();
         $userTable = $this->getUsersTable();
         $users->setUsername($username = $this->rand());
-        $password = $this->rand(6);
+        $password = $username;
         $users->setPassword($password);
         $users->setActivate(1);
         $users->setFullname("Auto Register");
@@ -190,16 +189,16 @@ class IndexController extends AbstractActionController {
             if($radCheckTable->save($radCheck)):
                 $this->message = $url->getServer()->get('HTTP_REFERER');
                 $this->responseCode = 1;
-                //$this->redirect()->toUrl($url->getServer()->get('HTTP_REFERER'));
             endif;
         else:
-            
         endif;
+        $this->layout('layout/register');
         return new ViewModel(array(
             'message' => $this->message,
             'code' => $this->responseCode,
             'username'=> $username,
-            'password' => $password
+            'password' => $password,
+            'action'=> $this->message
         ));
     }
 

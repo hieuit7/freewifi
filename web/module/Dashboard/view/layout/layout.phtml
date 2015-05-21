@@ -24,10 +24,10 @@
         <!-- Scripts -->
         <?php
         echo $this->headScript()
+                ->prependFile($this->basePath('js/custom.js'))
                 ->prependFile($this->basePath('js/metisMenu.min.js'))
                 ->prependFile($this->basePath('js/raphael-min.js'))
-                ->prependFile($this->basePath('js/morris.min.js'))
-                ->prependFile($this->basePath('js/morris-data.js'))
+                
                 ->prependFile($this->basePath('js/sb-admin-2.js'))
                 ->prependFile($this->basePath('js/bootstrap.min.js'))
                 ->prependFile($this->basePath('js/jquery.min.js'))

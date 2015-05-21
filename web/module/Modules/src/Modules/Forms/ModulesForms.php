@@ -65,6 +65,7 @@ class ModulesForms extends Form {
                 'placeholder' => 'MODULE_DESCRIPTION_TITLE'
             )
         ));
+        
     }
 
 }

@@ -42,13 +42,22 @@ class RadCheckTable {
         endwhile;
         return $results;
     }
+    public function getName($id) {
+        $resultSet = $this->tableGateway->select(array('username'=> $id));
+        $row = $resultSet->current();
+        
+        if(!$row):
+            return false;
+        endif;
+        return $row;        
+    }
     public function getCheck($id) {
         $id = (string)$id;
         $resultSet = $this->tableGateway->select(array('id'=> $id));
         $row = $resultSet->current();
         
         if(!$row):
-            throw new Exception('Can\'t find check with id = '.$id);
+            return false;
         endif;
         return $resultSet;        
     }

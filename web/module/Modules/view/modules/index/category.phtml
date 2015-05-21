@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-sm-12 col-md-12 col-xs-12">
         <div class="pull-right">
-            <?php echo $this->partial('partials/shared/menuaction.phtml', array('buttons' => $buttons)); ?>
+            <a class="btn btn-primary" href="addcategory">Thêm</a>
+            <a class="btn btn-primary edit-user">Sửa</a>
+            <a class="btn btn-primary del-user">Xóa</a>
         </div>
     </div>
 </div>
@@ -10,6 +12,9 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
+                <td>
+                    <input type="checkbox" class="check_all">
+                </td>
                 <td class="col-md-1 col-xs-12">
                     ID
                 </td>
@@ -25,7 +30,10 @@
             <?php if ($items): ?>
                 <?php foreach ($items as $item): ?>
                     <tr>
-                        <td class="col-md-1 col-xs-12">
+                        <td>
+                            <input type="checkbox" name="check" class="check">
+                        </td>
+                        <td class="col-md-1 col-xs-12 id">
                             <?php echo $item->getId(); ?>
                         </td>
                         <td class="col-md-6 col-xs-12">
@@ -48,3 +56,41 @@
         </tbody>
     </table>
 </div>
+<script>
+    $('.check').click(function(){
+        if($(this).prop('checked')){
+            current = $(this);
+            $('.check').prop('checked',false);
+            current.prop('checked',true);
+            p = $(this).parent().parent().find('.id').html();
+            if(!$('.checkall').prop('checked{')){
+                $(document).find('.del-user').attr('href','deletecategory?id='+p);
+                $(document).find('.edit-user').attr('href','editcategory?id='+p);
+            }
+        }
+        else{
+            $(document).find('.del-user').attr('href','');
+            $(document).find('.edit-user').attr('href','');
+        }
+    });
+    $('.check_all').click(function(){
+        if($(this).prop('checked')){
+            $('.check').prop('checked',true);
+            $(document).find('.del-user').attr('href','deleteAllcategory');
+        }
+        else{
+            $('.check').prop('checked',false);
+            $(document).find('.del-user').attr('href','');
+        }
+    });
+    $('.del-user').click(function(){
+        k = 0;
+        $('.check').each(function(){
+            if($(this).prop('checked')){
+                k = 1;
+            }
+        })
+        if(k==1)
+            confirm('Do you want to delete this Category');
+    })
+</script>

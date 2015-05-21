@@ -1,44 +1,75 @@
-<div class="jumbotron">
-    <h1><?php echo sprintf($this->translate('Welcome to %sZend Framework 2%s'), '<span class="zf-green">', '</span>') ?></h1>
-    <p><?php echo sprintf($this->translate('Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2.'), '<a href="https://github.com/zendframework/ZendSkeletonApplication" target="_blank">', '</a>', \Zend\Version\Version::VERSION) ?></p>
-    <p><a class="btn btn-success btn-lg" href="https://github.com/zendframework/zf2" target="_blank"><?php echo $this->translate('Fork Zend Framework 2 on GitHub') ?> &raquo;</a></p>
-</div>
-kakak
-<div class="row">
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Follow Development') ?></h3>
+<form class="form-horizontal" action="editUser" method="post" id="form-edit">
+        	<div class="form-group">
+                <label for="username" class="col-md-2 control-label">Username</label>
+                <div class="col-md-4">
+                    <input type="text" value="<?php echo $user->getUsername(); ?>" id='username' name='username' placeholder="Username ..." class='form-control'>
+                </div>
             </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!'), '<a href="http://framework.zend.com/wiki/display/ZFDEV2/Home">', '</a>', '<a href="http://framework.zend.com/zf2/blog">', '</a>', '<a href="https://github.com/zendframework/zf2/issues">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://framework.zend.com/zf2" target="_blank"><?php echo $this->translate('ZF2 Development Portal') ?> &raquo;</a></p>
+            <div class="form-group">
+                <label for="fullname" class="col-md-2 control-label">Fullname</label>
+                <div class="col-md-4">
+                    <input type="text" value="<?php echo $user->getFullname(); ?>" id='fullname' name='fullname' placeholder="Fullname ..." class='form-control'>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Discover Modules') ?></h3>
+            <div class="form-group">
+                <label for="password" class="col-md-2 control-label">Password</label>
+                <div class="col-md-4">
+                    <input type="password" id='password' name='password' placeholder="Password ..." class='form-control'>
+                </div>
             </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2.'), '<a href="https://github.com/zendframework/modules.zendframework.com">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://modules.zendframework.com/" target="_blank"><?php echo $this->translate('Explore ZF2 Modules') ?> &raquo;</a></p>
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">Email</label>
+                <div class="col-md-4">
+                    <input type="email" id='email' value="<?php echo $user->getEmail(); ?>" name='email' placeholder="Email ..." class='form-control'>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Help &amp; Support') ?></h3>
+            <div class="form-group">
+                <label for="phonenumber" class="col-md-2 control-label">Phone Number</label>
+                <div class="col-md-4">
+                    <input type="text" id='phonenumber' value="<?php echo $user->getPhone(); ?>" name='phone' placeholder="Phone Number ..." class='form-control'>
+                </div>
             </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We\'d love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s.'), '<a href="irc://irc.freenode.net/zftalk">', '</a>', '<a href="http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://webchat.freenode.net?channels=zftalk" target="_blank"><?php echo $this->translate('Ping us on IRC') ?> &raquo;</a></p>
+            <div class="form-group">
+                <label for="room" class="col-md-2 control-label">Room</label>
+                <div class="col-md-4">
+                    <input type="text" id='room' value="<?php echo $user->getRoom(); ?>" name='room' placeholder="Room ..." class='form-control'>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
+            <div class="form-group">
+                <label for="packet" class="col-sm-2 control-label">Packet</label>
+                <div class="col-sm-4">
+                    <select class="form-control" name="packet">
+                       <?php foreach ($packet as $item): ?>
+                        <option <?php if($user->getPacket()==$item->getId()) echo 'selected="selected"'; ?>  value="<?php echo $item->getId(); ?>"><?php echo $item->getName(); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="room" class="col-md-2 control-label">Building</label>
+                <div class="col-md-4">
+                    <input type="text" id='room' value="<?php echo $user->getBuilding(); ?>" name='building' placeholder=" ..." class='form-control'>
+                </div>
+            </div>
+            <div class="form-actions nobg fluid">
+                <div class="col-md-offset-2">
+                    <button class="btn" value="<?php echo $user->getID(); ?>" id='btn-ok' name='id' type='submit'>Save</button>
+                </div>
+            </div>
+        </form>
+<script>
+    $('#form-edit').submit(function(){
+        k = 0;
+        $('input').each(function(){
+            if($(this).val()===''){
+                $(this).css('border','1px solid red');
+                k = 1;
+            }            
+        });
+        if(k===1){
+            alert('Please input all field required');
+            return false;
+        }
+    })
+</script>

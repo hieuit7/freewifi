@@ -67,5 +67,8 @@ class AppModuleTable {
             endif;
         endif;
     }
+    public function delete($id) {
+        $this->tableGateway->delete(array('id'=>(int)$id));
+    }
 
 }

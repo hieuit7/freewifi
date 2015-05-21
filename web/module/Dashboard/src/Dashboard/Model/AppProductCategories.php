@@ -15,10 +15,17 @@ class AppProductCategories implements InputFilterAwareInterface {
     
     protected $id;
     protected $name;
+    protected $value;
     protected $description;
     protected $created;
     protected $created_by;
     
+    public function setValue($Value) {
+        $this->value = $Value;
+    }
+    public function getValue() {
+        return $this->value;
+    }
     public function setId($Id) {
         $this->id = $Id;
     }

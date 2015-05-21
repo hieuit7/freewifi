@@ -50,6 +50,19 @@ return array(
                     ),
                 ),
             ),
+            'payments-created' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '/payments/[:id]',
+                    'defaults' => array(
+                        'controller' => 'Payments\Controller\Payments',
+                        'action'     => 'createpayment',
+                    ),
+                    'constraints' => array(
+                        'id' => '[0-9a-zA-Z]+',
+                    ),
+                ),
+            ),
             'payments-failure' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
