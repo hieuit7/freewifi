@@ -59,4 +59,34 @@
         </tbody>
     </table>
 </div>
-
+<?php foreach ($items as $item): ?>
+<div class="modal fade" id="myModal<?php echo $item->getId(); ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Thêm Người Dùng</h4>
+            </div>
+            <form class="form-horizontal" action="modules/adduser" method="post">
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="packet" class="col-sm-2 control-label">Username</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="user_id">
+                               <?php foreach ($user as $i): ?>
+                                <option value="<?php echo $i->getId(); ?>"><?php echo $i->getUsername(); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" value="<?php echo $item->getAttribute(); ?>" name="module_attribute" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>

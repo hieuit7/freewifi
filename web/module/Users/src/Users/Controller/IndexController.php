@@ -191,6 +191,94 @@ class IndexController extends AbstractActionController {
         return $this->redirect()->toRoute('users');
     }
     
+    public  function addUserAction(){
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $building = $_POST['building'];
+        $packet = $_POST['packet'];
+        $created = date();
+        $room = $_POST['room'];
+        $user = $this->getUsersTable();
+        $u = new Users();
+        $u->setUsername($username);
+        $u->setPassword($password);
+        $u->setFullname($fullname);
+        $u->setEmail($email);
+        $u->setPhone($phone);
+        $u->setBuilding($building);
+        $u->setPacket($packet);
+        $u->setCreated($created);
+        $u->setRoom($room);
+        $user->save($u);
+        return $this->redirect()->toRoute('users');
+    }
+    
+    public function deleteAction(){
+        $id = $_GET['id'];
+        $user = $this->getUsersTable();
+        $user->deleteUser($id);
+        return $this->redirect()->toRoute('users');
+    }
+    
+    public function editAction(){
+        $id = $_GET['id'];
+        $user = $this->getUsersTable();
+        $user = $user->getUser($id);
+        $category = $this->getAppProductsTable();
+        $category = $category->fetchAll();
+        return new ViewModel(array(
+            'packet'=>$category,
+            'user'=>$user
+        ));
+    }  
+    
+    public function editUserAction(){
+        $username = $_POST['username'];
+        $id = $_POST['id'];
+        $password = $_POST['password'];
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $building = $_POST['building'];
+        $packet = $_POST['packet'];
+        $room = $_POST['room'];
+        $created = date('dd/mm/yyyy');
+        $user = $this->getUsersTable();
+        $u = new Users();
+        $u->setUsername($username);
+        $u->setPassword($password);
+        $u->setFullname($fullname);
+        $u->setEmail($email);
+        $u->setPhone($phone);
+        $u->setBuilding($building);
+        $u->setPacket($packet);
+        $u->setCreated($created);
+        $u->setRoom($room);
+        $check = $this->getRadCheckTable();
+        $usr = $user->getUser($id);
+        $check2 = $check->getName($usr->getUsername());
+        $check->removeCheck($check2->getId());
+        $u2 = new RadCheck();
+        $u2->setUsername($username);
+        $u2->setAttribute($check2->getAttribute());
+        $u2->setValue($email);
+        $u2->setOp(':=');
+        $check->save($u2);
+        $u->setId($id);
+        $user->deleteUser($id);
+        $user->save($u);
+        return $this->redirect()->toRoute('users');
+    }
+    
+    public function deleteAllAction(){
+        $user = $this->getUsersTable();
+        $user->deleteAllUser();
+        return $this->redirect()->toRoute('users');
+    }
+    
     public function getUsersTable() {
         if (!$this->usersTable):
             $sm = $this->getServiceLocator();
