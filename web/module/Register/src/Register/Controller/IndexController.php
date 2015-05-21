@@ -119,7 +119,7 @@ class IndexController extends AbstractActionController {
                     $userInsert = $userTable->find($data['username']);
                     $radCheckTable = $this->getRadCheckTable();
                     $userCheck = $radCheckTable->getChecks($userInsert->getUsername(), array('attribute' => 'Md5-Password'));
-                    
+
                     if ($userInsert && !$userCheck):
 
                         $data = array(
@@ -133,12 +133,12 @@ class IndexController extends AbstractActionController {
 
                         $radCheckTable = $this->getRadCheckTable();
                         $radSave = $radCheckTable->save($radData);
-                        
+
                         if ($radSave):
                             $code->setCode('active');
                             $codeTable->save($code);
                             $this->message = 'Veryfy ok!!!';
-                            
+
                             return $this->redirect()->toUrl($this->urlLogin);
                         endif;
                     else:
@@ -167,38 +167,52 @@ class IndexController extends AbstractActionController {
 
     public function autoAction() {
         $url = $this->getRequest();
-        
-        $users = new Users();
-        $userTable = $this->getUsersTable();
-        $users->setUsername($username = $this->rand());
+        $res = parse_url($url->getServer()->get('HTTP_REFERER'), PHP_URL_QUERY);
+        parse_str($res, $get);
+        $username = str_replace('-', '', $get['mac']);
         $password = $username;
-        $users->setPassword($password);
-        $users->setActivate(1);
-        $users->setFullname("Auto Register");
-        $users->setPacket(1);
-        $users->setCreated(date('Y-m-d'));
-        $users->setCreatedBy(0);
-        $users->setEmail('contact@freewifi.vn');
-        if($userTable->save($users)):
-            $radCheck = new RadCheck();
-            $radCheck->setUsername($users->getUsername());
-            $radCheck->setOp(':=');
-            $radCheck->setAttribute('Md5-Password');
-            $radCheck->setValue(md5($users->getPassword()));
+
+        $userTable = $this->getUsersTable();
+        $userold = $userTable->find($username);
+        if ($userold):
             $radCheckTable = $this->getRadCheckTable();
-            if($radCheckTable->save($radCheck)):
-                $this->message = $url->getServer()->get('HTTP_REFERER');
-                $this->responseCode = 1;
+            $rads = $radCheckTable->getChecks($userold->getUsername(), array('attribute' => 'Md5-Password'));
+            if ($rads):
+                //nothing to do with user exits Advertisement here or some thing.....
             endif;
         else:
+            $users = new Users();
+            $users->setUsername($username);
+            $users->setPassword($password);
+            $users->setActivate(1);
+            $users->setFullname("Auto Register");
+            $users->setPacket(1);
+            $users->setCreated(date('Y-m-d'));
+            $users->setCreatedBy(0);
+            $users->setEmail('contact@freewifi.vn');
+            if ($userTable->save($users)):
+                $radCheck = new RadCheck();
+                $radCheck->setUsername($users->getUsername());
+                $radCheck->setOp(':=');
+                $radCheck->setAttribute('Md5-Password');
+                $radCheck->setValue(md5($users->getPassword()));
+                $radCheckTable = $this->getRadCheckTable();
+                if ($radCheckTable->save($radCheck)):
+                    $this->message = $url->getServer()->get('HTTP_REFERER');
+                    $this->responseCode = 1;
+                endif;
+            else:
+                // fail to save user to app user!!
+            endif;
         endif;
+
         $this->layout('layout/register');
         return new ViewModel(array(
             'message' => $this->message,
             'code' => $this->responseCode,
-            'username'=> $username,
+            'username' => $username,
             'password' => $password,
-            'action'=> $this->message
+            'action' => $this->message
         ));
     }
 
