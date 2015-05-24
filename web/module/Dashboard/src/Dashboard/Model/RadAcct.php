@@ -38,6 +38,14 @@ class RadAcct {
     protected $frameprotocol;
     protected $frameipaddress;
     
+    protected $_key = 'radacctid';
+    public function setKey($Key) {
+        $this->_key = $Key;
+    }
+    public function getKey() {
+        return $this->_key;
+    }
+    
     public function exchangeArray($data) {
         $this->radacctid = (isset($data['radacctid']))?$data['radacctid']:'';
         $this->acctsessionid = (isset($data['acctsessionid']))?$data['acctsessionid']:'';

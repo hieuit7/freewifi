@@ -20,6 +20,14 @@ class AppProductCategories implements InputFilterAwareInterface {
     protected $created;
     protected $created_by;
     
+    protected $_key = 'id';
+    public function setKey($Key) {
+        $this->_key = $Key;
+    }
+    public function getKey() {
+        return $this->_key;
+    }
+    
     public function setValue($Value) {
         $this->value = $Value;
     }
@@ -62,6 +70,7 @@ class AppProductCategories implements InputFilterAwareInterface {
     public function exchangeArray($data) {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->name = (isset($data['name'])) ? $data['name'] : null;
+        $this->value = (isset($data['value'])) ? $data['value'] : null;
         $this->description = (isset($data['description'])) ? $data['description'] : null;
         $this->created = (isset($data['created'])) ? $data['created'] : null;
         $this->created_by = (isset($data['created_by'])) ? $data['created_by'] : null;

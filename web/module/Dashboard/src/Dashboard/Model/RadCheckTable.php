@@ -16,12 +16,15 @@ namespace Dashboard\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Dashboard\Model\RadCheck;
 
-class RadCheckTable {
+use Dashboard\Model\Mapper\MapperTable;
+
+class RadCheckTable extends MapperTable{
 
     protected $tableGateway;
 
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
+        parent::__construct($tableGateway);
     }
     /*
      * 

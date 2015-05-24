@@ -10,13 +10,14 @@ namespace Dashboard\Model;
 
 use Dashboard\Model\AppModule;
 use Zend\Db\TableGateway\TableGateway;
-
-class AppOrdersTable {
+use Dashboard\Model\Mapper\MapperTable;
+class AppOrdersTable extends MapperTable{
 
     protected $tableGateway;
 
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
+        parent::__construct($tableGateway);
     }
 
     public function find($modulename) {

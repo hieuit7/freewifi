@@ -13,12 +13,21 @@ use Zend\InputFilter\InputFilterInterface;
 
 class AppOrders implements InputFilterAwareInterface {
     
+    
     protected $orderid;
     protected $customerid;
     protected $orderdate;
     protected $status;
     protected $sumtotal;
     protected $created_by;
+    
+    protected $_key = 'orderid';
+    public function setKey($Key) {
+        $this->_key = $Key;
+    }
+    public function getKey() {
+        return $this->_key;
+    }
     
     public function getOrderid() {
         return $this->orderid;

@@ -54,28 +54,28 @@
                     <?php foreach ($items as $key => $value): ?>
                         <tr>
                             <td>
-                                <input type="checkbox" name="check" class="check" value="<?php echo $value->getId(); ?>">
+                                <input type="checkbox" name="check" class="check" value="<?php echo $value['id']; ?>">
                             </td>
                             <td class="id">
-                                <?php echo $value->getId(); ?>
+                                <?php echo $value['id']; ?>
                             </td> 
                             <td>
-                                <?php echo $value->getUsername(); ?>
+                                <?php echo $value['username']; ?>
                             </td> 
                             <td>
-                                <?php echo $value->getEmail(); ?>
+                                <?php echo $value['email']; ?>
                             </td> 
                             <td class="link">
                                 <?php
-                                echo $value->getActivate();
-                                if ($value->getActivate() == 1)
+                                echo $value['activate'];
+                                if ($value['activate'] == 1)
                                     echo 'Actived';
                                 else
                                     echo 'Non-active';
                                 ?>
                             </td> 
                             <td>
-                                <?php echo date($value->getCreated()); ?>
+                                <?php echo date($value['created']); ?>
                             </td> 
                         </tr>
                     <?php endforeach; ?>
@@ -93,12 +93,12 @@
                     'partials/shared/paging.phtml',
                     // the route to link to when a user clicks a control link
                     array(
-                'route' => 'users'
+                'route' => 'users',
+                        'options' => array()
                     )
             );
             ?>
-        <?php endif;
-        ?>
+        <?php endif; ?>
     </div>
 </div>
 <script>

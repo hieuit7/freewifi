@@ -1,57 +1,75 @@
-
+<?php if (isset($message) && count($message)): ?>
+    <div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+        <ul>
+            <?php foreach ($message as $key => $msg): ?>
+                <li>
+                    <span>
+                        <?php echo $this->translate($key . '_error'); ?>
+                    </span>
+                    <ul>
+                        <?php foreach ($msg as $mskey => $msgv): ?>
+                            <li><?php echo $mskey . ': ' . $msgv; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+<?php
+$form->setAttribute('action', $this->url('modules', array('action' => 'savepacket')));
+$form->setAttribute('class', 'form-horizontal');
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
 <div class="row">
     <div class="col-sm-12 col-xs-12 col-md-12">
-        <form class="form-horizontal" action="editpk" method="post" id="form-edit">
-            <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Packet Name</label>
-                <div class="col-sm-5">
-                    <input type="text" value="<?php echo $category->getName(); ?>" id='name' name='name' placeholder="Packetname ..." class='form-control'>
-                </div>
+        <?php echo $this->form()->openTag($form); ?>
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label"><?php echo $this->translate('PACKET_NAME_TITLE'); ?></label>
+            <div class="col-sm-10">
+                <?php echo $this->formRow($form->get('name')); ?>
             </div>
-            <div class="form-group">
-                <label for="attribute" class="col-sm-2 control-label">Category</label>
-                <div class="col-sm-4">
-                    <select class="form-control" name="category">
-                       <?php foreach ($category2 as $item): ?>
-                        <option value="<?php echo $item->getId(); ?>"><?php echo $item->getName(); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="category" class="col-sm-2 control-label"><?php echo $this->translate('FORM_SELECT_CATEGORY'); ?></label>
+            <div class="col-sm-10">
+                <?php echo $this->formRow($form->get('category')); ?>
             </div>
-            <div class="form-group">
-                <label for="price" class="col-sm-2 control-label">Price</label>
-                <div class="col-sm-5">
-                        <input type="text" value="<?php echo $category->getPrice(); ?>" id='price' name='price' placeholder="Price ..." class='form-control'>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="price" class="col-sm-2 control-label"><?php echo $this->translate('PACKET_PRICE_TITLE'); ?></label>
+            <div class="col-sm-10">
+                <?php echo $this->formRow($form->get('price')); ?>
             </div>
-            <div class="form-group">
-
-                <label for="unit" class="col-sm-2 control-label">Unit</label>
-                <div class="col-sm-5">
-                        <input type="text" value="<?php echo $category->getUnit(); ?>" id='unit' name='unit' placeholder="Unit ..." class='form-control'>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="unit" class="col-sm-2 control-label"><?php echo $this->translate('PACKET_UNIT_TITLE'); ?></label>
+            <div class="col-sm-10">
+                <?php echo $this->formRow($form->get('unit')); ?>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" name="id" value="<?php echo $category->getId(); ?>" class="btn btn-default">Save</button>
-                    <button type="reset" class="btn btn-default linkCancle"><?php echo $this->translate('MODULE_CANCLE_BUTTON_TITLE'); ?></button>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="value" class="col-sm-2 control-label"><?php echo $this->translate('PACKET_VALUE_TITLE'); ?></label>
+            <div class="col-sm-10">
+                <?php echo $this->formRow($form->get('value')); ?>
             </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-sm-2 control-label"><?php echo $this->translate('PACKET_DESC_TITLE'); ?></label>
+            <div class="col-sm-10">
+                <?php echo $this->formRow($form->get('description')); ?>
+            </div>
+        </div>
+        <input name="id" value="<?php echo $item->getId()?>" hidden="">
+        <input name="created" value="<?php echo $item->getCreated()?>" hidden="">
+        <input name="created_by" value="<?php echo $item->getCreatedBy()?>" hidden="">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default"><?php echo $this->translate('MODULE_ADD_BUTTON_TITLE'); ?></button>
+                <button type="reset" class="btn btn-default linkCancel" data-href="/modules/packet"><?php echo $this->translate('MODULE_CANCLE_BUTTON_TITLE'); ?></button>
+            </div>
+        </div>
         </form>
     </div>
 </div>
-<script>
-    $('#form-edit').submit(function(){
-        k = 0;
-        $('input').each(function(){
-            if($(this).val()===''){
-                $(this).css('border','1px solid red');
-                k = 1;
-            }            
-        });
-        if(k===1){
-            alert('Please input all field required');
-            return false;
-        }
-    })
-</script>

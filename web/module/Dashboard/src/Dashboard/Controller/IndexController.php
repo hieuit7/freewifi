@@ -71,8 +71,9 @@ class IndexController extends AbstractActionController {
     }
 
     public function userstatisticAction() {
-        $k = $this->getRadAcctTable();
-        $k = $k->fetchAll();
+        $radActionTable = $this->getRadAcctTable();
+        $page = $this->params()->fromQuery('page',1);
+        $radActions = $radActionTable->customGetData($page,10,array(),array(),array(),$paging);
 
         $users = array();
         foreach ($k as $value):

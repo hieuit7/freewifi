@@ -22,7 +22,7 @@ class ModulesForms extends Form {
     public function __construct($name = null, $options = array()) {
         parent::__construct('modulesforms', $options);
 
-        $forms = array();
+        
         $this->setAttribute('action', '/modules/add');
 
         $this->add(array(
@@ -50,8 +50,8 @@ class ModulesForms extends Form {
             'name' => 'status',
             'options' => array(
                 'value_options' => array(
-                    '0' => 'MODULE_STATUS_ON',
-                    '1' => 'MODULE_STATUS_OFF',
+                    '1' => 'MODULE_STATUS_ON',
+                    '0' => 'MODULE_STATUS_OFF',
                 ),
             ),
         ));

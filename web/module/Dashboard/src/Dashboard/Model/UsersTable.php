@@ -24,6 +24,7 @@ class UsersTable extends MapperTable{
 
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
+        parent::__construct($tableGateway);
     }
 
     public function getUser($id) {

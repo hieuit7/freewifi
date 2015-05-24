@@ -63,7 +63,7 @@ class IndexController extends AbstractActionController {
         $page->setItemCountPerPage(10);
         //$items = $users->fetchAll();
         //do with payment
-
+        
         $route = 'user-action';
         return new ViewModel(array(
             'message' => $this->message,
@@ -87,27 +87,22 @@ class IndexController extends AbstractActionController {
     }
 
     public function addAction() {
-        $form = new RegisterForms();
+        $form = new RegisterForms(null,array(),$this->getServiceLocator());
         $form->get('submit')->setValue('Add');
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $users = new Users();
-
             $form->setInputFilter($users->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()):
                 $data = $form->getData();
-                
-            else:
-                $data = $form->getData();
-                
+                                
             endif;
         }
         $category = $this->getAppProductsTable();
         $category = $category->fetchAll();
-       
+        
         return new ViewModel(array(
             'form' => $form,
             'packet' => $category,

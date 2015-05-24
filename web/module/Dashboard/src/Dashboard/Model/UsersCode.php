@@ -19,6 +19,14 @@ class UsersCode {
     protected $id;
     protected $username;
     protected $code;
+    
+    protected $_key = 'id';
+    public function setKey($Key) {
+        $this->_key = $Key;
+    }
+    public function getKey() {
+        return $this->_key;
+    }
 
     public function exchangeArray($data) {
         $this->id = (isset($data['id'])) ? $data['id'] : null;

@@ -25,6 +25,15 @@ return array(
     'ROOM_TITLE' => 'Số phòng:',
     'PHONE_TITLE' => 'Số điện thoại:',
     'FORM_SELECT_MODULE_TITLE' => 'Chọn package:',
+    'PACKET_TITLE' => 'Gói dịch vụ',
     'SUBMIT_TITLE' => 'Thêm',
-    'fullname_error' => 'Ho va ten'
+    'fullname_error' => 'Họ và tên',
+    'username_error' => 'Tên đăng nhập',
+    'password_error' => 'Mật khẩu',
+    'retype_error' => 'Nhập lại mật khẩu',
+    'email_error' => 'Email',
+    'building_error' => 'Tòa nhà',
+    'room_error' => 'Số phòng',
+    'captcha_error' => "Captcha",
+    
 );

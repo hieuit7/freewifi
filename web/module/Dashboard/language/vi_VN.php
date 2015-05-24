@@ -22,4 +22,9 @@ return array(
     'TABLE_HEAD_EMAIL' => 'Email người dùng',
     'TABLE_HEAD_STATUS' => 'Trạng thái',
     'TABLE_HEAD_CREATED' => 'Ngày tạo',
+    'ID_TITLE' => 'Max',
+    'USERNAME_TITLE' => 'Ten nguoi dung',
+    'START_TIME_TITLE' => 'Lan truy cap cuoi',
+    'STATUS_TITLE' => 'Trang thai',
+    'ACTION_TITLE' => 'Thao tac'
 );

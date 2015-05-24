@@ -15,12 +15,13 @@
 namespace Register\Forms;
 
 use Zend\Form\Form;
-
+use Zend\ServiceManager\ServiceManager;
 class RegisterForms extends Form {
 
     //put your code here
-
-    public function __construct($name = null) {
+    protected $sm;
+    public function __construct($name = null,$optión =array(),ServiceManager $sm) {
+        $this->sm = $sm;
         parent::__construct('registerform');
         $forms = array();
 
@@ -102,16 +103,37 @@ class RegisterForms extends Form {
             ),
             'label' => 'USERNAME',
         ));
-        //capcha
+        //package sekect
+        $productTable = $sm->get('Dashboard\Model\AppProductsTable');
+        $products = $productTable->fetchAll();
+        echo "<pre>";
+        print_r($products);
+        echo "</pre>";
+        exit();
+        
         $this->add(array(
-            'type' => 'Zend\Form\Element\Captcha',
-            'name' => 'captcha',
+            'name' => 'packet',
+            'type' => 'Zend\Form\Element\Select',
             'options' => array(
-                'label' => 'Please verify you are human',
-                'captcha' => new \Zend\Captcha\Dumb()
+                'empty_options' => 'SELECTEMPTY',
+                'value_options' => array(
+                    '1' => 'IT Building',
+                ),
             ),
-            'label' => 'USERNAME',
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
         ));
+        //capcha
+//        $this->add(array(
+//            'type' => 'Zend\Form\Element\Captcha',
+//            'name' => 'captcha',
+//            'options' => array(
+//                'label' => 'Please verify you are human',
+//                'captcha' => new \Zend\Captcha\Dumb()
+//            ),
+//            'label' => 'USERNAME',
+//        ));
         //submit
         $this->add(array(
             'type' => 'submit',

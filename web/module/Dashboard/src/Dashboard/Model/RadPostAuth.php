@@ -18,6 +18,14 @@ class RadPostAuth {
     protected $reply;
     protected $authdate;
     
+    protected $_key = 'id';
+    public function setKey($Key) {
+        $this->_key = $Key;
+    }
+    public function getKey() {
+        return $this->_key;
+    }
+    
     public function exchangeArray($data) {
         $this->id = (isset($data['id']))?$data['id']:'';
         $this->username = (isset($data['username']))?$data['username']:'';

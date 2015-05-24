@@ -53,6 +53,7 @@ class AppProductsTable extends MapperTable{
             'category' => $module->getCategory(),
             'price' => $module->getPrice(),
             'unit' => $module->getUnit(),
+            'value' => $module->getValue(),
             'created' => $module->getCreated(),
             'created_by' => $module->getCreatedBy()
         );

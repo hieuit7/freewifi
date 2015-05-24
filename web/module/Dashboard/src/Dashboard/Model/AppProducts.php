@@ -11,15 +11,26 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-class AppProducts implements InputFilterAwareInterface {
+
+
+class AppProducts  implements InputFilterAwareInterface {
     
     protected $id;
     protected $name;
     protected $category;
     protected $price;
     protected $unit;
+    protected $value;
     protected $created;
     protected $created_by;
+    
+    protected $_key = 'id';
+    public function setKey($Key) {
+        $this->_key = $Key;
+    }
+    public function getKey() {
+        return $this->_key;
+    }
     
     public function setId($Id) {
         $this->id = $Id;
@@ -29,6 +40,9 @@ class AppProducts implements InputFilterAwareInterface {
     }
     public function setPrice($Price) {
         $this->price = $Price;
+    }
+    public function setValue($Value) {
+        $this->value = $Value;
     }
     public function setCategory($Category) {
         $this->category = $Category;
@@ -57,6 +71,9 @@ class AppProducts implements InputFilterAwareInterface {
     public function getPrice() {
         return $this->price;
     }
+    public function getValue() {
+        return $this->value;
+    }
     public function getCreated() {
         return $this->created;
     }
@@ -71,6 +88,7 @@ class AppProducts implements InputFilterAwareInterface {
         $this->category = (isset($data['category'])) ? $data['category'] : null;
         $this->price = (isset($data['price'])) ? $data['price'] : null;
         $this->unit = (isset($data['unit'])) ? $data['unit'] : null;
+        $this->value = (isset($data['value'])) ? $data['value'] : null;
         $this->created = (isset($data['created'])) ? $data['created'] : null;
         $this->created_by = (isset($data['created_by'])) ? $data['created_by'] : null;
     }

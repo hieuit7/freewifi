@@ -41,13 +41,15 @@ class PackageCategoryForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control',
-                'placeholder' => 'MUDOLE_NAME_TITLE'
+                'placeholder' => 'MUDOLE_NAME_TITLE',
+                'required' =>true
             )
         ));
         
         $Appmodules  = $this->sm->get('Dashboard\Model\AppModuleTable');
         $modules = $Appmodules->fetchAll();
-        $values = array('FORM_SELECT_MODULE');
+        $values = array();
+        $values[] = 'FORM_SELECT_MODULE';
         foreach ($modules as $module):
             if($module->getStatus()):
                 $values[$module->getId()] = $module->getName();
@@ -59,7 +61,11 @@ class PackageCategoryForms extends Form {
             'name' => 'value',
             'options' => array(
                 'value_options' => $values,
+                'required'=> true,
             ),
+            'attribute' => array(
+                'class' => 'form-control',
+            )
         ));
         $form = $this->add(array(
             'name' => 'description',
@@ -73,5 +79,6 @@ class PackageCategoryForms extends Form {
         ));
         
     }
+    
 
 }

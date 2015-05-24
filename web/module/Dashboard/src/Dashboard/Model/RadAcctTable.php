@@ -17,13 +17,15 @@ namespace Dashboard\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 use DashBoard\Model\RadAcct;
+use Dashboard\Model\Mapper\MapperTable;
 
-class RadAcctTable {
+class RadAcctTable extends MapperTable{
 
     protected $tableGateway;
 
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
+        parent::__construct($tableGateway);
     }
 
     public function getAcct($id) {

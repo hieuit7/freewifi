@@ -10,13 +10,23 @@ namespace Dashboard\Model;
 
 use Dashboard\Model\AppModule;
 use Zend\Db\TableGateway\TableGateway;
-
-class AppModuleTable {
+use Dashboard\Model\Mapper\MapperTable;
+class AppModuleTable extends MapperTable{
 
     protected $tableGateway;
-
+    
+    protected $_key;
+    
+    public function setKey($Key) {
+        $this->_key = $Key;
+    }
+    public function getKey() {
+        return $this->_key;
+    }
+    
     public function __construct(TableGateway $tableGateway) {
-        $this->tableGateway = $tableGateway;
+        $this->tableGateway = $tableGateway; 
+        parent::__construct($tableGateway);
     }
 
     public function find($modulename) {
@@ -27,6 +37,7 @@ class AppModuleTable {
         endif;
         return $row;
     }
+    
     public function findById($id) {
         $rowSet = $this->tableGateway->select(array('id' => $id));
         $row = $rowSet->current();
@@ -70,5 +81,5 @@ class AppModuleTable {
     public function delete($id) {
         $this->tableGateway->delete(array('id'=>(int)$id));
     }
-
+    
 }

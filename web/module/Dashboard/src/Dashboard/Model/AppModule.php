@@ -13,6 +13,13 @@ use Zend\InputFilter\InputFilterInterface;
 
 class AppModule implements InputFilterAwareInterface {
     
+    /**
+     * @primary
+     * @var type 
+     */
+    
+    
+    
     protected $id;
     protected $name;
     protected $description;
@@ -20,6 +27,8 @@ class AppModule implements InputFilterAwareInterface {
     protected $status;
     protected $created;
     protected $created_by;
+    
+    
 
     public function getId() {
         return $this->id;
@@ -81,5 +90,8 @@ class AppModule implements InputFilterAwareInterface {
     public function setInputFilter(InputFilterInterface $inputFilter) {
         
     }
+    
+    
+    
 
 }
