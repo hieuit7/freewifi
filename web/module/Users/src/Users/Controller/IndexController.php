@@ -40,7 +40,7 @@ class IndexController extends AbstractActionController {
     public function __construct() {
         
     }
-    
+
     public function getAppProductsTable() {
         if (!$this->appCategoryTable):
             $sm = $this->getServiceLocator();
@@ -48,6 +48,7 @@ class IndexController extends AbstractActionController {
         endif;
         return $this->appCategoryTable;
     }
+
     public function indexAction() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('Users');
@@ -57,8 +58,12 @@ class IndexController extends AbstractActionController {
         endif;
 
         $users = $this->getUsersTable();
-        $items = $users->fetchAll();
+        $items = $users->customGetData((int) $this->params()->fromQuery('page', 1), 10, array(), array(), array(), $page);
+        $page->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $page->setItemCountPerPage(10);
+        //$items = $users->fetchAll();
         //do with payment
+
         $route = 'user-action';
         return new ViewModel(array(
             'message' => $this->message,
@@ -76,7 +81,8 @@ class IndexController extends AbstractActionController {
                     'action' => 'delete'
                 )
             ),
-            'items' => $items
+            'items' => $items,
+            'paginator' => $page
         ));
     }
 
@@ -92,18 +98,24 @@ class IndexController extends AbstractActionController {
             $form->setInputFilter($users->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()):
-                echo 'qha';
+                $data = $form->getData();
+                
+            else:
+                $data = $form->getData();
+                
             endif;
         }
         $category = $this->getAppProductsTable();
         $category = $category->fetchAll();
+       
         return new ViewModel(array(
             'form' => $form,
-            'packet'=>$category
+            'packet' => $category,
+            'message' => $form->getMessages()
         ));
     }
-    
-    public  function addUserAction(){
+
+    public function addUserAction() {
         $username = $_POST['username'];
         $password = $_POST['password'];
         $fullname = $_POST['fullname'];
@@ -127,27 +139,27 @@ class IndexController extends AbstractActionController {
         $user->save($u);
         return $this->redirect()->toRoute('users');
     }
-    
-    public function deleteAction(){
+
+    public function deleteAction() {
         $id = $_GET['id'];
         $user = $this->getUsersTable();
         $user->deleteUser($id);
         return $this->redirect()->toRoute('users');
     }
-    
-    public function editAction(){
+
+    public function editAction() {
         $id = $_GET['id'];
         $user = $this->getUsersTable();
         $user = $user->getUser($id);
         $category = $this->getAppProductsTable();
         $category = $category->fetchAll();
         return new ViewModel(array(
-            'packet'=>$category,
-            'user'=>$user
+            'packet' => $category,
+            'user' => $user
         ));
-    }  
-    
-    public function editUserAction(){
+    }
+
+    public function editUserAction() {
         $username = $_POST['username'];
         $id = $_POST['id'];
         $password = $_POST['password'];
@@ -184,101 +196,99 @@ class IndexController extends AbstractActionController {
         $user->save($u);
         return $this->redirect()->toRoute('users');
     }
-    
-    public function deleteAllAction(){
+
+//    public function deleteAllAction(){
+//        $user = $this->getUsersTable();
+//        $user->deleteAllUser();
+//        return $this->redirect()->toRoute('users');
+//    }
+//    
+//    public  function addUserAction(){
+//        $username = $_POST['username'];
+//        $password = $_POST['password'];
+//        $fullname = $_POST['fullname'];
+//        $email = $_POST['email'];
+//        $phone = $_POST['phone'];
+//        $building = $_POST['building'];
+//        $packet = $_POST['packet'];
+//        $created = date();
+//        $room = $_POST['room'];
+//        $user = $this->getUsersTable();
+//        $u = new Users();
+//        $u->setUsername($username);
+//        $u->setPassword($password);
+//        $u->setFullname($fullname);
+//        $u->setEmail($email);
+//        $u->setPhone($phone);
+//        $u->setBuilding($building);
+//        $u->setPacket($packet);
+//        $u->setCreated($created);
+//        $u->setRoom($room);
+//        $user->save($u);
+//        return $this->redirect()->toRoute('users');
+//    }
+//    public function deleteAction(){
+//        $id = $_GET['id'];
+//        $user = $this->getUsersTable();
+//        $user->deleteUser($id);
+//        return $this->redirect()->toRoute('users');
+//    }
+//    
+//    public function editAction(){
+//        $id = $_GET['id'];
+//        $user = $this->getUsersTable();
+//        $user = $user->getUser($id);
+//        $category = $this->getAppProductsTable();
+//        $category = $category->fetchAll();
+//        return new ViewModel(array(
+//            'packet'=>$category,
+//            'user'=>$user
+//        ));
+//    }  
+//    public function editUserAction(){
+//        $username = $_POST['username'];
+//        $id = $_POST['id'];
+//        $password = $_POST['password'];
+//        $fullname = $_POST['fullname'];
+//        $email = $_POST['email'];
+//        $phone = $_POST['phone'];
+//        $building = $_POST['building'];
+//        $packet = $_POST['packet'];
+//        $room = $_POST['room'];
+//        $created = date('dd/mm/yyyy');
+//        $user = $this->getUsersTable();
+//        $u = new Users();
+//        $u->setUsername($username);
+//        $u->setPassword($password);
+//        $u->setFullname($fullname);
+//        $u->setEmail($email);
+//        $u->setPhone($phone);
+//        $u->setBuilding($building);
+//        $u->setPacket($packet);
+//        $u->setCreated($created);
+//        $u->setRoom($room);
+//        $check = $this->getRadCheckTable();
+//        $usr = $user->getUser($id);
+//        $check2 = $check->getName($usr->getUsername());
+//        $check->removeCheck($check2->getId());
+//        $u2 = new RadCheck();
+//        $u2->setUsername($username);
+//        $u2->setAttribute($check2->getAttribute());
+//        $u2->setValue($email);
+//        $u2->setOp(':=');
+//        $check->save($u2);
+//        $u->setId($id);
+//        $user->deleteUser($id);
+//        $user->save($u);
+//        return $this->redirect()->toRoute('users');
+//    }
+
+    public function deleteAllAction() {
         $user = $this->getUsersTable();
         $user->deleteAllUser();
         return $this->redirect()->toRoute('users');
     }
-    
-    public  function addUserAction(){
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $fullname = $_POST['fullname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $building = $_POST['building'];
-        $packet = $_POST['packet'];
-        $created = date();
-        $room = $_POST['room'];
-        $user = $this->getUsersTable();
-        $u = new Users();
-        $u->setUsername($username);
-        $u->setPassword($password);
-        $u->setFullname($fullname);
-        $u->setEmail($email);
-        $u->setPhone($phone);
-        $u->setBuilding($building);
-        $u->setPacket($packet);
-        $u->setCreated($created);
-        $u->setRoom($room);
-        $user->save($u);
-        return $this->redirect()->toRoute('users');
-    }
-    
-    public function deleteAction(){
-        $id = $_GET['id'];
-        $user = $this->getUsersTable();
-        $user->deleteUser($id);
-        return $this->redirect()->toRoute('users');
-    }
-    
-    public function editAction(){
-        $id = $_GET['id'];
-        $user = $this->getUsersTable();
-        $user = $user->getUser($id);
-        $category = $this->getAppProductsTable();
-        $category = $category->fetchAll();
-        return new ViewModel(array(
-            'packet'=>$category,
-            'user'=>$user
-        ));
-    }  
-    
-    public function editUserAction(){
-        $username = $_POST['username'];
-        $id = $_POST['id'];
-        $password = $_POST['password'];
-        $fullname = $_POST['fullname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $building = $_POST['building'];
-        $packet = $_POST['packet'];
-        $room = $_POST['room'];
-        $created = date('dd/mm/yyyy');
-        $user = $this->getUsersTable();
-        $u = new Users();
-        $u->setUsername($username);
-        $u->setPassword($password);
-        $u->setFullname($fullname);
-        $u->setEmail($email);
-        $u->setPhone($phone);
-        $u->setBuilding($building);
-        $u->setPacket($packet);
-        $u->setCreated($created);
-        $u->setRoom($room);
-        $check = $this->getRadCheckTable();
-        $usr = $user->getUser($id);
-        $check2 = $check->getName($usr->getUsername());
-        $check->removeCheck($check2->getId());
-        $u2 = new RadCheck();
-        $u2->setUsername($username);
-        $u2->setAttribute($check2->getAttribute());
-        $u2->setValue($email);
-        $u2->setOp(':=');
-        $check->save($u2);
-        $u->setId($id);
-        $user->deleteUser($id);
-        $user->save($u);
-        return $this->redirect()->toRoute('users');
-    }
-    
-    public function deleteAllAction(){
-        $user = $this->getUsersTable();
-        $user->deleteAllUser();
-        return $this->redirect()->toRoute('users');
-    }
-    
+
     public function getUsersTable() {
         if (!$this->usersTable):
             $sm = $this->getServiceLocator();
@@ -302,6 +312,5 @@ class IndexController extends AbstractActionController {
         endif;
         return $this->usersCodeTable;
     }
-    
 
 }

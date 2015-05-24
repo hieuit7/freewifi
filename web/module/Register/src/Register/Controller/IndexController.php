@@ -169,25 +169,32 @@ class IndexController extends AbstractActionController {
         $url = $this->getRequest();
         $res = parse_url($url->getServer()->get('HTTP_REFERER'), PHP_URL_QUERY);
         parse_str($res, $get);
-        $username = str_replace('-', '', $get['mac']);
+        $username = str_replace('-', '', (isset($get['mac'])) ? $get['mac'] : 'free_nomac');
         $password = $username;
-
         $userTable = $this->getUsersTable();
         $userold = $userTable->find($username);
+        $inactive = false;
         if ($userold):
             $radCheckTable = $this->getRadCheckTable();
             $rads = $radCheckTable->getChecks($userold->getUsername(), array('attribute' => 'Md5-Password'));
             if ($rads):
                 //nothing to do with user exits Advertisement here or some thing.....
+                $this->message = $url->getServer()->get('HTTP_REFERER');
+            else:
+                $inactive = true;
             endif;
         else:
+            $inactive = true;
+        endif;
+
+        if ($inactive):
             $users = new Users();
             $users->setUsername($username);
             $users->setPassword($password);
             $users->setActivate(1);
             $users->setFullname("Auto Register");
             $users->setPacket(1);
-            $users->setCreated(date('Y-m-d'));
+            $users->setCreated(date('Y-m-d H:m:d'));
             $users->setCreatedBy(0);
             $users->setEmail('contact@freewifi.vn');
             if ($userTable->save($users)):
@@ -199,14 +206,25 @@ class IndexController extends AbstractActionController {
                 $radCheckTable = $this->getRadCheckTable();
                 if ($radCheckTable->save($radCheck)):
                     $this->message = $url->getServer()->get('HTTP_REFERER');
+
                     $this->responseCode = 1;
+                    $radCheck = new RadCheck();
+                    $radCheck->setUsername($users->getUsername());
+                    $radCheck->setOp(':=');
+                    $radCheck->setAttribute('Expire-After');
+                    $radCheck->setValue('16');
+                    $radCheckTable->save($radCheck);
                 endif;
             else:
                 // fail to save user to app user!!
+                echo "<pre>3";
+                print_r($username);
+                echo "</pre>";
+                exit();
             endif;
         endif;
-
         $this->layout('layout/register');
+
         return new ViewModel(array(
             'message' => $this->message,
             'code' => $this->responseCode,
@@ -240,6 +258,30 @@ class IndexController extends AbstractActionController {
         if (!$this->usersCodeTable):
             $sm = $this->getServiceLocator();
             $this->usersCodeTable = $sm->get('Dashboard\Model\UsersCodeTable');
+        endif;
+        return $this->usersCodeTable;
+    }
+
+    public function getProductsTable() {
+        if (!$this->usersCodeTable):
+            $sm = $this->getServiceLocator();
+            $this->usersCodeTable = $sm->get('Dashboard\Model\AppProductsTable');
+        endif;
+        return $this->usersCodeTable;
+    }
+
+    public function getProductCategoryTable() {
+        if (!$this->usersCodeTable):
+            $sm = $this->getServiceLocator();
+            $this->usersCodeTable = $sm->get('Dashboard\Model\AppProductCategoriesTable');
+        endif;
+        return $this->usersCodeTable;
+    }
+
+    public function getModulesTable() {
+        if (!$this->usersCodeTable):
+            $sm = $this->getServiceLocator();
+            $this->usersCodeTable = $sm->get('Dashboard\Model\AppmodulesTable');
         endif;
         return $this->usersCodeTable;
     }

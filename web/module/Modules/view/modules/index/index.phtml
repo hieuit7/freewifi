@@ -20,7 +20,7 @@
                     <?php echo $this->translate('MUDOLE_NAME_TITLE'); ?>
                 </td>
                 <td class="col-md-5 col-xs-12">
-                    <?php echo $this->translate('MODULE_ACTION_TITLE'); ?>
+                    <?php echo $this->translate('MODULE_STATUS_TITLE'); ?>
                 </td>
             </tr>
         </thead>
@@ -40,9 +40,7 @@
                             <?php echo $item->getName(); ?>
                         </td>
                         <td class="col-md-5 col-xs-12">
-                            <form method="post" style="display: inline" action="modules/listnguoidung"><button type="submit" name="module_attribute" value="<?php echo $item->getAttribute(); ?>" class="btn btn-info btn-xs " style="border-radius: 0px; border:none; padding: 5px">List Người Dùng</button></a></form>
-                            <button style="border-radius: 0px; border:none; padding:5px" type="button" id="add" class="add btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal<?php echo $item->getId(); ?>">Thêm User</button>
-                            <div class="clearfix"></div>
+                            <?php echo ($item->getStatus())?$this->translate('MODULE_STATUS_ON'):$this->translate('MODULE_STATUS_OFF')?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

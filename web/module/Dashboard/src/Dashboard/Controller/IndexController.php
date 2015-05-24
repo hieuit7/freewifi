@@ -42,12 +42,18 @@ class IndexController extends AbstractActionController {
         $usersAuthen = $authens->getPostAuths('');
         $all = $acct->getAccts('', array(), 0);
         $inputs = 0;
+        $countUser = array();
         foreach ($all as $key => $value) {
             $inputs +=$value->getacctinputoctets();
+            if(!in_array($value->getUsername(), $countUser)):
+                $countUser[$value->getUsername()] = $value;
+            endif;
+            
         }
-        $sums = array('userlogged' => $authens->count());
+        $sums = array('userlogged' => count($countUser));
+        
         $sums['bandwidthtrafic'] = $inputs;
-        $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+       //$objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 
         return new ViewModel(array(
             'sums' => $sums

@@ -131,10 +131,10 @@ class IndexController extends AbstractActionController {
         $form = new ModulesForms();
         $modules = $this->getAppModuleTable();
         $id = $this->params('id', 0);
-        
+
         $request = $this->getRequest();
-        
-        
+
+
         if ($request->isPost() && $request->getPost()->get('idsubmit', 0)):
             $para = $request->getPost();
             $form->setData($para);
@@ -143,12 +143,12 @@ class IndexController extends AbstractActionController {
                 $module->exchangeArray($form->getData());
                 $module->setCreated(date('Y-m-d H:m:s'));
                 $module->setCreatedBy($this->user->id);
-                if($para->get('idsubmit',0)):
-                    $module->setId($para->get('idsubmit',0));
+                if ($para->get('idsubmit', 0)):
+                    $module->setId($para->get('idsubmit', 0));
                 endif;
-               
+
                 $moduleTable = $this->getAppModuleTable();
-                
+
                 $id = $moduleTable->save($module);
                 if ($id):
                     $this->redirect()->toRoute('modules');
@@ -172,6 +172,7 @@ class IndexController extends AbstractActionController {
             'form' => $form
         ));
     }
+
     public function delete() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('MODULE_ADD_TITLE');
@@ -183,20 +184,21 @@ class IndexController extends AbstractActionController {
         $form = new ModulesForms();
         $modules = $this->getAppModuleTable();
         $request = $this->getRequest();
-        if($request->isPost()):
+        if ($request->isPost()):
             $para = $request->getPost();
-            $ids = $para->get('ids',0);
-            if($ids):
+            $ids = $para->get('ids', 0);
+            if ($ids):
                 echo "<pre>";
                 print_r($ids);
                 echo "</pre>";
                 exit();
             endif;
         endif;
-        
+
         $request = $this->getRequest();
         $modules->delete($id);
     }
+
     public function addUserAction() {
         $id = $_POST['user_id'];
         $module_attr = $_POST['module_attribute'];
@@ -395,9 +397,8 @@ class IndexController extends AbstractActionController {
             $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
         endif;
         $this->user = $user;
-        $form = new ModulesForms();
-
-
+        $form = new \Modules\Forms\PackageCategoryForms(null, array(), $this->getServiceLocator());
+        
         $request = $this->getRequest();
 
         if ($request->isPost()):

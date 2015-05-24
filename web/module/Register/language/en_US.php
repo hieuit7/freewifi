@@ -14,5 +14,6 @@ return array(
     'EMAIL' => 'Email:',
     'SELECTBUILDING' => 'Building:',
     'ROOM' => 'Room number:',
-    'PHONENUMBER' => 'Phone number:'
+    'PHONENUMBER' => 'Phone number:',
+    'FORM_SELECT_MODULE' => 'Chọn module'
 );

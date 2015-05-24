@@ -28,13 +28,11 @@ class RegisterForms extends Form {
         $this->add(array(
             'name' => 'username',
             'type' => 'text',
-            
             'attributes' => array(
                 'class' => 'form-control',
             ),
-            'label' => 'USERNAME',
         ));
-        
+
         //fullname 
         $this->add(array(
             'name' => 'fullname',
@@ -48,6 +46,9 @@ class RegisterForms extends Form {
         $this->add(array(
             'name' => 'password',
             'type' => 'password',
+            'options' => array(
+                
+            ),
             'attributes' => array(
                 'class' => 'form-control'
             )
@@ -82,7 +83,7 @@ class RegisterForms extends Form {
             ),
             'attributes' => array(
                 'class' => 'form-control',
-            ),'label' => 'USERNAME',
+            ), 'label' => 'USERNAME',
         ));
         //room
         $this->add(array(
@@ -90,7 +91,7 @@ class RegisterForms extends Form {
             'type' => 'text',
             'attributes' => array(
                 'class' => 'form-control'
-            ),'label' => 'USERNAME',
+            ), 'label' => 'USERNAME',
         ));
         //fone
         $this->add(array(

@@ -16,8 +16,9 @@ namespace Dashboard\Model;
 
 use Dashboard\Model\Users;
 use Zend\Db\TableGateway\TableGateway;
+use Dashboard\Model\Mapper\MapperTable;
 
-class UsersTable {
+class UsersTable extends MapperTable{
 
     protected $tableGateway;
 

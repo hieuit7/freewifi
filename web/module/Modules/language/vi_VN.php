@@ -25,5 +25,6 @@ return array(
     'MODULE_DESCRIPTION_TITLE' => 'Mo ta',
     'MODULE_ADD_TITLE' => 'Them module',
     'MODULE_ADD_BUTTON_TITLE' => 'Thêm',
-    'MODULE_CANCLE_BUTTON_TITLE' => 'Hủy'
+    'MODULE_CANCLE_BUTTON_TITLE' => 'Hủy',
+    'FORM_SELECT_MODULE' => 'Chọn module'
 );

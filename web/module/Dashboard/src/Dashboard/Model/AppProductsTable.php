@@ -10,13 +10,15 @@ namespace Dashboard\Model;
 
 use Dashboard\Model\AppProducts;
 use Zend\Db\TableGateway\TableGateway;
-
-class AppProductsTable {
+use Dashboard\Model\Mapper\MapperTable;
+class AppProductsTable extends MapperTable{
 
     protected $tableGateway;
 
     public function __construct(TableGateway $tableGateway) {
+        parent::__construct($tableGateway);
         $this->tableGateway = $tableGateway;
+        
     }
 
     public function find($modulename) {
@@ -67,6 +69,7 @@ class AppProductsTable {
             endif;
         endif;
     }
+    
     public function deleteUser($id) {
         $this->tableGateway->delete(array('id'=>(int)$id));
     }
