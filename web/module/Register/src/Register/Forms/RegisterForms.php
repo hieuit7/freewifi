@@ -106,19 +106,19 @@ class RegisterForms extends Form {
         //package sekect
         $productTable = $sm->get('Dashboard\Model\AppProductsTable');
         $products = $productTable->fetchAll();
-        echo "<pre>";
-        print_r($products);
-        echo "</pre>";
-        exit();
+        $packet = array();
+        foreach ($products as $value):
+                $packet[$value->getId()] = $value->getName();
+        endforeach;
+            
+       
         
         $this->add(array(
             'name' => 'packet',
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
                 'empty_options' => 'SELECTEMPTY',
-                'value_options' => array(
-                    '1' => 'IT Building',
-                ),
+                'value_options' => $packet,
             ),
             'attributes' => array(
                 'class' => 'form-control',
@@ -138,6 +138,9 @@ class RegisterForms extends Form {
         $this->add(array(
             'type' => 'submit',
             'name' => 'submit',
+            'attributes' => array(
+                'class' => 'form-control btn btn-success',
+            ),
         ));
     }
 

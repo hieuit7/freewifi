@@ -80,16 +80,16 @@ class ProductFroms extends Form{
                 'placeholder' => 'PACKET_VALUE_TITLE'
             )
         ));
-        $this->add(array(
-            'name' => 'description',
-            'type' => 'textarea',
-            'options' => array(
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'placeholder' => 'PACKET_DESC_TITLE'
-            )
-        ));
+//        $this->add(array(
+//            'name' => 'description',
+//            'type' => 'textarea',
+//            'options' => array(
+//            ),
+//            'attributes' => array(
+//                'class' => 'form-control',
+//                'placeholder' => 'PACKET_DESC_TITLE'
+//            )
+//        ));
         
         
     }

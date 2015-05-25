@@ -1,23 +1,37 @@
-<?php if(isset($message)):?>
-<div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
-    <?php echo (isset($message))?$message:"";?>
-</div>
-<?php endif;?>
-<div class="row">
-    <form action="/register/verify/<?php echo $id ?>" method="post">
-    <div class="col-sm-6 col-md-6 col-xs-12">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-xs-12">
-                <?php echo $code;?>
-            </div>
-            <div class="col-sm-12 col-md-12 col-xs-12">
-                <input name="verify" type="text">
-                <input name="username" type="text" value="<?php echo (isset($username)?$username:'');?>" <?php echo (!isset($username))?'placeholder="Please input username"':'hidden'?>>
+<?php if (isset($message)): ?>
+    <div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+        <?php echo (isset($message)) ? $message : ""; ?>
+    </div>
+<?php endif; ?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title alert alert-success" style="text-align: center; color: #202020; text-transform: uppercase; font-size: 20px"><?php echo $this->translate('_WELLCOME'); ?></h3>
+                    <p style="text-align: center; font-size: 16px; margin-top: 10px"><?php echo $this->translate('MESSAGE_WELLCOME_VERIFY'); ?></p>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <form action="/register/verify/<?php echo $id ?>" method="post">
+                            <div class="col-sm-6 col-md-6 col-xs-12">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-xs-12">
+                                        <?php echo $code; ?>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-xs-12">
+                                        <input name="verify" type="text">
+                                        <input name="username" type="text" value="<?php echo (isset($username) ? $username : ''); ?>" <?php echo (!isset($username)) ? 'placeholder="Please input username"' : 'hidden' ?>>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-xs-12">
+                                <input type="submit" name="submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-md-6 col-xs-12">
-        <input type="submit" name="submit">
-    </div>
-    </form>
 </div>

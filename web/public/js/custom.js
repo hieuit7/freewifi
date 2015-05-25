@@ -5,7 +5,7 @@
  */
 var App = {
     submit: function () {
-        
+
         if (jQuery('form#autologin').length > 0) {
             setTimeout(function () {
                 jQuery('form#autologin').submit();
@@ -50,43 +50,84 @@ var App = {
                 confirm('Do you want to delete this user');
         });
     },
-    deconnect: function(){
-        if(jQuery('.deconnect').length > 0){
-            jQuery('.deconnect').on('click',function(){
-               $id = jQuery(this).attr('data-mac');
-               console.log($id);
-               jQuery.ajax({
-                   url: '/dashboard/deconnect',
-                   type: 'post',
-                   data: {id:$id},
-                   success:function(data){
-                       console.log(data);
-                   }
-               });
+    deconnect: function () {
+        if (jQuery('.deconnect').length > 0) {
+            jQuery('.deconnect').on('click', function () {
+                $id = jQuery(this).attr('data-mac');
+                console.log($id);
+                jQuery.ajax({
+                    url: '/dashboard/deconnect',
+                    type: 'post',
+                    data: {id: $id},
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
             });
         }
     },
-    controlAction: function(){
-        if(jQuery('.editLink').length > 0){
-            jQuery('.editLink').on('click',function(e){
+    controlAction: function () {
+        if (jQuery('.editLink').length > 0) {
+            jQuery('.editLink').on('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 //console.log(jQuery('.checked'));
                 $item = 0;
-                jQuery.each(jQuery('.checked'),function(index,item){
-                    if(jQuery(item).prop('checked')){
+                jQuery.each(jQuery('.checked'), function (index, item) {
+                    if (jQuery(item).prop('checked')) {
                         console.log(jQuery(item).attr('value'));
                         $item = jQuery(item).attr('value');
                     }
                 });
-                $action = jQuery(this).attr('href')+'/'+$item;
-                console.log($action);
-                jQuery('#adminForm').attr('action',$action);
-                jQuery('#adminForm').submit();
+                if ($item == 0) {
+                    alert('Please select a packet!!');
+                } else {
+                    $action = jQuery(this).attr('href') + '/' + $item;
+                    //console.log($action);
+                    jQuery('#adminForm').attr('action', $action);
+                    jQuery('#adminForm').submit();
+                }
             });
-        };
-        if(jQuery('.removeLink'));
-                
+        }
+        ;
+        if (jQuery('.removeLink').length > 0) {
+            jQuery('.removeLink').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                //console.log(jQuery('.checked'));
+                $item = 0;
+                jQuery.each(jQuery('.checked'), function (index, item) {
+                    if (jQuery(item).prop('checked')) {
+                        console.log(jQuery(item).attr('value'));
+                        $item = jQuery(item).attr('value');
+                    }
+                });
+                if ($item == 0) {
+                    alert('Please select a packet!!');
+                } else {
+                    $action = jQuery(this).attr('href') + '/' + $item;
+                    //console.log($action);
+                    jQuery('#adminForm').attr('action', $action);
+                    jQuery('#adminForm').submit();
+                }
+            });
+        }
+        ;
+        if (jQuery('.linkCancel').length > 0) {
+            jQuery('.linkCancel').on('click', function (e) {
+                //console.log('ok');
+                e.preventDefault();
+                e.stopPropagation();
+                $action = jQuery(this).attr('data-href');
+
+                jQuery('form').attr('action', $action);
+                jQuery('form').submit();
+            });
+        }
+        ;
+
+
+
     },
 };
 jQuery(document).ready(function () {

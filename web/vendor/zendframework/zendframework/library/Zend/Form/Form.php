@@ -519,7 +519,6 @@ class Form extends Fieldset implements FormInterface
         if (!$result) {
             $this->setMessages($filter->getMessages());
         }
-
         return $result;
     }
 

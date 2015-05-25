@@ -81,7 +81,6 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
-        
     ),
     // Placeholder for console routes
     'console' => array(
@@ -90,4 +89,11 @@ return array(
             ),
         ),
     ),
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format' => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
+            'message_close_string' => '</li></ul></div>',
+            'message_separator_string' => '</li><li>'
+        )
+    )
 );

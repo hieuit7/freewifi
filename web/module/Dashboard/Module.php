@@ -28,6 +28,8 @@ use Dashboard\Model\AppModule;
 use Dashboard\Model\AppModuleTable;
 use Dashboard\Model\AppOrders;
 use Dashboard\Model\AppOrdersTable;
+use Dashboard\Model\AppOrderDetails;
+use Dashboard\Model\AppOrderDetailsTable;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Validator\AbstractValidator;
 use Dashboard\Model\AppProductCategories;
@@ -248,6 +250,17 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype->setArrayObjectPrototype(new AppOrders());
                     return new TableGateway('app_orders', $dbAdapter, null, $resultSetPrototype);
                 },
+                        'Dashboard\Model\AppOrderDetailsTable' => function($sm) {
+                    $tableGateway = $sm->get('AppOrderDetailsTableGateway');
+                    $table = new AppOrderDetailsTable($tableGateway);
+                    return $table;
+                },
+                        'AppOrderDetailsTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new AppOrderDetails());
+                    return new TableGateway('app_order_details', $dbAdapter, null, $resultSetPrototype);
+                },
                         'Dashboard\Model\AppProductsTable' => function($sm) {
                     $tableGateway = $sm->get('AppProductsTableGateway');
                     $table = new AppProductsTable($tableGateway);
@@ -259,7 +272,6 @@ class Module implements ConfigProviderInterface, AutoLoaderProviderInterface {
                     $resultSetPrototype->setArrayObjectPrototype(new AppProducts());
                     return new TableGateway('app_products', $dbAdapter, null, $resultSetPrototype);
                 },
-                        
                         'Dashboard\Model\AppProductCategoriesTable' => function($sm) {
                     $tableGateway = $sm->get('AppProductCategoriesTableGateway');
                     $table = new AppProductCategoriesTable($tableGateway);

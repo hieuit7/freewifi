@@ -32,7 +32,20 @@ class MapperTable extends AbstractTableGateway{
         $this->table = $this->tableGateway->getTable();
         $this->adapter = $this->tableGateway->getAdapter();
     }
-
+    public function search($condition = array()) {
+        $selector = new Select();
+        $selector->from($this->tableGateway->getTable());
+        if($condition):
+            $selector->where($condition);
+        endif;
+        $resultSet = $this->tableGateway->selectWith($selector);
+        $result = array();
+        while ($row = $resultSet->current()):
+            $result[] = $row;
+            $resultSet->next();
+        endwhile;
+        return $result;
+    }
     public function customGetData($page = 1, $limit = 10, $wheres = array(), $orders = array(), $joins = array(), &$paging) {
         $selector = new Select();
         $selector->from(array(

@@ -33,5 +33,12 @@ return array(
     'PACKET_PRICE_TITLE' => 'Giá',
     'PACKET_UNIT_TITLE' => 'Đơn vị tính',
     'PACKET_VALUE_TITLE' => 'Giá trị',
-    'PACKET_DESC_TITLE' => 'Mô tả'
+    'PACKET_DESC_TITLE' => 'Mô tả',
+    'MODULE_EDIT_BUTTON_TITLE' => 'Sửa',
+    'CATEGORY_NAME_TITLE' => 'Tên loại',
+    'CATEGORY_DESC_TITLE' => 'Mô tả',
+    'CATEGORY_MODULE_TITLE' => 'Module',
+    'MODULE_SAVE_BUTTON_TITLE' => 'Lưu',
+    'MODULE_EDIT_CATEGORY_TITLE' => 'Sửa phân loại',
+    'MODULE_ADD_CATEGORY_TITLE' => 'Thêm phân loại'
 );

@@ -74,22 +74,23 @@ class IndexController extends AbstractActionController {
         $radActionTable = $this->getRadAcctTable();
         $page = $this->params()->fromQuery('page',1);
         $radActions = $radActionTable->customGetData($page,10,array(),array(),array(),$paging);
-
+        
         $users = array();
-        foreach ($k as $value):
-            if (in_array($value->getUsername(), $users)):
-                $users[$value->getUsername()]['user'] = $value;
-                $users[$value->getUsername()]['status'] = (!$value->getAcctstoptime()) ? 1 : ($users[$value->getUsername()]['status']) ? 1 : 1;
+        foreach ($radActions as $rad):
+            if (in_array($rad['username'], $users)):
+                $users[$rad['username']]['user'] = $rad;
+                $users[$rad['username']]['status'] = (!$value->getAcctstoptime()) ? 1 : ($users[$value->getUsername()]['status']) ? 1 : 1;
             else:
-                $users[$value->getUsername()] = array();
-                $users[$value->getUsername()]['user'] = $value;
-                $users[$value->getUsername()]['status'] = (!$value->getAcctstoptime()) ? 1 : 0;
+                $users[$rad['username']] = array();
+                $users[$rad['username']]['user'] = $rad;
+                $users[$rad['username']]['status'] = (!$rad['acctstoptime']) ? 1 : 0;
             endif;
         endforeach;
-
+        $paging->setCurrentPageNumber($page);
+        $paging->setItemCountPerPage(10);
         return new ViewModel(array(
-            'allUser' => $k,
-            'users' => $users
+            'users' => $users,
+            'paginator' => $paging
         ));
     }
 

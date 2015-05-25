@@ -1,33 +1,33 @@
 
 <h1><?php echo $this->escapeHtml('Transactions'); ?></h1>
 
-<?php  ?>
-    <table class='table table-hover'>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Packet</th>
-                <th>Day</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
-            <?php foreach ($user as $u): ?>
-            <?php 
-                $r = $radact->findByUsername($u->getUsername()); 
-                if(!$r)
-                    continue;
-                else {
-            ?>
-            <tr>
-                <td><?php echo $u->getId(); ?></td>
-                <td><?php echo $u->getUsername(); ?></td>
-                <td><?php $p = $packet->findById($u->getPacket()); echo $p->getName(); ?></td>
-                <td><?php $r = $radact->findByUsername($u->getUsername());$now = time(); $your_date = strtotime($r->getacctstarttime());   $datediff = $now - $your_date; echo floor($datediff/(60*60*24)); ?></td>
-                <td><?php $p = $packet->findById($u->getPacket()); echo number_format(floor($datediff/(60*60*24))*$p->getPrice()).' VND'; ?></td>
-                <td><form method="post" style="display: inline" action="payments/createpayment">
-                        <input type="hidden" name="id_user" value="<?php echo $u->getId()?>">
-                        <button style="border-radius: 0px; border:none; padding:5px" value="<?php echo $u->getUsername(); ?>" name="radcheck_id" type="submit" id="add" class="add btn btn-danger btn-xs">Payment</button></form></td>
-            </tr>
-                <?php } ?>
-            <?php endforeach; ?>
-    </table>
+<?php ?>
+<table class='table table-hover'>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Packet</th>
+        <th>Day</th>
+        <th>Total</th>
+        <th>Action</th>
+    </tr>
+    <?php foreach ($items as $item): ?>
+
+        <tr>
+            <td><?php echo $item['customerid']; ?></td>
+            <td><?php echo $item['username']; ?></td>
+            <td><?php echo $item['productid']; ?></td>
+            <td><?php echo $item['orderdate']; ?></td>
+            <td><?php echo $item['sumtotal'] . ' VND'; ?></td>
+            <td><form method="post" style="display: inline" action="payments/createpayment">
+                    <input type="hidden" name="id_user" value="<?php echo $item['customerid']; ?>">
+                    <?php if (!$item['status']): ?>
+                        <button style="border-radius: 0px; border:none; padding:5px" value="<?php echo $item['username']; ?>" name="radcheck_id" type="submit" id="add" class="add btn btn-danger btn-xs">Payment</button>
+                    <?php endif; ?>
+                </form>
+            </td>
+
+        </tr>
+
+    <?php endforeach; ?>
+</table>

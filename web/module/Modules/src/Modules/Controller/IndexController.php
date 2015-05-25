@@ -29,6 +29,7 @@ use Dashboard\Model\AppProducts;
 use Dashboard\Model\AppProductsTable;
 use Modules\Forms\ModulesForms;
 use Modules\Forms\ProductFroms;
+use Modules\Forms\PackageCategoryForms;
 
 class IndexController extends AbstractActionController {
 
@@ -267,8 +268,10 @@ class IndexController extends AbstractActionController {
 
     public function categoryAction() {
         $route = 'modules';
-        $category = $this->getAppProductCategoriesTable();
-        $category = $category->fetchAll();
+        $categoryTable = $this->getAppProductCategoriesTable();
+        $page = (int) $this->params()->fromQuery('page', 1);
+
+        $categories = $categoryTable->customGetData($page, 10, array(), array(), array(), $paging);
         return new ViewModel(array(
             'buttons' => array(
                 'add' => array(
@@ -284,9 +287,113 @@ class IndexController extends AbstractActionController {
                     'action' => 'deletecategory'
                 )
             ),
-            'items' => $category
+            'items' => $categories,
+            'paginator' => $paging
                 )
         );
+    }
+
+    public function deletepacketAction() {
+        $id = $_GET['id'];
+        $user = $this->getAppProductsTable();
+        $user->deleteUser($id);
+        return $this->redirect()->toRoute('modules', array('action' => 'packet'));
+    }
+
+    public function deleteAllpacketAction() {
+        $user = $this->getAppProductsTable();
+        $user->deleteAllUser();
+        return $this->redirect()->toRoute('modules', array('action' => 'packet'));
+    }
+
+    public function deletecategoryAction() {
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            return $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
+        endif;
+        $this->user = $user;
+        $id = $this->params('id', 0);
+        if ($id):
+            $categoryTable = $this->getAppProductCategoriesTable();
+            $categoryTable->deleteUser($id);
+        endif;
+        $this->flashMessenger()->addMessage('kaka');
+        return $this->redirect()->toRoute('modules', array('action' => 'category'));
+    }
+
+    public function deleteAllcategoryAction() {
+        $user = $this->getAppProductCategoriesTable();
+        $user->deleteAllUser();
+        return $this->redirect()->toRoute('modules', array('action' => 'category'));
+    }
+
+    public function editcategoryAction() {
+        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->headTitle('MODULE_EDIT_CATEGORY_TITLE');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
+        endif;
+        $this->user = $user;
+        $id = $this->params('id', 0);
+        if ($id):
+            $form = new PackageCategoryForms(null, array(), $this->getServiceLocator());
+            $categoriesTable = $this->getAppProductCategoriesTable();
+            $category = $categoriesTable->findById($id);
+            $form->setData(array(
+                'name' => $category->getName(),
+                'value' => $category->getValue(),
+                'description' => $category->getDescription(),
+            ));
+
+        endif;
+        return new ViewModel(array(
+            'items' => $category,
+            'form' => $form
+        ));
+    }
+
+    public function editpacketAction() {
+        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->headTitle('MODULE_ADD_TITLE');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
+        endif;
+        $this->user = $user;
+        $form = new ProductFroms(null, array(), $this->getServiceLocator());
+        $id = $this->params('id', 0);
+
+        if ($id):
+            $productTable = $this->getAppProductsTable();
+            $product = $productTable->findById($id);
+            $form->setData(array(
+                'name' => $product->getName(),
+                'category' => $product->getCategory(),
+                'price' => $product->getPrice(),
+                'value' => $product->getValue(),
+                'unit' => $product->getUnit(),
+            ));
+        endif;
+        return new ViewModel(array(
+            'form' => $form,
+            'message' => $form->getMessages(),
+            'item' => $product
+        ));
+    }
+
+    public function addcategoryAction() {
+        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->headTitle('MODULE_ADD_CATEGORY_TITLE');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
+        endif;
+        $this->user = $user;
+        $form = new \Modules\Forms\PackageCategoryForms(null, array(), $this->getServiceLocator());
+        return new ViewModel(array(
+            'form' => $form
+        ));
     }
 
     public function addpacketAction() {
@@ -304,9 +411,51 @@ class IndexController extends AbstractActionController {
         ));
     }
 
+    public function savecategoryAction() {
+        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->headTitle('MODULE_ADD_CATEGORY_TITLE');
+        $user = new Container('user');
+        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
+        endif;
+        $this->user = $user;
+        $form = new \Modules\Forms\PackageCategoryForms(null, array(), $this->getServiceLocator());
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()):
+            $datas = $request->getPost();
+            $form->setData($datas);
+            if ($form->isValid()):
+                $packetCategory = new \Dashboard\Model\AppProductCategories();
+                $packetCategory->exchangeArray($form->getData());
+                $id = $datas->get('id', 0);
+                if ($id):
+                    $packetCategory->setId($id);
+                    $packetCategory->setCreated($datas->get('created'));
+                    $packetCategory->setCreatedBy($datas->get('created_by'));
+                else:
+                    $packetCategory->setCreated(date('Y-m-d H:m:s'));
+                    $packetCategory->setCreatedBy($this->user->id);
+                endif;
+                $moduleTable = $this->getAppProductCategoriesTable();
+                $id = $moduleTable->save($packetCategory);
+                if ($id):
+                    $this->redirect()->toRoute('modules', array('action' => 'category'));
+                endif;
+            endif;
+        endif;
+
+        $view = new ViewModel(array(
+            'form' => $form,
+            'message' => $form->getMessages(),
+            'items' => $packetCategory
+        ));
+    }
+
     public function savepacketAction() {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->headTitle('MODULE_ADD_TITLE');
+        $renderer->headTitle('CATEGORY__TITLE');
         $user = new Container('user');
         if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
             $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
@@ -327,10 +476,13 @@ class IndexController extends AbstractActionController {
                     $products->setId($id);
                     $products->setCreated($datas->get('created'));
                     $products->setCreatedBy($datas->get('created_by'));
+                else:
+                    $products->setCreated(date('Y-m-d H:m:s'));
+                    $products->setCreatedBy($this->user->id);
                 endif;
-                $products->setCreated(date('Y-m-d H:m:s'));
-                $products->setCreatedBy($this->user->id);
+
                 $productsTable = $this->getAppProductsTable();
+
                 $id = $productsTable->save($products);
                 if ($id):
                     $this->redirect()->toRoute('modules', array('action' => 'packet'));
@@ -346,140 +498,7 @@ class IndexController extends AbstractActionController {
         else:
             $view->setTemplate('modules/addpacket');
         endif;
-        return new ViewModel(array(
-            'form' => $form,
-            'message' => $form->getMessages()
-        ));
-    }
-
-    public function deletepacketAction() {
-        $id = $_GET['id'];
-        $user = $this->getAppProductsTable();
-        $user->deleteUser($id);
-        return $this->redirect()->toRoute('modules', array('action' => 'packet'));
-    }
-
-    public function deleteAllpacketAction() {
-        $user = $this->getAppProductsTable();
-        $user->deleteAllUser();
-        return $this->redirect()->toRoute('modules', array('action' => 'packet'));
-    }
-
-    public function deletecategoryAction() {
-        $id = $_GET['id'];
-        $user = $this->getAppProductCategoriesTable();
-        $user->deleteUser($id);
-        return $this->redirect()->toRoute('modules', array('action' => 'category'));
-    }
-
-    public function deleteAllcategoryAction() {
-        $user = $this->getAppProductCategoriesTable();
-        $user->deleteAllUser();
-        return $this->redirect()->toRoute('modules', array('action' => 'category'));
-    }
-
-    public function editcategoryAction() {
-        $id = $_GET['id'];
-        $user = $this->getAppProductCategoriesTable();
-        $user = $user->findById($id);
-        return new ViewModel(array(
-            'category' => $user
-        ));
-    }
-
-    public function editpacketAction() {
-        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->headTitle('MODULE_ADD_TITLE');
-        $user = new Container('user');
-        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
-            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
-        endif;
-        $this->user = $user;
-        $form = new ProductFroms(null, array(), $this->getServiceLocator());
-        $id = $this->params('id', 0);
-        
-        if ($id):
-            $productTable = $this->getAppProductsTable();
-            $product = $productTable->findById($id);
-            $form->setData(array(
-                'name' => $product->getName(),
-                'category' => $product->getCategory(),
-                'price' => $product->getPrice(),
-                'value' => $product->getValue(),
-                'unit' => $product->getUnit(),
-            ));
-        endif;
-        return new ViewModel(array(
-            'form' => $form,
-            'message' => $form->getMessages(),
-            'item' => $product
-        ));
-    }
-
-    public function editpkAction() {
-        $id = $_POST['id'];
-        $category2 = $this->getAppProductsTable();
-        $category2->deleteUser($id);
-        $c = $this->getAppProductsTable();
-        $name = $_POST['name'];
-        $category = $_POST['category'];
-        $price = $_POST['price'];
-        $unit = $_POST['unit'];
-        $p = new AppProducts();
-        $p->setName($name);
-        $p->setCategory($category);
-        $p->setPrice($price);
-        $p->setUnit($unit);
-        $c->save($p);
-        return $this->redirect()->toRoute('modules', array('action' => 'packet'));
-    }
-
-    public function editctAction() {
-        $name = $_POST['name'];
-        $description = $_POST['description'];
-        $id = $_POST['id'];
-        $category = $this->getAppProductCategoriesTable();
-        $category->deleteUser($id);
-        $c = new AppProductCategories();
-        $c->setName($name);
-        $c->setDescription($description);
-        $category->save($c);
-        return $this->redirect()->toRoute('modules', array('action' => 'category'));
-    }
-
-    public function addcategoryAction() {
-        $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->headTitle('MODULE_ADD_TITLE');
-        $user = new Container('user');
-        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
-            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'modules'));
-        endif;
-        $this->user = $user;
-        $form = new \Modules\Forms\PackageCategoryForms(null, array(), $this->getServiceLocator());
-
-        $request = $this->getRequest();
-
-        if ($request->isPost()):
-
-            $form->setData($request->getPost());
-            if ($form->isValid()):
-                $packetCategory = new \Dashboard\Model\AppProductCategories();
-                $packetCategory->exchangeArray($form->getData());
-                $packetCategory->setCreated(date('Y-m-d H:m:s'));
-                $packetCategory->setCreatedBy($this->user->id);
-                $moduleTable = $this->getAppProductCategoriesTable();
-                $id = $moduleTable->save($packetCategory);
-                if ($id):
-                    $this->redirect()->toRoute('modules', array('action' => 'category'));
-                endif;
-            endif;
-
-        endif;
-
-
-        return new ViewModel(array(
-            'form' => $form
-        ));
+        return new $view;
     }
 
     public function addpkAction() {

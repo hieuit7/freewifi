@@ -8,11 +8,12 @@
 
 namespace Dashboard\Model;
 
-use Dashboard\Model\AppOrders;
+use Dashboard\Model\AppModule;
 use Zend\Db\TableGateway\TableGateway;
 use Dashboard\Model\Mapper\MapperTable;
+use Dashboard\Model\AppOrderDetails;
 
-class AppOrdersTable extends MapperTable {
+class AppOrderDetailsTable extends MapperTable {
 
     protected $tableGateway;
 
@@ -31,7 +32,7 @@ class AppOrdersTable extends MapperTable {
     }
 
     public function findById($id) {
-        $rowSet = $this->tableGateway->select(array('id' => $id));
+        $rowSet = $this->tableGateway->select(array('orderid' => $id));
         $row = $rowSet->current();
         if (!$row):
             return false;
@@ -49,23 +50,17 @@ class AppOrdersTable extends MapperTable {
         return $result;
     }
 
-    public function save(AppOrders $order) {
-        
+    public function save(AppOrderDetails $orderDetail) {
         $data = array(
-            'customerid' => $order->getCustomerid(),
-            'orderdate' => $order->getOrderdate(),
-            'status' => $order->getStatus(),
-            'sumtotal' => $order->getSumtotal(),
+            'orderid' => $orderDetail->getOrderid(),
+            'productid' => $orderDetail->getProductid(),
+            'unitprice' => $orderDetail->getUnitprice(),
+            'quantity' => $orderDetail->getQuantity(),
+            'discount' => $orderDetail->getDiscount(),
+            'total' => $orderDetail->getTotal(),
         );
-        $id = $order->getOrderid();
-        if (!$id):
-            $this->tableGateway->insert($data);
-            return $this->tableGateway->getLastInsertValue();
-        else:
-            $this->update($data, array('orderid' => $id ));
-            return $id;
-        endif;
-        
+        $this->tableGateway->insert($data);
+        return $this->tableGateway->getLastInsertValue();
     }
 
 }

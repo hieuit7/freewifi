@@ -1,40 +1,62 @@
-
+<?php if (isset($message) && count($message)): ?>
+    <div class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+        <ul>
+            <?php foreach ($message as $key => $msg): ?>
+                <li>
+                    <span>
+                        <?php echo $this->translate($key . '_error'); ?>
+                    </span>
+                    <ul>
+                        <?php foreach ($msg as $mskey => $msgv): ?>
+                            <li><?php echo $mskey . ': ' . $msgv; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+<?php
+$form->setAttribute('action', $this->url('modules', array('action' => 'savecategory')));
+$form->setAttribute('class', 'form-horizontal');
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
 <div class="row">
     <div class="col-sm-12 col-xs-12 col-md-12">
-        <form class="form-horizontal" action="editct" method="post"v id="form-edit">
-            <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Category Name</label>
-                <div class="col-sm-5">
-                    <input type="text" value="<?php echo $category->getName(); ?>" id='name' name='name' placeholder="Category name ..." class='form-control'>
-                </div>
+
+        <?php echo $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label"><?php echo $this->translate('CATEGORY_NAME_TITLE');?></label>
+            <div class="col-sm-5">
+                <?php echo $this->formRow($form->get('name')) ?>
+<!--                    <input type="text" id='name' name='name' placeholder="Category name ..." class='form-control'>-->
             </div>
-            <div class="form-group">
-                <label for="description" class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-5">
-                        <input type="text" value="<?php echo $category->getDescription(); ?>" id='description' name='description' placeholder="Description ..." class='form-control'>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-sm-2 control-label"><?php echo $this->translate('CATEGORY_DESC_TITLE');?></label>
+            <div class="col-sm-5">
+                <?php echo $this->formRow($form->get('description')) ?>
+<!--                    <input type="text" id='description' name='description' placeholder="Description ..." class='form-control'>-->
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" value="<?php echo $category->getID(); ?>" name="id" class="btn btn-default">Save</button>
-                    <button type="reset" class="btn btn-default linkCancle"><?php echo $this->translate('MODULE_CANCLE_BUTTON_TITLE'); ?></button>
-                </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-sm-2 control-label"><?php echo $this->translate('CATEGORY_MODULE_TITLE');?></label>
+            <div class="col-sm-5">
+                <?php echo $this->formRow($form->get('value')) ?>
+<!--                    <input type="text" id='description' name='description' placeholder="Description ..." class='form-control'>-->
             </div>
-        </form>
+        </div>
+        <input name="id" hidden="" value="<?php echo $items->getId();?>">
+        <input name="created" hidden="" value="<?php echo $items->getCreated();?>">
+        <input name="created_by" hidden="" value="<?php echo $items->getCreatedBy();?>">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default"><?php echo $this->translate('MODULE_SAVE_BUTTON_TITLE'); ?></button>
+                <button class="btn btn-default linkCancel" data-hrefs="/modules/category"><?php echo $this->translate('MODULE_CANCLE_BUTTON_TITLE'); ?></button>
+            </div>
+        </div>
+        <?php echo $this->form()->closeTag(); ?>
     </div>
 </div>
-<script>
-    $('#form-edit').submit(function(){
-        k = 0;
-        $('input').each(function(){
-            if($(this).val()===''){
-                $(this).css('border','1px solid red');
-                k = 1;
-            }            
-        });
-        if(k===1){
-            alert('Please input all field required');
-            return false;
-        }
-    })
-</script>

@@ -37,14 +37,14 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"><?php
-                            $unit = array('B','Kb','Mb','Gb','Tb');
+                            $unit = array('B', 'Kb', 'Mb', 'Gb', 'Tb');
                             $i = 0;
                             $bw = (isset($sums['bandwidthtrafic'])) ? $sums['bandwidthtrafic'] : '0';
-                            while($bw - 100 >= 0):
+                            while ($bw - 100 >= 0):
                                 $i++;
                                 $bw /= 1024;
                             endwhile;
-                            echo round($bw,2).' '.$unit[$i];
+                            echo round($bw, 2) . ' ' . $unit[$i];
                             ?></div>
                         <div><?php echo $this->translate('BANDWIDTH_TRAFIC'); ?></div>
                     </div>
@@ -106,30 +106,47 @@
 </div>
 <!-- /.row -->
 <div class="row">
-     <div class="col-lg-8">
-            <div class="container-fluid text-center">
-                <div class="row" style="background:rgba(102,153,51,1); color:#eee;">
-                  <div class="col-md-1 table-bordered" style="padding:10px 0"><?php echo $this->translate('ID_TITLE')?></div>
-                  <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('USERNAME_TITLE')?></div>
-                  <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('START_TIME_TITLE')?></div>
-                  <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('STATUS_TITLE')?></div>
-                  <div class="col-md-2 table-bordered" style="padding:10px 0"><?php echo $this->translate('ACTION_TITLE')?></div>
-                </div>
-                <?php foreach ($users as $user) : ?>
-                <div class="row" data-toggle="modal" data-target="#myModal<?php echo $this->escapeHtml($user['user']->getRadacctid());?>">
-                    <div class="col-md-1 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']->getRadacctid());?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']->getUsername());?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']->getAcctstarttime());?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo ($user['status'])?'Online':'Offline'?></div>
+    <div class="col-lg-8">
+        <div class="container-fluid text-center">
+            <div class="row" style="background:rgba(102,153,51,1); color:#eee;">
+                <div class="col-md-1 table-bordered" style="padding:10px 0"><?php echo $this->translate('ID_TITLE') ?></div>
+                <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('USERNAME_TITLE') ?></div>
+                <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('START_TIME_TITLE') ?></div>
+                <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('STATUS_TITLE') ?></div>
+                <div class="col-md-2 table-bordered" style="padding:10px 0"><?php echo $this->translate('ACTION_TITLE') ?></div>
+            </div>
+            <?php foreach ($users as $user) : ?>
+                <div class="row" data-toggle="modal" data-target="#myModal<?php echo $this->escapeHtml($user['user']['radacctid']); ?>">
+                    <div class="col-md-1 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']['radacctid']); ?></div>
+                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']['username']); ?></div>
+                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']['acctstarttime']); ?></div>
+                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo ($user['status']) ? 'Online' : 'Offline' ?></div>
                     <div class="col-md-2 table-bordered" style="padding:5px 0">
-                        <button type="button" class="btn btn-primary btn-xs deconnect <?php echo ($user['status'])?'':'disabled';?>" style="border-radius: 0px; border:none; padding: 0px 5px" value="<?php echo $this->escapeHtml($user['user']->getRadacctid());?>" data-mac="<?php echo $user['user']->getCallingstationid();?>">Ngắt kết nối</button>
+                        <button type="button" class="btn btn-primary btn-xs deconnect <?php echo ($user['status']) ? '' : 'disabled'; ?>" style="border-radius: 0px; border:none; padding: 0px 5px" value="<?php echo $this->escapeHtml($user['user']['radacctid']); ?>" data-mac="<?php echo $user['user']['callingstationid']; ?>">Ngắt kết nối</button>
                     </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
-     </div>
+            <?php endforeach; ?>
+
+        </div>
+        <?php
+            // add at the end of the file after the table
+            echo $this->paginationControl(
+                    // the paginator object
+                    $this->paginator,
+                    // the scrolling style
+                    'sliding',
+                    // the partial to use to render the control
+                    'partials/shared/paging.phtml',
+                    // the route to link to when a user clicks a control link
+                    array(
+                'route' => 'users',
+                'options' => array('acton'=>'userstatistic')
+                    )
+            );
+            ?>
+    </div>
     <!-- /.col-lg-8 -->
-     <div class="col-lg-4">
+    <div class="col-lg-4">
         <div class="panel panel-default">
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -185,13 +202,13 @@
             </div>
             <!-- /.panel-body -->
         </div>
-     </div>
-        <!-- /.panel -->
-       
-        <!-- /.panel -->
-       
-        <!-- /.panel .chat-panel -->
     </div>
-    <!-- /.col-lg-4 -->
+    <!-- /.panel -->
+
+    <!-- /.panel -->
+
+    <!-- /.panel .chat-panel -->
+</div>
+<!-- /.col-lg-4 -->
 </div>
 <!-- /.row -->

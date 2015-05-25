@@ -54,7 +54,7 @@ class IndexController extends AbstractActionController {
         $renderer->headTitle('Users');
         $user = new Container('user');
         if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
-            $this->redirect()->toRoute('login', array('action' => 'login', 'urlLogin' => 'users'));
+            $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'users'));
         endif;
 
         $users = $this->getUsersTable();

@@ -1,4 +1,5 @@
 <?php
+
 return array(
     'controllers' => array(
         'invokables' => array(
@@ -10,53 +11,53 @@ return array(
             'payments' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/payments',
+                    'route' => '/payments',
                     'defaults' => array(
                         'controller' => 'Payments\Controller\Payments',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),
             'payments-read' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/payments/[:id]',
+                    'route' => '/payments/[:id]',
                     'constraints' => array(
                         'id' => '[0-9a-zA-Z]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Payments\Controller\Payments',
-                        'action'     => 'read',
+                        'action' => 'read',
                     ),
                 ),
             ),
             'payments-create' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/payments/create',
+                    'route' => '/payments/create',
                     'defaults' => array(
                         'controller' => 'Payments\Controller\Payments',
-                        'action'     => 'create',
+                        'action' => 'create',
                     ),
                 ),
             ),
             'payments-finish' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/payments/finish',
+                    'route' => '/payments/finish',
                     'defaults' => array(
                         'controller' => 'Payments\Controller\Payments',
-                        'action'     => 'finish',
+                        'action' => 'finish',
                     ),
                 ),
             ),
             'payments-created' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route'    => '/payments/[:id]',
+                    'route' => '/payments/[:id]',
                     'defaults' => array(
                         'controller' => 'Payments\Controller\Payments',
-                        'action'     => 'createpayment',
+                        'action' => 'createpayment',
                     ),
                     'constraints' => array(
                         'id' => '[0-9a-zA-Z]+',
@@ -66,10 +67,10 @@ return array(
             'payments-failure' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/payments/failure',
+                    'route' => '/payments/failure',
                     'defaults' => array(
                         'controller' => 'Payments\Controller\Payments',
-                        'action'     => 'failure',
+                        'action' => 'failure',
                     ),
                 ),
             ),
@@ -87,6 +88,13 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format' => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
+            'message_close_string' => '</li></ul></div>',
+            'message_separator_string' => '</li><li>'
         )
     )
 );

@@ -27,6 +27,7 @@ return array(
     'FORM_SELECT_MODULE_TITLE' => 'Chọn package:',
     'PACKET_TITLE' => 'Gói dịch vụ',
     'SUBMIT_TITLE' => 'Thêm',
+    'REG_SUBMIT_TITLE' => 'Đăng ký',
     'fullname_error' => 'Họ và tên',
     'username_error' => 'Tên đăng nhập',
     'password_error' => 'Mật khẩu',
@@ -35,5 +36,7 @@ return array(
     'building_error' => 'Tòa nhà',
     'room_error' => 'Số phòng',
     'captcha_error' => "Captcha",
-    
+    '_WELLCOME' => 'Chào mừng đến với hệ thống wifi của FreeWifiGroup',
+    'MESSAGE_WELLCOME' =>'Vui lòng điền thong tin bên dưới để đăng ký',
+    'MESSAGE_WELLCOME_VERIFY' => 'Nhaapj max ddere xacs thucwj!'
 );

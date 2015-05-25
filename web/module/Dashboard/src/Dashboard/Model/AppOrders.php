@@ -63,6 +63,9 @@ class AppOrders implements InputFilterAwareInterface {
     public function setCreatedBy($CreatedBy) {
         $this->created_by = $CreatedBy;
     }
+    public function setSumtotal($Sumtotal) {
+        $this->sumtotal = $Sumtotal;
+    }
     public function exchangeArray($data) {
         $this->orderid = (isset($data['orderid'])) ? $data['orderid'] : null;
         $this->customerid = (isset($data['customerid'])) ? $data['customerid'] : null;

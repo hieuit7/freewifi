@@ -43,7 +43,7 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
         $User = new Container('user');
-        $form = new RegisterForms();
+        $form = new RegisterForms(null,array(),$this->getServiceLocator());
         $form->get('submit')->setValue('Add');
         $request = $this->getRequest();
 
@@ -119,9 +119,7 @@ class IndexController extends AbstractActionController {
                     $userInsert = $userTable->find($data['username']);
                     $radCheckTable = $this->getRadCheckTable();
                     $userCheck = $radCheckTable->getChecks($userInsert->getUsername(), array('attribute' => 'Md5-Password'));
-
                     if ($userInsert && !$userCheck):
-
                         $data = array(
                             'username' => $userInsert->getUsername(),
                             'attribute' => 'Md5-Password',
@@ -138,7 +136,7 @@ class IndexController extends AbstractActionController {
                             $code->setCode('active');
                             $codeTable->save($code);
                             $this->message = 'Veryfy ok!!!';
-
+                            $userInsert->setActivate(1);
                             return $this->redirect()->toUrl($this->urlLogin);
                         endif;
                     else:
