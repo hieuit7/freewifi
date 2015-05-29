@@ -24,18 +24,43 @@ return array(
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
-            'users' => array(
+            'userpage' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/users[/:action][/:id]',
+                    'route' => '/userpage[/:action][/:id]',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Users\Controller',
-                        'controller' => 'Users\Controller\Index',
+                        '__NAMESPACE__' => 'Frontend\Controller',
+                        'controller' => 'Frontend\Controller\Index',
                         'action' => 'index',
                     ),
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                ),
+            ),
+            'userpayment' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/userpage/payment[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Frontend\Controller',
+                        'controller' => 'Frontend\Controller\Index',
+                        'action' => 'payment',
+                    ),
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                ),
+            ),
+            'userprofile' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/userprofile',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Frontend\Controller',
+                        'controller' => 'Frontend\Controller\Index',
+                        'action' => 'profile',
                     ),
                 ),
             ),
@@ -62,8 +87,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Users\Controller\Index' => 'Users\Controller\IndexController',
-            'Users\Controller\User' => 'Users\Controller\UserController',
+            'Frontend\Controller\Index' => 'Frontend\Controller\IndexController',
         ),
     ),
     'view_manager' => array(
@@ -73,8 +97,7 @@ return array(
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => array(
-            'layout/users' => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'layout/frontend' => __DIR__ . '/../view/layout/layout.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ),

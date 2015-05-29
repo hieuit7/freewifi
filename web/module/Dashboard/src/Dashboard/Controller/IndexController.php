@@ -34,9 +34,13 @@ class IndexController extends AbstractActionController {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('Dashboard');
         $user = new Container('user');
-        if (isset($user->name) && $user->name == 'guess' || !isset($user->name)):
+        if (isset($user->name) && $user->name == 'guess' || isset($user->name)&& $user->admin || !isset($user->name)):
             $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'dashboard'));
         endif;
+        echo "<pre>";
+        print_r(isset($user->name)&& $user->admin);
+        echo "</pre>";
+        exit();
         $acct = $this->getRadAcctTable();
         $authens = $this->getRadPostAuthTable();
         $usersAuthen = $authens->getPostAuths('');

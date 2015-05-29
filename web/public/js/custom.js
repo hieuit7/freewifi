@@ -129,6 +129,9 @@ var App = {
 
 
     },
+    tabUserpage: function(){
+        
+    }
 };
 jQuery(document).ready(function () {
     App.submit();

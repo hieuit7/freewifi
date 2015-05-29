@@ -3,7 +3,7 @@
 namespace Dashboard\Entity;
 
 
-
+use Doctrine\ORM\Mapping as ORM;
 /**
  * AppOrderDetails
  *
