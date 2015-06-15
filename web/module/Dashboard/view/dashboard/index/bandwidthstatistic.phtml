@@ -1,48 +1,53 @@
 <div class="container-fluid text-center">
-    <table>
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <?php echo $this->translate('ID_TITLE');?>
+                <th>
+                    <?php echo $this->translate('ID_TITLE'); ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('NAME_TITLE'); ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('START_TIME_TITLE'); ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('BANDWIDTH'); ?>
+                </th>
             </tr>
-            <tr>
-                <?php echo $this->translate('NAME_TITLE');?>
-            </tr>
-            <tr>
-                <?php echo $this->translate('START_TIME_TITLE');?>
-            </tr>
-            <tr>
-                <?php echo $this->translate('BANDWIDTH');?>
-            </tr>
+
         </thead>
         <tbody>
-            
+            <?php
+            $i = 0;
+            foreach ($users as $user) :
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $i++; ?> 
+                    </td>
+                    <td>
+                        <?php echo $user['user']['username']; ?> 
+                    </td>
+                    <td>
+                        <?php echo $user['user']['acctstarttime']; ?> 
+                    </td>
+                    <td>
+                        <?php
+                        $bw = $user['bandwidth'];
+                        $unit = array('B', 'Kb', 'Mb', 'Gb', 'Tb');
+                        $i = 0;
+                        while ($bw - 100 >= 0):
+                            $i++;
+                            $bw /= 1024;
+                        endwhile;
+                        echo round($bw, 2) . ' ' . $unit[$i];
+                        ?> 
+                    </td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>    
     </table>
-    <div class="row">
-      <div class="col-md-1 table-bordered" style="padding:10px 0">ID</div>
-      <div class="col-md-3 table-bordered" style="padding:10px 0">Tên Người Dùng</div>
-      <div class="col-md-3 table-bordered" style="padding:10px 0">Thời Gian Bắt Đầu</div>
-      <div class="col-md-3 table-bordered" style="padding:10px 0">Băng Thông</div>
-      
-    </div>
-    <?php foreach ($allUser as $user) : ?>
-    <div class="row">
-      <div class="col-md-1 table-bordered"><?php echo $this->escapeHtml($user->getRadacctid());?></div>
-      <div class="col-md-3 table-bordered"><?php echo $this->escapeHtml($user->getUsername());?></div>
-      <div class="col-md-3 table-bordered"><?php echo $this->escapeHtml($user->getAcctstarttime());?></div>
-      <div class="col-md-3 table-bordered">
-          <?php
-            $unit = array('B','Kb','Mb','Gb','Tb');
-            $i = 0;
-            $bw = $user->getAcctinputoctets();
-            while($bw - 100 >= 0):
-                $i++;
-                $bw /= 1024;
-            endwhile;
-            echo round($bw,2).' '.$unit[$i];
-          ?>
-      </div>
-    </div>
-    <?php endforeach; ?>
-    </div>
+
+</div>
 </div>

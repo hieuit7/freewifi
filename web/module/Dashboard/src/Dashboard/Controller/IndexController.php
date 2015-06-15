@@ -62,15 +62,27 @@ class IndexController extends AbstractActionController {
     }
 
     public function bandwidthstatisticAction() {
-        $k = $this->getRadAcctTable();
-        $k = $k->fetchAll();
+        $radActionTable = $this->getRadAcctTable();
+        $page = $this->params()->fromQuery('page',1);
+        $radActions = $radActionTable->customGetData($page,10,array(),array(),array(),$paging);
         
-        $userlogin = $this->radAcctTable->fetchAll();
-        return new ViewModel(
-                array(
-            'allUser' => $k
-                )
-        );
+        $users = array();
+        foreach ($radActions as $rad):
+            if (in_array($rad['username'], $users)):
+                $users[$rad['username']]['user'] = $rad;
+                $users[$rad['username']]['bandwidth'] += $rad['acctinputoctets'];
+            else:
+                $users[$rad['username']] = array();
+                $users[$rad['username']]['user'] = $rad;
+                $users[$rad['username']]['bandwidth'] = $rad['acctinputoctets'];
+            endif;
+        endforeach;
+        $paging->setCurrentPageNumber($page);
+        $paging->setItemCountPerPage(10);
+        return new ViewModel(array(
+            'users' => $users,
+            'paginator' => $paging
+        ));
     }
 
     public function userstatisticAction() {
