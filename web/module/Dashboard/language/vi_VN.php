@@ -65,5 +65,7 @@ return array(
 	'PACKET_TITLE' => 'Tên gói dịch vụ',
 	'SUBMIT_TITLE' => 'Submit',
 	'NAME_TITLE' => 'Tên',
-	'START_TIME_TITLE' => 'Thời gian bắt đầu'
+	'START_TIME_TITLE' => 'Thời gian bắt đầu',
+	'BILLING_DATE_TITLE' => 'Ngày lập',
+	'TOTAL_TITLE' => 'Tổng cộng'
 );
