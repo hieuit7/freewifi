@@ -42,7 +42,7 @@ return array(
 	'MODULE_ADD_BUTTON_TITLE' => 'Thêm module',
 	'MODULE_CANCLE_BUTTON_TITLE' => 'Hủy bỏ',
 	'PACKET_NAME_TITLE' => 'Tên gói dịch vụ',
-	'FORM_SELECT_CATEGORY' => '',
+	'FORM_SELECT_CATEGORY' => 'Chọn loại',
 	'PACKET_PRICE_TITLE' => 'Giá',
 	'PACKET_UNIT_TITLE' => 'Đơn vị tính',
 	'PACKET_VALUE_TITLE' => 'Giá trị',
