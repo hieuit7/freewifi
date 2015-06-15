@@ -64,6 +64,8 @@ class IndexController extends AbstractActionController {
     public function bandwidthstatisticAction() {
         $k = $this->getRadAcctTable();
         $k = $k->fetchAll();
+        
+        $userlogin = $this->radAcctTable->fetchAll();
         return new ViewModel(
                 array(
             'allUser' => $k

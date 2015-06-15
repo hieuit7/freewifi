@@ -65,8 +65,10 @@ class IndexController extends AbstractActionController {
                             $appUserTable = $this->getAppUsers();
                             $user->name = $radCheck->getUsername();
                             $appUser = $appUserTable->find($user->name);
+                            
                             if ($appUser):
                                 $user->id = $appUser->getId();
+                                
                             endif;
                             $this->redirect()->toRoute($routedUrl);
                         endif;

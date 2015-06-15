@@ -1,207 +1,64 @@
 <div class="row">
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-user fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo (isset($sums['userlogged'])) ? $sums['userlogged'] : '0'; ?></div>
-                        <div><?php echo $this->translate('USER_LOGINED'); ?></div>
-                    </div>
-                </div>
-            </div>
-            <a href="<?php echo $this->url('dashboard', array('action' => 'userstatistic')); ?>">
-                <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-user fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"><?php
-                            $unit = array('B', 'Kb', 'Mb', 'Gb', 'Tb');
-                            $i = 0;
-                            $bw = (isset($sums['bandwidthtrafic'])) ? $sums['bandwidthtrafic'] : '0';
-                            while ($bw - 100 >= 0):
-                                $i++;
-                                $bw /= 1024;
-                            endwhile;
-                            echo round($bw, 2) . ' ' . $unit[$i];
-                            ?></div>
-                        <div><?php echo $this->translate('BANDWIDTH_TRAFIC'); ?></div>
-                    </div>
-                </div>
-            </div>
-            <a href="<?php echo $this->url('dashboard', array('action' => 'bandwidthstatistic')); ?>">
-                <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-user fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo (isset($sums['payment'])) ? $sums['payment'] : '0'; ?></div>
-                        <div><?php echo $this->translate('PAYMENT'); ?></div>
-                    </div>
-                </div>
-            </div>
-            <a href="<?php echo $this->url('dashboard', array('action' => 'paymentstatistic')); ?>">
-                <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-user fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"><?php echo (isset($sums['freeuserlogged'])) ? $sums['freeuserlogged'] : '0'; ?></div>
-                        <div><?php echo $this->translate('FREE_USER_LOGINED'); ?></div>
-                    </div>
-                </div>
-            </div>
-            <a href="<?php echo $this->url('dashboard', array('action' => 'userstatistic')); ?>">
-                <div class="panel-footer">
-                    <span class="pull-left"><?php echo $this->translate('DETAIL_VIEW'); ?></span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-<!-- /.row -->
-<div class="row">
-    <div class="col-lg-8">
-        <div class="container-fluid text-center">
-            <div class="row" style="background:rgba(102,153,51,1); color:#eee;">
-                <div class="col-md-1 table-bordered" style="padding:10px 0"><?php echo $this->translate('ID_TITLE') ?></div>
-                <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('USERNAME_TITLE') ?></div>
-                <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('START_TIME_TITLE') ?></div>
-                <div class="col-md-3 table-bordered" style="padding:10px 0"><?php echo $this->translate('STATUS_TITLE') ?></div>
-                <div class="col-md-2 table-bordered" style="padding:10px 0"><?php echo $this->translate('ACTION_TITLE') ?></div>
-            </div>
-            <?php foreach ($users as $user) : ?>
-                <div class="row" data-toggle="modal" data-target="#myModal<?php echo $this->escapeHtml($user['user']['radacctid']); ?>">
-                    <div class="col-md-1 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']['radacctid']); ?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']['username']); ?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo $this->escapeHtml($user['user']['acctstarttime']); ?></div>
-                    <div class="col-md-3 table-bordered" style="padding:5px 0"><?php echo ($user['status']) ? 'Online' : 'Offline' ?></div>
-                    <div class="col-md-2 table-bordered" style="padding:5px 0">
-                        <button type="button" class="btn btn-primary btn-xs deconnect <?php echo ($user['status']) ? '' : 'disabled'; ?>" style="border-radius: 0px; border:none; padding: 0px 5px" value="<?php echo $this->escapeHtml($user['user']['radacctid']); ?>" data-mac="<?php echo $user['user']['callingstationid']; ?>">Ngắt kết nối</button>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-
-        </div>
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-info center bg-info">
+                    <th>
+                        <?php echo $this->translate('ID_TITLE') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->translate('USERNAME_TITLE') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->translate('START_TIME_TITLE') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->translate('STATUS_TITLE') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->translate('ACTION_TITLE') ?>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+               <?php foreach ($users as $user) : ?>
+                <tr class="center">
+                        <td>
+                            <?php echo $this->escapeHtml($user['user']['radacctid']); ?>
+                        </td>
+                        <td>
+                            <?php echo $this->escapeHtml($user['user']['username']); ?>
+                        </td>
+                        <td>
+                            <?php echo $this->escapeHtml($user['user']['acctstarttime']); ?>
+                        </td>
+                        <td>
+                            <?php echo ($user['status']) ? 'Online' : 'Offline' ?>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary deconnect <?php echo ($user['status']) ? '' : 'disabled'; ?>"  value="<?php echo $this->escapeHtml($user['user']['radacctid']); ?>" data-mac="<?php echo $user['user']['callingstationid']; ?>"><?php echo $this->translate('DISCONNECT_BTN'); ?></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?> 
+            </tbody>
+        </table>
         <?php
-            // add at the end of the file after the table
-            echo $this->paginationControl(
-                    // the paginator object
-                    $this->paginator,
-                    // the scrolling style
-                    'sliding',
-                    // the partial to use to render the control
-                    'partials/shared/paging.phtml',
-                    // the route to link to when a user clicks a control link
-                    array(
-                'route' => 'users',
-                'options' => array('acton'=>'userstatistic')
-                    )
-            );
-            ?>
+        // add at the end of the file after the table
+        echo $this->paginationControl(
+                // the paginator object
+                $this->paginator,
+                // the scrolling style
+                'sliding',
+                // the partial to use to render the control
+                'partials/shared/paging.phtml',
+                // the route to link to when a user clicks a control link
+                array(
+            'route' => 'users',
+            'options' => array('acton' => 'userstatistic')
+                )
+        );
+        ?>
     </div>
-    <!-- /.col-lg-8 -->
-    <div class="col-lg-4">
-        <div class="panel panel-default">
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div class="list-group">
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-comment fa-fw"></i> New Comment
-                        <span class="pull-right text-muted small"><em>4 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                        <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                        <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-tasks fa-fw"></i> New Task
-                        <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                        <span class="pull-right text-muted small"><em>11:32 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                        <span class="pull-right text-muted small"><em>11:13 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                        <span class="pull-right text-muted small"><em>10:57 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                        <span class="pull-right text-muted small"><em>9:49 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-money fa-fw"></i> Payment Received
-                        <span class="pull-right text-muted small"><em>Yesterday</em>
-                        </span>
-                    </a>
-                </div>
-                <!-- /.list-group -->
-                <a href="#" class="btn btn-default btn-block">View All Alerts</a>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-    </div>
-    <!-- /.panel -->
 
-    <!-- /.panel -->
+</div>
 
-    <!-- /.panel .chat-panel -->
-</div>
-<!-- /.col-lg-4 -->
-</div>
-<!-- /.row -->
