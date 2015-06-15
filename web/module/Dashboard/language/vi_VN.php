@@ -67,5 +67,6 @@ return array(
 	'NAME_TITLE' => 'Tên',
 	'START_TIME_TITLE' => 'Thời gian bắt đầu',
 	'BILLING_DATE_TITLE' => 'Ngày lập',
-	'TOTAL_TITLE' => 'Tổng cộng'
+	'TOTAL_TITLE' => 'Tổng cộng',
+	'ORDER_TITLE_PAGE' => 'Lịch sử thanh toán'
 );
