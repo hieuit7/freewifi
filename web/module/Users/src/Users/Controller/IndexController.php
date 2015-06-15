@@ -63,7 +63,7 @@ class IndexController extends AbstractActionController {
         $page->setItemCountPerPage(10);
         //$items = $users->fetchAll();
         //do with payment
-        
+
         $route = 'user-action';
         return new ViewModel(array(
             'message' => $this->message,
@@ -87,196 +87,155 @@ class IndexController extends AbstractActionController {
     }
 
     public function addAction() {
-        $form = new RegisterForms(null,array(),$this->getServiceLocator());
+        $form = new RegisterForms(null, array(), $this->getServiceLocator());
         $form->get('submit')->setValue('Add');
         $request = $this->getRequest();
-
         if ($request->isPost()) {
             $users = new Users();
             $form->setInputFilter($users->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()):
                 $data = $form->getData();
-                                
+                if (!isset($data['activate'])):
+                    $data['activate'] = 1;
+                endif;
+                if (!isset($data['created'])):
+                    $data['created'] = date('Y-m-d H:i:s');
+                endif;
+                if (!isset($data['created_by'])):
+                    $data['created_by'] = 1;
+                endif;
+                $users->exchangeArray($data);
+                $userTable = $this->getUsersTable();
+                $id = $userTable->save($users);
+                if ($id):
+                    $this->flashMessenger("User created!!");
+
+                    $this->redirect()->toRoute('users', array('action' => 'index'));
+                endif;
             endif;
         }
-        $category = $this->getAppProductsTable();
-        $category = $category->fetchAll();
-        
         return new ViewModel(array(
             'form' => $form,
-            'packet' => $category,
             'message' => $form->getMessages()
         ));
     }
 
-    public function addUserAction() {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $fullname = $_POST['fullname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $building = $_POST['building'];
-        $packet = $_POST['packet'];
-        $created = date();
-        $room = $_POST['room'];
-        $user = $this->getUsersTable();
-        $u = new Users();
-        $u->setUsername($username);
-        $u->setPassword($password);
-        $u->setFullname($fullname);
-        $u->setEmail($email);
-        $u->setPhone($phone);
-        $u->setBuilding($building);
-        $u->setPacket($packet);
-        $u->setCreated($created);
-        $u->setRoom($room);
-        $user->save($u);
-        return $this->redirect()->toRoute('users');
-    }
-
-    public function deleteAction() {
-        $id = $_GET['id'];
-        $user = $this->getUsersTable();
-        $user->deleteUser($id);
-        return $this->redirect()->toRoute('users');
-    }
-
     public function editAction() {
-        $id = $_GET['id'];
-        $user = $this->getUsersTable();
-        $user = $user->getUser($id);
-        $category = $this->getAppProductsTable();
-        $category = $category->fetchAll();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id', '');
+        if ($id):
+            $userTable = $this->getUsersTable();
+            $user = $userTable->getUser($id);
+            $form = new RegisterForms(null, array(), $this->getServiceLocator());
+            $form->setData(array(
+                'username' => $user->getUsername(),
+                'fullname' => $user->getFullname(),
+                'password' => $user->getPassword(),
+                'email' => $user->getEmail(),
+                'phone' => $user->getPhone(),
+                'packet' => $user->getPacket(),
+                'building' => $user->getBuilding(),
+                'room' => $user->getRoom(),
+                'activate' => $user->getActivate()
+            ));
+        else:
+
+        endif;
         return new ViewModel(array(
-            'packet' => $category,
-            'user' => $user
+            'data' => array(
+                'id' => $user->getId(),
+                'created' => $user->getCreated(),
+                'created_by' => $user->getCreatedBy(),
+            ),
+            'form' => $form
         ));
     }
 
-    public function editUserAction() {
-        $username = $_POST['username'];
-        $id = $_POST['id'];
-        $password = $_POST['password'];
-        $fullname = $_POST['fullname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $building = $_POST['building'];
-        $packet = $_POST['packet'];
-        $room = $_POST['room'];
-        $created = date('dd/mm/yyyy');
-        $user = $this->getUsersTable();
-        $u = new Users();
-        $u->setUsername($username);
-        $u->setPassword($password);
-        $u->setFullname($fullname);
-        $u->setEmail($email);
-        $u->setPhone($phone);
-        $u->setBuilding($building);
-        $u->setPacket($packet);
-        $u->setCreated($created);
-        $u->setRoom($room);
-        $check = $this->getRadCheckTable();
-        $usr = $user->getUser($id);
-        $check2 = $check->getName($usr->getUsername());
-        $check->removeCheck($check2->getId());
-        $u2 = new RadCheck();
-        $u2->setUsername($username);
-        $u2->setAttribute($check2->getAttribute());
-        $u2->setValue($email);
-        $u2->setOp(':=');
-        $check->save($u2);
-        $u->setId($id);
-        $user->deleteUser($id);
-        $user->save($u);
-        return $this->redirect()->toRoute('users');
+    public function saveAction() {
+        $form = new RegisterForms(null, array(), $this->getServiceLocator());
+        $form->get('submit')->setValue('Add');
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $users = new Users();
+            $form->setInputFilter($users->getInputFilter());
+            $form->setData($request->getPost());
+            if ($form->isValid()):
+                $data = $form->getData();
+                if ($request->getPost()->get('id')):
+                    $data['id'] = $request->getPost()->get('id');
+                //$this->redirect()->toRoute('users', array('action' => 'edit','id'=>$request->getPost()->get('id')));
+                endif;
+                foreach ($data as $key => $d) :
+                    if (!$d):
+                        unset($data[$key]);
+                    endif;
+                endforeach;
+                if (!isset($data['activate'])):
+                    $data['activate'] = 1;
+                endif;
+                if (!isset($data['created'])):
+                    $data['created'] = date('Y-m-d H:i:s');
+                endif;
+                if (!isset($data['created_by'])):
+                    $data['created_by'] = 1;
+                endif;
+                $users->exchangeArray($data);
+                $userTable = $this->getUsersTable();
+                $id = $userTable->save($users);
+
+                if ($id):
+                    $this->flashMessenger("User created!!");
+                    $this->redirect()->toRoute('users', array('action' => 'index'));
+                endif;
+            else:
+                if ($request->getPost()->get('id')):
+                    //$data['id'] = $request->getPost()->get('id');
+                    $this->redirect()->toRoute('users', array('action' => 'edit', 'id' => $request->getPost()->get('id')));
+                endif;
+                $this->redirect()->toRoute('users', array('action' => 'ADD',));
+            endif;
+        }
+        $this->redirect()->toRoute('users', array('action' => 'index'));
     }
 
-//    public function deleteAllAction(){
-//        $user = $this->getUsersTable();
-//        $user->deleteAllUser();
-//        return $this->redirect()->toRoute('users');
-//    }
-//    
-//    public  function addUserAction(){
-//        $username = $_POST['username'];
-//        $password = $_POST['password'];
-//        $fullname = $_POST['fullname'];
-//        $email = $_POST['email'];
-//        $phone = $_POST['phone'];
-//        $building = $_POST['building'];
-//        $packet = $_POST['packet'];
-//        $created = date();
-//        $room = $_POST['room'];
-//        $user = $this->getUsersTable();
-//        $u = new Users();
-//        $u->setUsername($username);
-//        $u->setPassword($password);
-//        $u->setFullname($fullname);
-//        $u->setEmail($email);
-//        $u->setPhone($phone);
-//        $u->setBuilding($building);
-//        $u->setPacket($packet);
-//        $u->setCreated($created);
-//        $u->setRoom($room);
-//        $user->save($u);
-//        return $this->redirect()->toRoute('users');
-//    }
-//    public function deleteAction(){
-//        $id = $_GET['id'];
-//        $user = $this->getUsersTable();
-//        $user->deleteUser($id);
-//        return $this->redirect()->toRoute('users');
-//    }
-//    
-//    public function editAction(){
-//        $id = $_GET['id'];
-//        $user = $this->getUsersTable();
-//        $user = $user->getUser($id);
-//        $category = $this->getAppProductsTable();
-//        $category = $category->fetchAll();
-//        return new ViewModel(array(
-//            'packet'=>$category,
-//            'user'=>$user
-//        ));
-//    }  
-//    public function editUserAction(){
-//        $username = $_POST['username'];
-//        $id = $_POST['id'];
-//        $password = $_POST['password'];
-//        $fullname = $_POST['fullname'];
-//        $email = $_POST['email'];
-//        $phone = $_POST['phone'];
-//        $building = $_POST['building'];
-//        $packet = $_POST['packet'];
-//        $room = $_POST['room'];
-//        $created = date('dd/mm/yyyy');
-//        $user = $this->getUsersTable();
-//        $u = new Users();
-//        $u->setUsername($username);
-//        $u->setPassword($password);
-//        $u->setFullname($fullname);
-//        $u->setEmail($email);
-//        $u->setPhone($phone);
-//        $u->setBuilding($building);
-//        $u->setPacket($packet);
-//        $u->setCreated($created);
-//        $u->setRoom($room);
-//        $check = $this->getRadCheckTable();
-//        $usr = $user->getUser($id);
-//        $check2 = $check->getName($usr->getUsername());
-//        $check->removeCheck($check2->getId());
-//        $u2 = new RadCheck();
-//        $u2->setUsername($username);
-//        $u2->setAttribute($check2->getAttribute());
-//        $u2->setValue($email);
-//        $u2->setOp(':=');
-//        $check->save($u2);
-//        $u->setId($id);
-//        $user->deleteUser($id);
-//        $user->save($u);
-//        return $this->redirect()->toRoute('users');
-//    }
+    public function deleteAction() {
+        $id = $this->getEvent()->getRouteMatch()->getParam('id', '');
+        if ($id):
+            $this->getUsersTable()->deleteUser($id);
+            $this->redirect()->toRoute('users', array('action' => 'index'));
+        else:
+            $this->redirect()->toRoute('users', array('action' => 'index'));
+        endif;
+    }
+
+    public function deactiveAction() {
+        $request = $this->getRequest();
+        if ($request->isPost()):
+            $postData = $request->getPost();
+            $type = $postData->get('type');
+            $id = $postData->get('id');
+            if ($id && $type):
+                $userTable = $this->getUsersTable();
+                $user = $userTable->getUser($id);
+               
+                if ($user && $type == 'active'):
+                    $user->setActivate(1);
+                echo 1;
+                elseif ($user && $type != 'active'):
+                    $user->setActivate(0);
+                echo 2;
+                endif;
+                $userTable->save($user);
+                
+                exit;
+            endif;
+            echo 0;
+            exit;
+
+        endif;
+        echo 0;
+        exit;
+    }
 
     public function deleteAllAction() {
         $user = $this->getUsersTable();

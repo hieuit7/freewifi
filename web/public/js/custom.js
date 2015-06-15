@@ -20,8 +20,8 @@ var App = {
                 current.prop('checked', true);
                 p = jQuery(this).parent().parent().find('.id').html();
                 if (!jQuery('.checkall').prop('checked{')) {
-                    jQuery(document).find('.del-user').attr('href', 'users/delete?id=' + jQuery.trim(p));
-                    jQuery(document).find('.edit-user').attr('href', 'users/edit?id=' + jQuery.trim(p));
+                    jQuery(document).find('.del-user').attr('href', 'users/delete/' + jQuery.trim(p));
+                    jQuery(document).find('.edit-user').attr('href', 'users/edit/' + jQuery.trim(p));
                 }
             }
             else {
@@ -129,8 +129,30 @@ var App = {
 
 
     },
-    tabUserpage: function(){
-        
+    tabUserpage: function () {
+
+    },
+    changeStatus: function () {
+        jQuery('.link').on('click','i', function () {
+            var id = jQuery('.deactivelink').attr('data-id');
+            var action = (jQuery(this).hasClass('active'))?'deactive':'active';
+            jQuery.ajax({
+                url: '/users/deactive',
+                type: 'post',
+                data: {id: id, type: action},
+                success: function (data, textStatus, jqXHR) {
+                    if (data == 1) {
+                        alert('Updated!!');
+                        jQuery(this).removeClass('glyphicon-remove-sign');
+                        jQuery(this).addClass('active glyphicon-ok-sign');
+                    }else if(data == 2){
+                        jQuery(this).removeClass('active glyphicon-ok-sign');
+                        jQuery(this).addClass('glyphicon-remove-sign');
+                    }
+                }
+            });
+        })
+
     }
 };
 jQuery(document).ready(function () {
@@ -138,5 +160,6 @@ jQuery(document).ready(function () {
     App.checkUser();
     App.deconnect();
     App.controlAction();
+    App.changeStatus();
 });
 

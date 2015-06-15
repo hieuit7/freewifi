@@ -65,14 +65,14 @@
                             <td>
                                 <?php echo $value['email']; ?>
                             </td> 
-                            <td class="link">
-                                <?php
-                                echo $value['activate'];
-                                if ($value['activate'] == 1)
-                                    echo 'Actived';
-                                else
-                                    echo 'Non-active';
-                                ?>
+                            <td class="link center">
+                                <span class="text-center">
+                                    <?php if ($value['activate'] == 1): ?>
+                                        <i class="deactivelink glyphicon  active glyphicon-ok-sign"  data-id="<?php echo $value['id']?>"></i>
+                                        <?php else: ?>
+                                        <i class="deactivelink glyphicon glyphicon-remove-sign" data-id="<?php echo $value['id']?>"></i>
+                                    <?php endif;?>
+                                </span>
                             </td> 
                             <td>
                                 <?php echo date($value['created']); ?>
@@ -94,49 +94,11 @@
                     // the route to link to when a user clicks a control link
                     array(
                 'route' => 'users',
-                        'options' => array()
+                'options' => array()
                     )
             );
             ?>
         <?php endif; ?>
     </div>
 </div>
-<script>
-    $('.check').click(function () {
-        if ($(this).prop('checked')) {
-            current = $(this);
-            $('.check').prop('checked', false);
-            current.prop('checked', true);
-            p = $(this).parent().parent().find('.id').html();
-            if (!$('.checkall').prop('checked{')) {
-                $(document).find('.del-user').attr('href', 'users/delete?id=' + p);
-                $(document).find('.edit-user').attr('href', 'users/edit?id=' + p);
-            }
-        }
-        else {
-            $(document).find('.del-user').attr('href', '');
-            $(document).find('.edit-user').attr('href', '');
-        }
-    });
-    $('.check_all').click(function () {
-        if ($(this).prop('checked')) {
-            $('.check').prop('checked', true);
-            $(document).find('.del-user').attr('href', 'users/deleteAll');
-        }
-        else {
-            $('.check').prop('checked', false);
-            $(document).find('.del-user').attr('href', '');
-        }
-    });
-    $('.del-user').click(function () {
-        k = 0;
-        $('.check').each(function () {
-            if ($(this).prop('checked')) {
-                k = 1;
-            }
-        })
-        if (k == 1)
-            confirm('Do you want to delete this user');
-    })
-</script>
 
