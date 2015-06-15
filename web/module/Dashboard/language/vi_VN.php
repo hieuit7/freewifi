@@ -63,5 +63,7 @@ return array(
 	'REG_SUBMIT_TITLE' => 'Đăng kí',
 	'AUTO_SUBMIT_TITLE' => 'Tự động',
 	'PACKET_TITLE' => 'Tên gói dịch vụ',
-	'SUBMIT_TITLE' => 'Submit'
+	'SUBMIT_TITLE' => 'Submit',
+	'NAME_TITLE' => 'Tên',
+	'START_TIME_TITLE' => 'Thời gian bắt đầu'
 );
