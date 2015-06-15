@@ -55,6 +55,9 @@ class IndexController extends AbstractActionController {
                         if (($appUser->getUsername()) == $data['username']):
                             $user->name = $appUser->getUsername();
                             $user->id = $appUser->getId();
+                            if ($user->id == 1):
+                                $user->admin = true;
+                            endif;
                             $this->redirect()->toRoute($routedUrl);
                         endif;
                     endif;
@@ -65,10 +68,12 @@ class IndexController extends AbstractActionController {
                             $appUserTable = $this->getAppUsers();
                             $user->name = $radCheck->getUsername();
                             $appUser = $appUserTable->find($user->name);
-                            
+
                             if ($appUser):
                                 $user->id = $appUser->getId();
-                                
+                                if ($user->id == 1):
+                                    $user->admin = true;
+                                endif;
                             endif;
                             $this->redirect()->toRoute($routedUrl);
                         endif;
