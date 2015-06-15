@@ -34,10 +34,10 @@ class IndexController extends AbstractActionController {
         $renderer = $this->getServiceLocator()->get('Zend\View\Renderer\PhpRenderer');
         $renderer->headTitle('Dashboard');
         $user = new Container('user');
-        if (isset($user->name) && $user->name == 'guess' || isset($user->name)&& $user->admin || !isset($user->name)):
+        if (isset($user->name) && $user->name == 'guess' || isset($user->name) && $user->admin || !isset($user->name)):
             $this->redirect()->toRoute('login', array('action' => 'index', 'urlLogin' => 'dashboard'));
         endif;
-        
+
         $acct = $this->getRadAcctTable();
         $authens = $this->getRadPostAuthTable();
         $usersAuthen = $authens->getPostAuths('');
@@ -46,15 +46,14 @@ class IndexController extends AbstractActionController {
         $countUser = array();
         foreach ($all as $key => $value) {
             $inputs +=$value->getacctinputoctets();
-            if(!in_array($value->getUsername(), $countUser)):
+            if (!in_array($value->getUsername(), $countUser)):
                 $countUser[$value->getUsername()] = $value;
             endif;
-            
         }
         $sums = array('userlogged' => count($countUser));
-        
+
         $sums['bandwidthtrafic'] = $inputs;
-       //$objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        //$objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 
         return new ViewModel(array(
             'sums' => $sums
@@ -63,9 +62,9 @@ class IndexController extends AbstractActionController {
 
     public function bandwidthstatisticAction() {
         $radActionTable = $this->getRadAcctTable();
-        $page = $this->params()->fromQuery('page',1);
-        $radActions = $radActionTable->customGetData($page,10,array(),array(),array(),$paging);
-        
+        $page = $this->params()->fromQuery('page', 1);
+        $radActions = $radActionTable->customGetData($page, 10, array(), array(), array(), $paging);
+
         $users = array();
         foreach ($radActions as $rad):
             if (in_array($rad['username'], $users)):
@@ -87,9 +86,9 @@ class IndexController extends AbstractActionController {
 
     public function userstatisticAction() {
         $radActionTable = $this->getRadAcctTable();
-        $page = $this->params()->fromQuery('page',1);
-        $radActions = $radActionTable->customGetData($page,10,array(),array(),array(),$paging);
-        
+        $page = $this->params()->fromQuery('page', 1);
+        $radActions = $radActionTable->customGetData($page, 10, array(), array(), array(), $paging);
+
         $users = array();
         foreach ($radActions as $rad):
             if (in_array($rad['username'], $users)):
@@ -119,13 +118,28 @@ class IndexController extends AbstractActionController {
     }
 
     public function paymentstatisticAction() {
-        $k = $this->getAppOrdersTable();
-        $k = $k->fetchAll();
-        $user = $this->getUser();
-        return new ViewModel(array(
-            'transactions' => $k,
-            'user' => $user
-        ));
+        $page = $this->params()->fromQuery('page', 1);
+        $appOrders = $this->getAppOrdersTable();
+        $wheres = $orders = $joins = array();
+        $joins[] = array(
+            'table' => 'app_users',
+            'alias' => 'u',
+            'on' => 'a.customerid = u.id',
+            'columns' => array(
+                'username' => 'username'
+            ),
+            'type' => \Zend\Db\Sql\Select::JOIN_INNER
+        );
+        $bill = $appOrders->customGetData($page, 10, array(), array(), $joins, $paging);
+        $paging->setCurrentPageNumber($page);
+        $paging->setItemCountPerPage(10);
+        
+        return new ViewModel(
+                array(
+                    'orders' => $bill,
+                    'paginator' => $paging
+                )
+        );
     }
 
     public function getRadAcctTable() {

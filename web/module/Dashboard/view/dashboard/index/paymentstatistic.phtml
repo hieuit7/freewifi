@@ -1,27 +1,56 @@
-<h1><?php echo $this->escapeHtml('Transactions'); ?></h1>
+<h1><?php echo $this->translate('ORDER_TITLE_PAGE'); ?></h1>
 
-<?php if(count($transactions) > 0) { ?>
-    <table class='table table-hover'>
+<?php if (count($orders) > 0) { ?>
+    <table class='table table-hover table-bordered'>
         <thead>
             <tr>
-                <th>STT</th>
-                <th>Username</th>
-                <th>Order Date</th>
-                <th>Status</th>
-                <th>Total</th>
+                <th><?php echo $this->translate('STT'); ?></th>
+                <th><?php echo $this->translate('USERNAME_TITLE'); ?></th>
+                <th><?php echo $this->translate('BILLING_DATE_TITLE'); ?></th>
+                <th><?php echo $this->translate('STATUS_TITLE'); ?></th>
+                <th><?php echo $this->translate('TOTAL_TITLE'); ?></th>
             </tr>
         </thead>
 
         <tbody>
-            <?php foreach($transactions as $transaction) { ?>
+            <?php foreach ($orders as $order) { ?>
                 <tr>
-                    <td><?php echo $this->escapehtml($transaction->getOrderid()); ?></td>
-                    <td><?php $u = $user->getUser($transaction->getOrderid()); echo $this->escapehtml($u->getUsername()); ?></td>
-                    <td><?php echo $this->escapehtml($transaction->getOrderdate()); ?></td>
-                    <td><?php echo $this->escapehtml($transaction->getStatus()); ?></td>
-                    <td><?php echo $this->escapehtml(number_format($transaction->getSumtotal())).' VND'; ?></td>
+                    <td><?php echo $order['orderid']; ?></td>
+                    <td>
+                        <?php echo $order['username']; ?>
+                    </td>
+                    <td>
+                        <?php echo $order['orderdate']; ?>
+                    </td>
+                    <td>
+                        <?php echo $this->translate(($order['status'])?'PROCESSED':'NOT_PTOCCESSED'); ?>
+                    </td>
+                    <td>
+                        <?php echo $order['sumtotal'].' VND'; ?>
+                    </td>
                 </tr>
             <?php } ?>
+            <tr>
+                <td colspan="5">
+                    <?php
+                    // add at the end of the file after the table
+                    echo $this->paginationControl(
+                            // the paginator object
+                            $this->paginator,
+                            // the scrolling style
+                            'sliding',
+                            // the partial to use to render the control
+                            'partials/shared/paging.phtml',
+                            // the route to link to when a user clicks a control link
+                            array(
+                        'route' => 'dashboard',
+                        'options' => array('action' => 'paymentstatistic')
+                            )
+                    );
+                    ?>
+                </td>
+            </tr>
+
         </tbody>
     </table>
 <?php } else { ?>

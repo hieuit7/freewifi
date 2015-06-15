@@ -46,6 +46,16 @@ class MapperTable extends AbstractTableGateway{
         endwhile;
         return $result;
     }
+    /**
+     * 
+     * @param type $page
+     * @param type $limit
+     * @param type $wheres
+     * @param type $orders
+     * @param type $joins
+     * @param Paginator $paging
+     * @return array $mixed
+     */
     public function customGetData($page = 1, $limit = 10, $wheres = array(), $orders = array(), $joins = array(), &$paging) {
         $selector = new Select();
         $selector->from(array(
